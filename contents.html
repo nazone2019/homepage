@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NAZONEの作品一覧">
+  <title>CONTENTS | NAZONE</title>
+  <link rel="icon" href="assets/brand/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="stage">
+    <header class="site-header" id="site-header"></header>
+
+    <main class="page">
+      <h1 class="page-title reveal">Works <span class="page-title__count" id="works-count"></span></h1>
+      <p class="page-lead reveal">これまでの作品・公演一覧。ポスターをタップして詳細へ。</p>
+      <div class="filters filters--center" id="filters" role="tablist" aria-label="年で絞り込み"></div>
+      <div class="container">
+        <div class="works-grid" id="works-grid"></div>
+      </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+  </div>
+
+  <script src="js/site-data.js"></script>
+  <script src="js/works-data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    NAZONE.init({ crumb: "WORKS" });
+
+    const works = getListedWorks();
+    const years = getWorkYears();
+    document.getElementById("works-count").textContent = String(works.length);
+
+    const filters = document.getElementById("filters");
+    const grid = document.getElementById("works-grid");
+
+    filters.innerHTML =
+      `<button type="button" class="filter-btn is-active" data-year="all">All</button>` +
+      years.map((y) => `<button type="button" class="filter-btn" data-year="${y}">${y}</button>`).join("");
+
+    grid.innerHTML = works.map((w) => NAZONE.workCardHtml(w, "h2")).join("");
+    filters.addEventListener("click", (e) => {
+      const btn = e.target.closest(".filter-btn");
+      if (!btn) return;
+      filters.querySelectorAll(".filter-btn").forEach((b) => b.classList.remove("is-active"));
+      btn.classList.add("is-active");
+      const year = btn.dataset.year;
+      grid.querySelectorAll(".work-card").forEach((card) => {
+        const show = year === "all" || card.dataset.year === year;
+        card.classList.toggle("is-hidden", !show);
+      });
+    });
+
+    NAZONE.observeReveal();
+  </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NAZONEのメンバー紹介">
+  <title>MEMBER | NAZONE</title>
+  <link rel="icon" href="assets/brand/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="stage">
+    <header class="site-header" id="site-header"></header>
+
+  <main class="page">
+    <h1 class="page-title reveal">MEMBER</h1>
+    <div class="container">
+      <div class="member-list" id="member-list"></div>
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+  </div>
+
+  <script src="js/site-data.js"></script>
+  <script src="js/members-data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    NAZONE.init({ crumb: "MEMBER" });
+    document.getElementById("member-list").innerHTML = MEMBERS.map((m) => {
+      const img = m.image
+        ? `<img src="assets/members/${m.image}" alt="" loading="lazy">`
+        : "";
+      return `
+        <article class="member-row reveal" style="--member-color:${m.color}">
+          <div class="member-visual">
+            ${img}
+            <div class="member-visual__name">${m.name}</div>
+          </div>
+          <div class="member-body">
+            <h3>${m.role}</h3>
+            <p>${m.bio}</p>
+            ${
+              m.sns
+                ? `<a class="member-sns" href="${m.sns}" target="_blank" rel="noopener noreferrer">SNS ${NAZONE.EXT_ICON}</a>`
+                : ""
+            }
+          </div>
+        </article>`;
+    }).join("");
+    NAZONE.observeReveal();
+  </script>
+</body>
+</html>

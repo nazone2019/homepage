@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="全国の大学生を中心とした謎解き制作集団 NAZONE">
+  <meta property="og:title" content="NAZONE">
+  <meta property="og:description" content="全国の大学生を中心とした謎解き制作集団">
+  <meta property="og:image" content="assets/brand/og.jpg">
+  <title>NAZONE</title>
+  <link rel="icon" href="assets/brand/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800;900&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/lab.css">
+</head>
+<body class="lab">
+  <div class="lab-bg" aria-hidden="true">
+    <span class="lab-orb lab-orb--a"></span>
+    <span class="lab-orb lab-orb--b"></span>
+    <span class="lab-orb lab-orb--c"></span>
+    <span class="lab-grid"></span>
+  </div>
+
+  <header class="lab-nav">
+    <a class="lab-nav__logo" href="index.html">
+      <img src="assets/brand/logo.webp" alt="NAZONE" width="140" height="30">
+    </a>
+    <nav>
+      <a href="about.html">About</a>
+      <a href="contents.html">Works</a>
+      <a href="member.html">Member</a>
+      <a class="lab-nav__cta" href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- PORTAL HERO -->
+    <section class="lab-hero">
+      <div class="lab-portal" aria-hidden="true">
+        <span class="lab-ring"></span>
+        <span class="lab-ring lab-ring--2"></span>
+        <span class="lab-ring lab-ring--3"></span>
+        <span class="lab-spark s1"></span>
+        <span class="lab-spark s2"></span>
+        <span class="lab-spark s3"></span>
+        <span class="lab-spark s4"></span>
+      </div>
+
+      <p class="lab-hero__chip">Mystery Lab · EST.2019</p>
+      <h1 class="lab-hero__title">
+        <span>わくわくの</span>
+        <span class="lab-hero__glow">入口</span>
+        <span>は、ここ。</span>
+      </h1>
+      <p class="lab-hero__lead">全国の大学生が仕掛ける体験型謎解き。<br>物語の主人公になって、緑の向こうへ飛び込もう。</p>
+      <div class="lab-hero__actions">
+        <a class="lab-btn lab-btn--pop" href="#works">Works を開く</a>
+        <a class="lab-btn lab-btn--ghost" href="about.html">NAZONEとは</a>
+      </div>
+
+      <div class="lab-hero__card">
+        <img src="assets/brand/colorbar.webp" alt="ココロざす を 志す" width="1200" height="674">
+      </div>
+    </section>
+
+    <!-- FLOATING WORKS -->
+    <section class="lab-works" id="works">
+      <div class="lab-works__head">
+        <h2><span>01</span> Works</h2>
+        <a href="contents.html">すべて見る →</a>
+      </div>
+      <div class="lab-float" id="lab-works"></div>
+    </section>
+
+    <!-- ENERGY STATEMENT -->
+    <section class="lab-energy">
+      <p class="lab-energy__en">Enter the green. Solve the story.</p>
+      <h2 class="lab-energy__jp">緑の世界で、<br>謎に飛び込もう。</h2>
+    </section>
+
+    <!-- ABOUT BLOB -->
+    <section class="lab-about">
+      <div class="lab-about__media">
+        <img src="assets/brand/web-visual.png" alt="" width="620" height="876">
+      </div>
+      <div class="lab-about__text">
+        <p class="lab-tag">02 · About</p>
+        <h2>NAZONEは、<br>謎解き制作集団。</h2>
+        <p>2019年設立。参加者自身が主人公になって物語体験を楽しめる「体験型謎解きゲーム」を制作・開催しています。</p>
+        <a class="lab-btn lab-btn--pop" href="about.html">もっと知る</a>
+      </div>
+    </section>
+
+    <!-- MEMBER PILLS -->
+    <section class="lab-members">
+      <div class="lab-works__head">
+        <h2><span>03</span> Member</h2>
+        <a href="member.html">紹介へ →</a>
+      </div>
+      <div class="lab-pills" id="lab-members"></div>
+    </section>
+
+    <!-- CONTACT BURST -->
+    <section class="lab-contact">
+      <div class="lab-contact__burst" aria-hidden="true"></div>
+      <p class="lab-tag lab-tag--light">04 · Contact</p>
+      <h2>いっしょに、<br>謎をつくろう。</h2>
+      <a class="lab-btn lab-btn--light" href="contact.html">Contact</a>
+    </section>
+  </main>
+
+  <footer class="lab-foot">
+    <p>Copyright© 2019 NAZONE All Rights Reserved.</p>
+    <a href="https://twitter.com/nazone2019" target="_blank" rel="noopener noreferrer">X / Twitter</a>
+  </footer>
+
+  <script src="js/works-data.js"></script>
+  <script src="js/members-data.js"></script>
+  <script>
+    (function () {
+      const worksMount = document.getElementById("lab-works");
+      const listed = typeof getListedWorks === "function" ? getListedWorks() : (WORKS || []).filter((w) => w.listed !== false);
+      const offsets = [-18, 12, -8, 20, -14, 8, -22, 16];
+      worksMount.innerHTML = listed.slice(0, 8).map((w, i) => `
+        <a class="lab-float__item" href="work.html?id=${encodeURIComponent(w.id)}" style="--y:${offsets[i % offsets.length]}px; --d:${i * 0.08}s">
+          <div class="lab-float__img">
+            ${w.image
+              ? `<img src="assets/works/${w.image}" alt="${w.title}" loading="lazy">`
+              : `<div class="lab-float__ph">${w.title}</div>`}
+          </div>
+          <strong>${w.title}</strong>
+          <span>${w.date}</span>
+        </a>
+      `).join("");
+
+      const mem = document.getElementById("lab-members");
+      if (typeof MEMBERS !== "undefined") {
+        mem.innerHTML = MEMBERS.map((m) => `
+          <a class="lab-pill" href="member.html" style="--c:${m.color}">
+            <div class="lab-pill__face">
+              ${m.image ? `<img src="assets/members/${m.image}" alt="${m.name}" loading="lazy">` : ""}
+            </div>
+            <div>
+              <strong>${m.name}</strong>
+              <span>${m.role}</span>
+            </div>
+          </a>
+        `).join("");
+      }
+
+      // ポータルがカーソルで少し追従
+      const portal = document.querySelector(".lab-portal");
+      if (portal && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        window.addEventListener("pointermove", (e) => {
+          const x = (e.clientX / innerWidth - 0.5) * 24;
+          const y = (e.clientY / innerHeight - 0.5) * 18;
+          portal.style.transform = `translate(${x}px, ${y}px)`;
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="謎解き制作団体NAZONEについて">
+  <title>ABOUT | NAZONE</title>
+  <link rel="icon" href="assets/brand/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="stage">
+    <header class="site-header" id="site-header"></header>
+
+  <main class="page">
+    <h1 class="page-title reveal">ABOUT</h1>
+    <div class="container container--narrow" id="about-content"></div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+  </div>
+
+  <script src="js/site-data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    NAZONE.init({ crumb: "ABOUT" });
+    const a = SITE.about;
+    document.getElementById("about-content").innerHTML = `
+      <section class="about-block reveal">
+        <h2>${a.title}</h2>
+        <p>${a.lead}</p>
+      </section>
+      <section class="about-block reveal">
+        <h2>自主制作</h2>
+        <ul>${a.selfProductions.map((x) => `<li>${x}</li>`).join("")}</ul>
+      </section>
+      <section class="about-block reveal">
+        <h2>企業さまとのコラボ実績</h2>
+        <ul>${a.collaborations.map((x) => `<li>${x}</li>`).join("")}</ul>
+      </section>
+    `;
+    NAZONE.observeReveal();
+  </script>
+</body>
+</html>
