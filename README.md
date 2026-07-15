@@ -1,6 +1,6 @@
 # NAZONEHP
 
-[nazone-web.studio.site](https://nazone-web.studio.site/) を参考にした、NAZONE 公式サイトの静的版です。
+NAZONEの公式HPです。[nazone-web.studio.site](https://nazone-web.studio.site/) を参考にした静的版です。
 
 ## 開き方
 
