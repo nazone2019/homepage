@@ -32,13 +32,12 @@
     NAZONE.init({ crumb: "MEMBER" });
     document.getElementById("member-list").innerHTML = MEMBERS.map((m) => {
       const img = m.image
-        ? `<img src="assets/members/${m.image}" alt="" loading="lazy">`
+        ? `<img src="assets/members/${m.image}" alt="${m.name}" loading="lazy">`
         : "";
       return `
         <article class="member-row reveal" style="--member-color:${m.color}">
           <div class="member-visual">
             ${img}
-            <div class="member-visual__name">${m.name}</div>
           </div>
           <div class="member-body">
             <h3>${m.role}</h3>
