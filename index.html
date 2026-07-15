@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="全国の大学生を中心とした謎解き制作集団">
+  <meta name="description" content="全国の大学生を中心とした謎解き制作集団 NAZONE">
   <meta property="og:title" content="NAZONE">
   <meta property="og:description" content="全国の大学生を中心とした謎解き制作集団">
   <meta property="og:image" content="assets/brand/og.jpg">
@@ -11,91 +11,74 @@
   <link rel="icon" href="assets/brand/favicon.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/edge.css">
 </head>
-<body class="is-intro is-edge">
-  <div class="stage stage--edge">
+<body class="is-intro">
+  <div class="stage stage--home">
     <header class="site-header" id="site-header"></header>
 
-    <main class="page page--edge">
-      <!-- OPENING：大きな問いかけ -->
-      <section class="edge-open">
-        <div class="edge-open__meta">
-          <span class="edge-open__live"></span>
-          <span>NAZONE / EST.2019</span>
+    <main class="page page--home">
+      <section class="hero-banner reveal" aria-label="メインビジュアル">
+        <div class="hero-banner__visual">
+          <img
+            class="hero-banner__img"
+            src="assets/brand/colorbar.webp"
+            alt="ココロざす を 志す — NAZONE"
+            width="1200"
+            height="674"
+            fetchpriority="high"
+          >
         </div>
-        <h1 class="edge-open__title">
-          <span class="edge-open__row">このサイトの</span>
-          <span class="edge-open__row edge-open__row--shift">先に、</span>
-          <span class="edge-open__row"><em>謎</em>がある。</span>
-        </h1>
-        <p class="edge-open__sub">全国の大学生が仕掛ける、体験型謎解き制作集団。</p>
-        <div class="edge-open__frame reveal" data-tilt>
-          <img src="assets/brand/colorbar.webp" alt="ココロざす を 志す — NAZONE" width="1200" height="674" fetchpriority="high">
-          <div class="edge-open__cut" aria-hidden="true">ココロざす を 志す</div>
+        <div class="hero-banner__bar">
+          <p class="hero-banner__desc">
+            全国の大学生がつくる体験型謎解き。<br class="hero-banner__br">
+            物語の主人公になって、ちょっと不思議な時間を楽しもう。
+          </p>
+          <div class="hero-banner__actions">
+            <a class="btn btn--primary btn--pulse" href="#works">作品を見る</a>
+            <a class="btn btn--ghost-dark" href="about.html">NAZONEについて</a>
+          </div>
         </div>
-        <a class="edge-scroll" href="#works">SCROLL ↓</a>
       </section>
 
-      <!-- TAPE -->
-      <div class="edge-tape" aria-hidden="true">
-        <div class="edge-tape__track">
-          <span>LOOK CLOSER</span><span>SOLVE</span><span>PLAY</span><span>NAZONE</span><span>STORY</span><span>ESCAPE</span>
-          <span>LOOK CLOSER</span><span>SOLVE</span><span>PLAY</span><span>NAZONE</span><span>STORY</span><span>ESCAPE</span>
+      <section class="section section--works" id="works" aria-label="作品">
+        <div class="section__head">
+          <div>
+            <p class="section__label">Works</p>
+            <h2 class="section__title reveal">制作したもの <span id="works-count"></span></h2>
+          </div>
+          <a class="section__link reveal" href="contents.html">すべて見る</a>
         </div>
-      </div>
 
-      <!-- WORKS：縦ラベル + 横スクロール -->
-      <section class="edge-works" id="works">
-        <div class="edge-works__side">
-          <p class="edge-works__label">WORKS</p>
-          <h2 class="edge-works__heading">制作した<br>ものたち</h2>
-          <p class="edge-works__count"><span id="works-count">0</span> titles</p>
-          <a class="edge-link" href="contents.html">一覧へ →</a>
-        </div>
-        <div class="edge-works__rail" id="home-works"></div>
+        <a class="spotlight reveal" id="home-spotlight" href="contents.html"></a>
+        <div class="works-grid" id="home-works"></div>
       </section>
 
-      <!-- STATEMENT -->
-      <section class="edge-statement">
-        <p class="edge-statement__en">We craft mysteries you can walk into.</p>
-        <h2 class="edge-statement__jp">入り込める謎を、つくる。</h2>
-      </section>
-
-      <!-- ABOUT：画像が斜めに切れる -->
-      <section class="edge-about">
-        <div class="edge-about__visual reveal">
+      <section class="about-teaser reveal" aria-label="団体紹介">
+        <div class="about-teaser__visual">
           <img src="assets/brand/web-visual.png" alt="" width="620" height="876">
         </div>
-        <div class="edge-about__body">
-          <p class="edge-kicker">ABOUT</p>
-          <h2>NAZONEは謎解き制作集団です</h2>
-          <p>2019年設立。参加者自身が主人公になって物語体験を楽しめる「体験型謎解きゲーム」を制作・開催しています。</p>
-          <a class="btn btn--primary" href="about.html">詳しく見る</a>
+        <div class="about-teaser__body">
+          <p class="section__label">About</p>
+          <h2 class="about-teaser__title">NAZONEとは</h2>
+          <p class="about-teaser__text">全国の大学生を中心とした謎解き制作集団。2019年6月設立。参加者自身が主人公になって物語体験を楽しめる「体験型謎解きゲーム」を制作・開催しています。</p>
+          <a class="btn btn--primary" href="about.html">もっとくわしく</a>
         </div>
       </section>
 
-      <!-- LINKS：全幅の鋭い行 -->
-      <nav class="edge-rows" aria-label="導線">
-        <a class="edge-row" href="member.html">
-          <span class="edge-row__num">01</span>
-          <span class="edge-row__name">Member</span>
-          <span class="edge-row__desc">仕掛け人たち</span>
-          <span class="edge-row__go">→</span>
+      <nav class="home-links" aria-label="導線">
+        <a class="home-links__item home-links__item--green" href="member.html">
+          <span>Member</span>
+          <strong>仕掛け人たち</strong>
         </a>
-        <a class="edge-row" href="contact.html">
-          <span class="edge-row__num">02</span>
-          <span class="edge-row__name">Contact</span>
-          <span class="edge-row__desc">制作依頼・お問い合わせ</span>
-          <span class="edge-row__go">→</span>
+        <a class="home-links__item home-links__item--yellow" href="contact.html">
+          <span>Contact</span>
+          <strong>制作依頼</strong>
         </a>
-        <a class="edge-row" href="https://twitter.com/nazone2019" target="_blank" rel="noopener noreferrer">
-          <span class="edge-row__num">03</span>
-          <span class="edge-row__name">SNS</span>
-          <span class="edge-row__desc">最新情報</span>
-          <span class="edge-row__go">→</span>
+        <a class="home-links__item home-links__item--sky" href="https://twitter.com/nazone2019" target="_blank" rel="noopener noreferrer">
+          <span>SNS</span>
+          <strong>最新情報</strong>
         </a>
       </nav>
     </main>
@@ -114,32 +97,26 @@
       const countEl = document.getElementById("works-count");
       if (countEl) countEl.textContent = String(listed.length);
 
-      const home = document.getElementById("home-works");
-      if (home) {
-        home.innerHTML = listed.slice(0, 12).map((w, i) => `
-          <a class="edge-poster reveal" href="work.html?id=${encodeURIComponent(w.id)}" style="--i:${i}">
-            <div class="edge-poster__img">${NAZONE.workImageHtml(w)}</div>
-            <div class="edge-poster__cap">
-              <span>${w.date}</span>
-              <strong>${w.title}</strong>
-            </div>
-          </a>
-        `).join("");
+      const featured = getFeaturedWork() || listed[0];
+      const spotlight = document.getElementById("home-spotlight");
+      if (spotlight && featured) {
+        spotlight.href = `work.html?id=${encodeURIComponent(featured.id)}`;
+        spotlight.innerHTML = `
+          <div class="spotlight__media">${NAZONE.workImageHtml(featured)}</div>
+          <div class="spotlight__body">
+            <p class="spotlight__badge">Featured</p>
+            <h3 class="spotlight__title">${featured.title}</h3>
+            <p class="spotlight__date">${featured.date}</p>
+            <p class="spotlight__text">${(featured.story || featured.about || "").split("\n")[0] || "体験型謎解き作品"}</p>
+            <span class="spotlight__more">詳細を見る →</span>
+          </div>
+        `;
       }
 
-      // 軽いティルト（お好みの興味づけ）
-      const tilt = document.querySelector("[data-tilt]");
-      if (tilt && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        tilt.addEventListener("pointermove", (e) => {
-          const r = tilt.getBoundingClientRect();
-          const x = (e.clientX - r.left) / r.width - 0.5;
-          const y = (e.clientY - r.top) / r.height - 0.5;
-          tilt.style.transform = `perspective(900px) rotateY(${x * 6}deg) rotateX(${-y * 5}deg)`;
-        });
-        tilt.addEventListener("pointerleave", () => {
-          tilt.style.transform = "";
-        });
-      }
+      const home = document.getElementById("home-works");
+      if (!home) return;
+      const rest = listed.filter((w) => !featured || w.id !== featured.id).slice(0, 6);
+      home.innerHTML = rest.map((w) => NAZONE.workCardHtml(w)).join("");
     })();
   </script>
 </body>
