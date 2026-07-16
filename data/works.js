@@ -1,22 +1,6 @@
 /**
- * 作品データ — 追加・編集は基本的にこのファイルだけで完結します
- *
- * 【追加手順】
- * 1. assets/works/ に画像を置く
- * 2. 下の WORKS 配列の先頭（または任意の位置）にオブジェクトを追加
- *
- * フィールド:
- *   id        … URL用ID（英数字とハイフン）
- *   title     … 作品名
- *   date      … 表示用日付（例: "2026/5/2.3"）
- *   year      … 絞り込み用の西暦（数字）
- *   image     … assets/works/ 内のファイル名
- *   featured  … true ならトップに大きく表示
- *   story     … 【STORY】（任意）
- *   about     … 【ABOUT】本文（任意）
- *   meta      … 拘束時間・人数など（任意・配列）
- *   hashtag   … ハッシュタグ（任意）
- *   history   … 過去の公演（任意・配列）
+ * WORKS ページ用データ
+ * 画像は assets/works/ に置いてください
  */
 const WORKS = [
   {
@@ -121,7 +105,7 @@ const WORKS = [
     title: "DUSTRUSH",
     date: "2024/10/12〜14",
     year: 2024,
-    image: "",
+    image: "dustrush.webp",
     about: "2024年10月公演。",
     history: ["2024.10 公演"],
   },
@@ -148,7 +132,7 @@ const WORKS = [
     title: "ALIVE",
     date: "2023/12/16.17",
     year: 2023,
-    image: "",
+    image: "alive.webp",
     about: "2023年12月公演。",
     history: ["2023.12 公演"],
   },
@@ -157,7 +141,7 @@ const WORKS = [
     title: "謎を提供して下さい",
     date: "2023/10/28.29",
     year: 2023,
-    image: "",
+    image: "nazo-teikyo.webp",
     about: "2023年10月公演。",
     history: ["2023.10 公演"],
   },
@@ -166,7 +150,7 @@ const WORKS = [
     title: "囚人ゲヱム",
     date: "2023/7/29.30",
     year: 2023,
-    image: "",
+    image: "shujin-game.webp",
     about: "2023年7月公演。",
     history: ["2023.7 公演"],
   },
@@ -184,7 +168,7 @@ const WORKS = [
     title: "頭が良くなる！爆走！ナゾトキ大冒険",
     date: "2022/12/13〜",
     year: 2022,
-    image: "",
+    image: "bakusou-nazotoki.webp",
     about: "書籍。企業さまとのコラボ実績。",
     history: ["2022.12 書籍"],
   },
@@ -260,7 +244,6 @@ const WORKS = [
   },
 ];
 
-/** CONTENTS ページに出す作品（listed: false は除外） */
 function getListedWorks() {
   return WORKS.filter((w) => w.listed !== false);
 }
@@ -274,6 +257,5 @@ function getFeaturedWork() {
 }
 
 function getWorkYears() {
-  const years = [...new Set(getListedWorks().map((w) => w.year))].sort((a, b) => b - a);
-  return years;
+  return [...new Set(getListedWorks().map((w) => w.year))].sort((a, b) => b - a);
 }

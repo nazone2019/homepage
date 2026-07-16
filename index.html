@@ -61,8 +61,8 @@
         </div>
         <div class="about-teaser__body">
           <p class="section__label">About</p>
-          <h2 class="about-teaser__title">NAZONEとは</h2>
-          <p class="about-teaser__text">全国の大学生を中心とした謎解き制作集団。2019年6月設立。参加者自身が主人公になって物語体験を楽しめる「体験型謎解きゲーム」を制作・開催しています。</p>
+          <h2 class="about-teaser__title" id="home-about-title">NAZONEとは</h2>
+          <p class="about-teaser__text" id="home-about-text">全国の大学生を中心とした謎解き制作集団。2019年6月設立。参加者自身が主人公になって物語体験を楽しめる「体験型謎解きゲーム」を制作・開催しています。</p>
           <a class="btn btn--primary" href="about.html">もっとくわしく</a>
         </div>
       </section>
@@ -86,13 +86,19 @@
     <footer class="site-footer" id="site-footer"></footer>
   </div>
 
-  <script src="js/site-data.js"></script>
-  <script src="js/works-data.js"></script>
+  <script src="data/site.js"></script>
+  <script src="data/about.js"></script>
+  <script src="data/works.js"></script>
   <script src="js/loader.js"></script>
   <script src="js/main.js"></script>
   <script>
     NAZONE.init({ waitIntro: true });
     (function () {
+      const aboutTitle = document.getElementById("home-about-title");
+      const aboutText = document.getElementById("home-about-text");
+      if (aboutTitle) aboutTitle.textContent = ABOUT.title;
+      if (aboutText) aboutText.textContent = ABOUT.lead;
+
       const listed = getListedWorks();
       const countEl = document.getElementById("works-count");
       if (countEl) countEl.textContent = String(listed.length);

@@ -1,8 +1,6 @@
 /**
- * メンバーデータ — 追加・編集はこのファイルだけ
- *
- * image … assets/members/ 内のファイル名（空なら色シルエットのみ）
- * color … シルエットの基調色
+ * MEMBER ページ用データ
+ * 画像は assets/members/ に置いてください
  */
 const MEMBERS = [
   {
