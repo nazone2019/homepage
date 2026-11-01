@@ -23,7 +23,8 @@ python3 -m http.server 8080
 | お問い合わせ文言・送信先 | `data/contact.js` |
 | サイト名・ナビ・SNS | `data/site.js` |
 | プライバシーポリシー | `data/privacy.js` |
-| 色・余白・フォント | `css/style.css` の `:root` |
+| /naiyoubutsu の内容 | `data/naiyoubutsu.js` |
+| 色・余白・フォント | `css/app.css` の `:root`（スマホ幅が基準） |
 
 ヘッダー／フッターは `js/main.js` が全ページに自動挿入します。HTMLをページごとに直す必要はありません。
 
@@ -40,7 +41,7 @@ python3 -m http.server 8080
   year: 2026,
   image: "my-work.jpg",
   about: "説明文",
-  featured: false, // true にするとトップに大きく表示
+  featured: false,
 },
 ```
 
@@ -48,26 +49,14 @@ python3 -m http.server 8080
 
 ## ページ構成
 
-- `index.html` … トップ（ヒーロー＋Works＋導線）
+- `index.html` … トップ（キャッチ＋About＋Works）
 - `about.html` … 団体紹介
 - `contents.html` … Works 一覧（年フィルター付き）
 - `work.html?id=...` … 作品詳細
 - `member.html` … メンバー
 - `contact.html` … お問い合わせ（mailto）
 - `privacy.html` … プライバシーポリシー
-
-## イントロ演出（トップのみ）
-
-初回アクセス時:
-1. ローディング画面
-2. 緑の炭酸リキッドが下から上昇
-3. メイン画面が出現
-
-同じタブでは2回目以降スキップされます。もう一度見るときは:
-
-```
-index.html?intro=1
-```
+- `/naiyoubutsu` … サブページ（`naiyoubutsu/index.html`）
 
 ## 補足
 

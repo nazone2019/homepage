@@ -8,20 +8,21 @@
   <link rel="icon" href="assets/brand/favicon.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-  <div class="stage">
-    <header class="site-header" id="site-header"></header>
+  <header class="site-header" id="site-header"></header>
 
-  <main class="page">
-    <h1 class="page-title reveal">ABOUT</h1>
-    <div class="container container--narrow" id="about-content"></div>
+  <main class="wrap">
+    <div class="section-head">
+      <p>About</p>
+      <h1>NAZONEとは</h1>
+    </div>
+    <div id="about-content"></div>
   </main>
 
   <footer class="site-footer" id="site-footer"></footer>
-  </div>
 
   <script src="data/site.js"></script>
   <script src="data/about.js"></script>
@@ -30,20 +31,19 @@
     NAZONE.init({ crumb: "ABOUT" });
     const a = ABOUT;
     document.getElementById("about-content").innerHTML = `
-      <section class="about-block reveal">
+      <section class="about-block">
         <h2>${a.title}</h2>
         <p>${a.lead}</p>
       </section>
-      <section class="about-block reveal">
+      <section class="about-block">
         <h2>自主制作</h2>
         <ul>${a.selfProductions.map((x) => `<li>${x}</li>`).join("")}</ul>
       </section>
-      <section class="about-block reveal">
+      <section class="about-block">
         <h2>企業さまとのコラボ実績</h2>
         <ul>${a.collaborations.map((x) => `<li>${x}</li>`).join("")}</ul>
       </section>
     `;
-    NAZONE.observeReveal();
   </script>
 </body>
 </html>

@@ -11,118 +11,63 @@
   <link rel="icon" href="assets/brand/favicon.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/app.css">
 </head>
-<body class="is-intro">
-  <div class="stage stage--home">
-    <header class="site-header" id="site-header"></header>
+<body>
+  <header class="site-header" id="site-header"></header>
 
-    <main class="page page--home">
-      <section class="hero-banner reveal" aria-label="メインビジュアル">
-        <div class="hero-banner__visual">
-          <img
-            class="hero-banner__img"
-            src="assets/brand/colorbar.webp"
-            alt="ココロざす を 志す — NAZONE"
-            width="1200"
-            height="674"
-            fetchpriority="high"
-          >
+  <div class="wrap">
+    <section class="hero" aria-label="メインビジュアル">
+      <img src="assets/brand/colorbar.webp" alt="ココロざす を 志す NAZONE">
+      <div class="hero__bar">
+        <p id="home-lead"></p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="about.html">ABOUT</a>
+          <a class="btn btn--ghost" href="contents.html">WORKS</a>
         </div>
-        <div class="hero-banner__bar">
-          <p class="hero-banner__desc">
-            全国の大学生がつくる体験型謎解き。<br class="hero-banner__br">
-            物語の主人公になって、ちょっと不思議な時間を楽しもう。
-          </p>
-          <div class="hero-banner__actions">
-            <a class="btn btn--primary btn--pulse" href="#works">作品を見る</a>
-            <a class="btn btn--ghost-dark" href="about.html">NAZONEについて</a>
-          </div>
-        </div>
-      </section>
+      </div>
+      <div class="colorbar" aria-hidden="true"></div>
+    </section>
 
-      <section class="section section--works" id="works" aria-label="作品">
-        <div class="section__head">
-          <div>
-            <p class="section__label">Works</p>
-            <h2 class="section__title reveal">制作したもの <span id="works-count"></span></h2>
-          </div>
-          <a class="section__link reveal" href="contents.html">すべて見る</a>
-        </div>
+    <section id="about" aria-labelledby="home-about-heading">
+      <div class="section-head">
+        <p>About</p>
+        <h2 id="home-about-heading">NAZONEとは</h2>
+      </div>
+      <p class="about-copy" id="home-about-text"></p>
+      <a class="more-link" href="about.html">詳しく見る</a>
+    </section>
 
-        <a class="spotlight reveal" id="home-spotlight" href="contents.html"></a>
-        <div class="works-grid" id="home-works"></div>
-      </section>
-
-      <section class="about-teaser reveal" aria-label="団体紹介">
-        <div class="about-teaser__visual">
-          <img src="assets/brand/web-visual.png" alt="" width="620" height="876">
-        </div>
-        <div class="about-teaser__body">
-          <p class="section__label">About</p>
-          <h2 class="about-teaser__title" id="home-about-title">NAZONEとは</h2>
-          <p class="about-teaser__text" id="home-about-text">全国の大学生を中心とした謎解き制作集団。2019年6月設立。参加者自身が主人公になって物語体験を楽しめる「体験型謎解きゲーム」を制作・開催しています。</p>
-          <a class="btn btn--primary" href="about.html">もっとくわしく</a>
-        </div>
-      </section>
-
-      <nav class="home-links" aria-label="導線">
-        <a class="home-links__item home-links__item--green" href="member.html">
-          <span>Member</span>
-          <strong>仕掛け人たち</strong>
-        </a>
-        <a class="home-links__item home-links__item--yellow" href="contact.html">
-          <span>Contact</span>
-          <strong>制作依頼</strong>
-        </a>
-        <a class="home-links__item home-links__item--sky" href="https://twitter.com/nazone2019" target="_blank" rel="noopener noreferrer">
-          <span>SNS</span>
-          <strong>最新情報</strong>
-        </a>
-      </nav>
-    </main>
-
-    <footer class="site-footer" id="site-footer"></footer>
+    <section id="works" aria-labelledby="home-works-heading">
+      <div class="section-head">
+        <p>Works</p>
+        <h2 id="home-works-heading">制作したもの</h2>
+      </div>
+      <div class="work-grid" id="home-works"></div>
+      <p style="margin-top:16px;">
+        <a class="more-link" href="contents.html">すべて表示</a>
+      </p>
+    </section>
   </div>
+
+  <footer class="site-footer" id="site-footer"></footer>
 
   <script src="data/site.js"></script>
   <script src="data/about.js"></script>
   <script src="data/works.js"></script>
-  <script src="js/loader.js"></script>
   <script src="js/main.js"></script>
   <script>
-    NAZONE.init({ waitIntro: true });
+    NAZONE.init();
     (function () {
-      const aboutTitle = document.getElementById("home-about-title");
+      const lead = document.getElementById("home-lead");
+      if (lead) lead.textContent = SITE.description;
       const aboutText = document.getElementById("home-about-text");
-      if (aboutTitle) aboutTitle.textContent = ABOUT.title;
       if (aboutText) aboutText.textContent = ABOUT.lead;
-
-      const listed = getListedWorks();
-      const countEl = document.getElementById("works-count");
-      if (countEl) countEl.textContent = String(listed.length);
-
-      const featured = getFeaturedWork() || listed[0];
-      const spotlight = document.getElementById("home-spotlight");
-      if (spotlight && featured) {
-        spotlight.href = `work.html?id=${encodeURIComponent(featured.id)}`;
-        spotlight.innerHTML = `
-          <div class="spotlight__media">${NAZONE.workImageHtml(featured)}</div>
-          <div class="spotlight__body">
-            <p class="spotlight__badge">Featured</p>
-            <h3 class="spotlight__title">${featured.title}</h3>
-            <p class="spotlight__date">${featured.date}</p>
-            <p class="spotlight__text">${(featured.story || featured.about || "").split("\n")[0] || "体験型謎解き作品"}</p>
-            <span class="spotlight__more">詳細を見る →</span>
-          </div>
-        `;
-      }
 
       const home = document.getElementById("home-works");
       if (!home) return;
-      const rest = listed.filter((w) => !featured || w.id !== featured.id).slice(0, 6);
-      home.innerHTML = rest.map((w) => NAZONE.workCardHtml(w)).join("");
+      home.innerHTML = getListedWorks().slice(0, 6).map((w) => NAZONE.workCardHtml(w)).join("");
     })();
   </script>
 </body>

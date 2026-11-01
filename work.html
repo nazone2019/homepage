@@ -8,19 +8,17 @@
   <link rel="icon" href="assets/brand/favicon.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-  <div class="stage">
-    <header class="site-header" id="site-header"></header>
+  <header class="site-header" id="site-header"></header>
 
-  <main class="page">
-    <div class="container" id="work-detail"></div>
+  <main class="wrap">
+    <div id="work-detail"></div>
   </main>
 
   <footer class="site-footer" id="site-footer"></footer>
-  </div>
 
   <script src="data/site.js"></script>
   <script src="data/works.js"></script>
@@ -35,7 +33,7 @@
     if (!work) {
       mount.innerHTML = `
         <p style="text-align:center;margin:80px 0;">作品が見つかりませんでした。</p>
-        <p style="text-align:center;"><a href="contents.html">CONTENTS へ戻る</a></p>`;
+        <p style="text-align:center;"><a class="more-link" href="contents.html">WORKS へ戻る</a></p>`;
     } else {
       document.title = `${work.title} | NAZONE`;
       const story = work.story
@@ -59,22 +57,21 @@
           : "";
 
       mount.innerHTML = `
-        <article class="work-detail reveal">
+        <article class="work-detail">
           <div class="work-detail__media">${NAZONE.workImageHtml(work)}</div>
           <div>
             <h1 class="work-detail__title">${work.title}</h1>
-            <p style="color:var(--text-muted);font-size:13px;margin:0 0 8px;">${work.date}</p>
+            <p class="work-detail__date">${work.date}</p>
             ${story}
             ${about}
             ${meta}
             ${hashtag}
             ${history}
-            <p style="margin-top:40px;">
-              <a href="contents.html" style="font-size:13px;letter-spacing:0.1em;border-bottom:1px solid currentColor;">← CONTENTS</a>
+            <p style="margin-top:28px;">
+              <a class="more-link" href="contents.html">WORKS へ戻る</a>
             </p>
           </div>
         </article>`;
-      NAZONE.observeReveal();
     }
   </script>
 </body>

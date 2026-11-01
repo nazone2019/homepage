@@ -8,22 +8,21 @@
   <link rel="icon" href="assets/brand/favicon.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-  <div class="stage">
-    <header class="site-header" id="site-header"></header>
+  <header class="site-header" id="site-header"></header>
 
-  <main class="page">
-    <h1 class="page-title reveal">MEMBER</h1>
-    <div class="container">
-      <div class="member-list" id="member-list"></div>
+  <main class="wrap">
+    <div class="section-head">
+      <p>Member</p>
+      <h1>メンバー</h1>
     </div>
+    <div class="member-list" id="member-list"></div>
   </main>
 
   <footer class="site-footer" id="site-footer"></footer>
-  </div>
 
   <script src="data/site.js"></script>
   <script src="data/members.js"></script>
@@ -35,11 +34,10 @@
         ? `<img src="assets/members/${m.image}" alt="${m.name}" loading="lazy">`
         : "";
       return `
-        <article class="member-row reveal" style="--member-color:${m.color}">
-          <div class="member-visual">
-            ${img}
-          </div>
+        <article class="member-row">
+          <div class="member-visual">${img}</div>
           <div class="member-body">
+            <h2>${m.name}</h2>
             <h3>${m.role}</h3>
             <p>${m.bio}</p>
             ${
@@ -50,7 +48,6 @@
           </div>
         </article>`;
     }).join("");
-    NAZONE.observeReveal();
   </script>
 </body>
 </html>
