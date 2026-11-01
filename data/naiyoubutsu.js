@@ -1,17 +1,18 @@
 /**
  * /naiyoubutsu 解答フォーム用データ
- * 注意文・各STEPの正解はここを編集します
+ * 注意文・内容物・各STEPの正解はここを編集します
  *
  * answers にはそのSTEPで正解とみなす文字列を入れます（複数可）
  */
 const NAIYOUBUTSU = {
   title: "はじめに",
-  intro: [
-    "このページは、封筒に入った謎を順番に解くための解答入力ページです。",
-    "画面に指示が出るまで、次の封筒は開けないでください。",
-    "答えが分かったら、表示された入力欄に入力して送信してください。",
-  ],
-  startLabel: "はじめる",
+  thanks:
+    "この度は、『まずは内容物一覧をご確認ください！』のご購入、誠にありがとうございます。",
+  contentsTitle: "内容物",
+  contents: [],
+  notesTitle: "注意事項",
+  notes: [],
+  startLabel: "始める",
   correctMessage: "正解",
   wrongMessage: "間違っているようです。",
   steps: [

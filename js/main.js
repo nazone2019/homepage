@@ -122,7 +122,7 @@
     href,
     EXT_ICON,
     init(options = {}) {
-      renderHeader();
+      if (currentPage() !== "naiyoubutsu/") renderHeader();
       renderFooter(options.crumb || "");
       document.body.classList.add("is-ready");
     },

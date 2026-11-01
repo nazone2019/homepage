@@ -12,12 +12,22 @@
   <link rel="stylesheet" href="../css/app.css">
 </head>
 <body class="page-naiyoubutsu">
-  <header class="site-header" id="site-header"></header>
+  <p class="naiyou-hero">
+    <img src="title.png" alt="まずは内容物一覧をご確認ください！">
+  </p>
 
   <main class="wrap naiyou-wrap">
     <section class="naiyou-intro" aria-labelledby="naiyou-title">
       <h1 id="naiyou-title"></h1>
-      <div class="naiyou-notes" id="naiyou-notes"></div>
+      <p class="naiyou-thanks" id="naiyou-thanks"></p>
+      <section class="naiyou-block" aria-labelledby="contents-title">
+        <h2 id="contents-title"></h2>
+        <ul id="naiyou-contents"></ul>
+      </section>
+      <section class="naiyou-block" aria-labelledby="notes-title">
+        <h2 id="notes-title"></h2>
+        <ul id="naiyou-notes"></ul>
+      </section>
       <button class="naiyou-btn" id="start-btn" type="button"></button>
     </section>
     <div id="naiyou-steps"></div>
@@ -112,12 +122,18 @@
       NAZONE.init();
 
       document.getElementById("naiyou-title").textContent = data.title || "はじめに";
-      document.getElementById("naiyou-notes").innerHTML = (data.intro || [])
-        .map((line) => `<p>${escapeHtml(line)}</p>`)
+      document.getElementById("naiyou-thanks").textContent = data.thanks || "";
+      document.getElementById("contents-title").textContent = data.contentsTitle || "内容物";
+      document.getElementById("notes-title").textContent = data.notesTitle || "注意事項";
+      document.getElementById("naiyou-contents").innerHTML = (data.contents || [])
+        .map((line) => `<li>${escapeHtml(line)}</li>`)
+        .join("");
+      document.getElementById("naiyou-notes").innerHTML = (data.notes || [])
+        .map((line) => `<li>${escapeHtml(line)}</li>`)
         .join("");
 
       const startBtn = document.getElementById("start-btn");
-      startBtn.textContent = data.startLabel || "はじめる";
+      startBtn.textContent = data.startLabel || "始める";
 
       const progress = loadProgress();
 

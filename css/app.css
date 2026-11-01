@@ -614,14 +614,35 @@ body.is-nav-open { overflow: hidden; }
 }
 
 body.page-naiyoubutsu {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   background: #77cbea;
   color: #102018;
+  text-align: center;
 }
 
-body.page-naiyoubutsu .site-header,
+.naiyou-hero {
+  margin: 0;
+  width: 100%;
+}
+
+.naiyou-hero img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 body.page-naiyoubutsu .site-footer {
-  background: #77cbea;
+  margin-top: auto;
+  width: 100%;
+  background: #f0f0f2;
   border-color: transparent;
+  padding: 16px;
+}
+
+body.page-naiyoubutsu .copyright {
+  color: #595757;
 }
 
 body.page-naiyoubutsu .nav,
@@ -629,32 +650,66 @@ body.page-naiyoubutsu .menu-btn {
   display: none;
 }
 
-.naiyou-wrap { max-width: 640px; }
+.naiyou-wrap {
+  width: min(100%, 420px);
+  flex: 1;
+  padding: 12px 20px 40px;
+}
 
 .naiyou-intro h1,
 .naiyou-open,
 .naiyou-q,
-.naiyou-ok {
+.naiyou-ok,
+.naiyou-thanks,
+.naiyou-block {
   color: #102018;
 }
 
 .naiyou-intro h1 {
-  margin: 28px 0 16px;
-  font-size: 1.6rem;
+  margin: 20px 0 16px;
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
-.naiyou-notes p {
-  margin: 0 0 10px;
+.naiyou-thanks {
+  margin: 0 0 24px;
   font-size: 15px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+.naiyou-block {
+  margin: 0 0 20px;
+  min-height: 72px;
+}
+
+.naiyou-block h2 {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.naiyou-block ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.naiyou-block li {
+  margin: 0 0 6px;
 }
 
 .naiyou-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  max-width: 280px;
   min-height: 48px;
   padding: 0 22px;
-  margin-top: 16px;
+  margin: 12px auto 0;
   border: 0;
   border-radius: 999px;
   background: #145238;
@@ -678,6 +733,7 @@ body.page-naiyoubutsu .menu-btn {
 .naiyou-form {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 10px;
   margin-top: 10px;
 }
@@ -689,6 +745,7 @@ body.page-naiyoubutsu .menu-btn {
   border-radius: 10px;
   padding: 12px 14px;
   background: #fff;
+  text-align: center;
 }
 
 .naiyou-form .naiyou-btn { margin-top: 0; }
@@ -704,4 +761,22 @@ body.page-naiyoubutsu .menu-btn {
   color: #fff;
   font-size: 14px;
   font-weight: 700;
+}
+
+@media (min-width: 768px) {
+  body.page-naiyoubutsu {
+    background: #29bbe6;
+  }
+
+  .naiyou-hero {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .naiyou-wrap {
+    width: min(100%, 560px);
+    padding: 24px 24px 48px;
+  }
+
+  .naiyou-intro h1 { font-size: 1.75rem; }
 }
