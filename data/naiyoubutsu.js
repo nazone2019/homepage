@@ -21,6 +21,8 @@ const NAIYOUBUTSU = {
   ],
   hintLabel: "ヒント",
   startLabel: "始める",
+  resetLabel: "最初に戻す（編集用）",
+  resetConfirm: "最初の状態に戻しますか？",
   correctMessage: "正解！",
   wrongMessage: "間違っているようです。",
   steps: [

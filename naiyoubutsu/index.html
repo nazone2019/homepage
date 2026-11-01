@@ -36,6 +36,7 @@
   </div>
 
   <a class="naiyou-hint-fab" id="hint-fab" href="../hint/">ヒント</a>
+  <button class="naiyou-reset" id="reset-btn" type="button"></button>
   <div class="naiyou-clear" id="clear-overlay" hidden>
     <p id="clear-message">正解！</p>
   </div>
@@ -83,17 +84,26 @@
         return set;
       }
 
+      function emptyProgress() {
+        return { started: false, solved: 0, answers: [] };
+      }
+
       function loadProgress() {
         try {
           const raw = sessionStorage.getItem(STORAGE_KEY);
-          if (!raw) return { started: false, solved: 0 };
+          if (!raw) return emptyProgress();
           const parsed = JSON.parse(raw);
+          const solved = Math.max(0, Math.min(data.steps.length, Number(parsed.solved) || 0));
+          const answers = Array.isArray(parsed.answers)
+            ? parsed.answers.map((item) => String(item || ""))
+            : [];
           return {
             started: Boolean(parsed.started),
-            solved: Math.max(0, Math.min(data.steps.length, Number(parsed.solved) || 0)),
+            solved,
+            answers,
           };
         } catch (err) {
-          return { started: false, solved: 0 };
+          return emptyProgress();
         }
       }
 
@@ -112,27 +122,21 @@
         return [...variantsOf(value)].some((item) => accepted.has(item));
       }
 
-      function stepHtml(step, index, state) {
+      function stepHtml(step, index, state, submitted) {
         const n = index + 1;
         const bar = `<h3 class="naiyou-step-bar">STEP${n}</h3>`;
-        if (state === "done") {
-          return `
-            <section class="naiyou-step" data-step="${n}">
-              ${bar}
-              <p class="naiyou-open">${escapeHtml(step.open)}</p>
-              <p class="naiyou-q">${escapeHtml(step.question)}</p>
-            </section>`;
-        }
+        const locked = state === "done";
+        const valueAttr = locked ? ` value="${escapeHtml(submitted || "")}"` : "";
         return `
           <section class="naiyou-step" data-step="${n}">
             ${bar}
             <p class="naiyou-open">${escapeHtml(step.open)}</p>
             <p class="naiyou-q">${escapeHtml(step.question)}</p>
-            <form class="naiyou-form" data-index="${index}">
+            <form class="naiyou-form${locked ? " is-locked" : ""}" data-index="${index}">
               <label class="visually-hidden" for="answer-${n}">答え</label>
-              <input id="answer-${n}" name="answer" type="text" autocomplete="off" inputmode="text">
-              <button class="naiyou-btn" type="submit">送信</button>
-              <p class="naiyou-ng" hidden>${escapeHtml(data.wrongMessage)}</p>
+              <input id="answer-${n}" name="answer" type="text" autocomplete="off" inputmode="text"${valueAttr}${locked ? " readonly tabindex=\"-1\"" : ""}>
+              <button class="naiyou-btn" type="submit"${locked ? " disabled" : ""}>送信</button>
+              ${locked ? "" : `<p class="naiyou-ng" hidden>${escapeHtml(data.wrongMessage)}</p>`}
             </form>
           </section>`;
       }
@@ -142,12 +146,20 @@
         const message = document.getElementById("clear-message");
         if (message) message.textContent = data.correctMessage || "正解！";
         if (!overlay) return Promise.resolve();
+
         overlay.hidden = false;
+        overlay.classList.remove("is-on");
+        void overlay.offsetWidth;
+        overlay.classList.add("is-on");
+
         return new Promise((resolve) => {
           window.setTimeout(() => {
-            overlay.hidden = true;
-            resolve();
-          }, 1400);
+            overlay.classList.remove("is-on");
+            window.setTimeout(() => {
+              overlay.hidden = true;
+              resolve();
+            }, 280);
+          }, 1180);
         });
       }
 
@@ -155,13 +167,13 @@
         const mount = document.getElementById("naiyou-steps");
         const parts = [];
         for (let i = 0; i < solved; i += 1) {
-          parts.push(stepHtml(data.steps[i], i, "done"));
+          parts.push(stepHtml(data.steps[i], i, "done", progress.answers[i]));
         }
         if (currentOpen && solved < data.steps.length) {
           parts.push(stepHtml(data.steps[solved], solved, "open"));
         }
         mount.innerHTML = parts.join("");
-        const nextInput = mount.querySelector("input");
+        const nextInput = mount.querySelector(".naiyou-form:not(.is-locked) input");
         if (nextInput) nextInput.focus();
       }
 
@@ -182,6 +194,8 @@
       startBtn.textContent = data.startLabel || "始める";
       const hintFab = document.getElementById("hint-fab");
       if (hintFab && data.hintLabel) hintFab.textContent = data.hintLabel;
+      const resetBtn = document.getElementById("reset-btn");
+      if (resetBtn) resetBtn.textContent = data.resetLabel || "最初に戻す（編集用）";
 
       const progress = loadProgress();
 
@@ -190,6 +204,22 @@
         saveProgress(progress);
         startBtn.classList.add("is-hidden");
         renderSteps(progress.solved, true);
+      }
+
+      function resetToStart() {
+        if (!window.confirm(data.resetConfirm || "最初の状態に戻しますか？")) return;
+        sessionStorage.removeItem(STORAGE_KEY);
+        progress.started = false;
+        progress.solved = 0;
+        progress.answers = [];
+        startBtn.classList.remove("is-hidden");
+        document.getElementById("naiyou-steps").innerHTML = "";
+        const overlay = document.getElementById("clear-overlay");
+        if (overlay) {
+          overlay.classList.remove("is-on");
+          overlay.hidden = true;
+        }
+        window.scrollTo(0, 0);
       }
 
       if (progress.started) {
@@ -201,20 +231,24 @@
         begin();
       });
 
+      if (resetBtn) resetBtn.addEventListener("click", resetToStart);
+
       document.getElementById("naiyou-steps").addEventListener("submit", (e) => {
         const form = e.target.closest(".naiyou-form");
         if (!form) return;
         e.preventDefault();
+        if (form.classList.contains("is-locked")) return;
         const index = Number(form.dataset.index);
         if (index !== progress.solved) return;
         const input = form.querySelector("input");
         const ng = form.querySelector(".naiyou-ng");
         const value = (input && input.value) || "";
         if (isCorrect(data.steps[index], value)) {
+          progress.answers[index] = value;
           progress.solved += 1;
           saveProgress(progress);
           showClear().then(() => {
-            renderSteps(progress.solved, progress.solved < data.steps.length);
+            renderSteps(progress.solved, true);
           });
         } else if (ng) {
           ng.hidden = false;

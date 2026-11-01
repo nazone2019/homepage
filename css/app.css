@@ -803,6 +803,32 @@ body.page-naiyoubutsu .naiyou-form .naiyou-btn {
   text-align: center;
 }
 
+.naiyou-form.is-locked input {
+  cursor: default;
+  color: #102018;
+}
+
+.naiyou-form .naiyou-btn:disabled {
+  opacity: 0.42;
+  cursor: default;
+}
+
+.naiyou-reset {
+  position: fixed;
+  left: 16px;
+  bottom: 20px;
+  z-index: 50;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 999px;
+  background: rgba(16, 32, 24, 0.28);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 .naiyou-clear {
   position: fixed;
   inset: 0;
@@ -812,6 +838,16 @@ body.page-naiyoubutsu .naiyou-form .naiyou-btn {
   justify-content: center;
   margin: 0;
   background: rgba(0, 0, 0, 0.78);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.28s ease, visibility 0.28s ease;
+}
+
+.naiyou-clear.is-on {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .naiyou-clear[hidden] { display: none; }
@@ -822,6 +858,37 @@ body.page-naiyoubutsu .naiyou-form .naiyou-btn {
   font-size: clamp(40px, 12vw, 80px);
   font-weight: 700;
   letter-spacing: 0.08em;
+  opacity: 0;
+  transform: scale(0.62);
+}
+
+.naiyou-clear.is-on p {
+  animation: naiyou-clear-pop 0.62s cubic-bezier(0.22, 1.35, 0.36, 1) forwards;
+}
+
+@keyframes naiyou-clear-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.62) translateY(10px);
+  }
+  68% {
+    opacity: 1;
+    transform: scale(1.1) translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .naiyou-clear,
+  .naiyou-clear.is-on p {
+    animation: none;
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .naiyou-ng {
