@@ -30,21 +30,27 @@
     if (!mount || typeof SITE === "undefined") return;
 
     const page = currentPage();
-    const links = SITE.nav
-      .map((item) => {
-        const active = page === item.href.toLowerCase() ? " is-active" : "";
-        return `<a href="${href(item.href)}" class="${active.trim()}">
+    const hideMenu = page === "naiyoubutsu/";
+    const links = hideMenu
+      ? ""
+      : SITE.nav
+          .map((item) => {
+            const active = page === item.href.toLowerCase() ? " is-active" : "";
+            return `<a href="${href(item.href)}" class="${active.trim()}">
           <span class="nav__jp">${item.jp || item.label}</span>
           <span class="nav__en">${item.label}</span>
         </a>`;
-      })
-      .join("");
+          })
+          .join("");
 
     mount.innerHTML = `
       <a class="logo" href="${href("index.html")}" aria-label="${SITE.name} ホームへ">
         <img src="${href("assets/brand/logo.webp")}" alt="${SITE.name}" width="160" height="34">
       </a>
-      <nav class="nav" id="site-nav" aria-label="メインナビゲーション">
+      ${
+        hideMenu
+          ? ""
+          : `<nav class="nav" id="site-nav" aria-label="メインナビゲーション">
         ${links}
         <a href="${SITE.twitter}" target="_blank" rel="noopener noreferrer">
           <span class="nav__jp">X / Twitter</span>
@@ -53,7 +59,8 @@
       </nav>
       <button class="menu-btn" id="menuBtn" type="button" aria-label="メニュー" aria-expanded="false">
         <span></span><span></span>
-      </button>
+      </button>`
+      }
     `;
 
     const nav = document.getElementById("site-nav");

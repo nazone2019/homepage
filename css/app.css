@@ -624,6 +624,11 @@ body.page-naiyoubutsu .site-footer {
   border-color: transparent;
 }
 
+body.page-naiyoubutsu .nav,
+body.page-naiyoubutsu .menu-btn {
+  display: none;
+}
+
 .naiyou-wrap { max-width: 640px; }
 
 .naiyou-intro h1,
