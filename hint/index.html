@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NAZONE ヒント">
+  <title>ヒント | NAZONE</title>
+  <link rel="icon" href="../assets/brand/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/app.css">
+</head>
+<body class="page-naiyoubutsu">
+  <div class="naiyou-sheet">
+    <p class="naiyou-hero">
+      <img src="../assets/naiyoubutsu/title.png" alt="まずは内容物一覧をご確認ください！" width="2504" height="1772">
+    </p>
+
+    <main class="naiyou-wrap">
+      <section class="naiyou-intro" aria-labelledby="hint-title">
+        <h1 id="hint-title"></h1>
+        <p class="naiyou-thanks" id="hint-thanks"></p>
+        <section class="naiyou-notes-box" aria-labelledby="hint-notes-title">
+          <h2 id="hint-notes-title"></h2>
+          <ul id="hint-notes"></ul>
+        </section>
+      </section>
+      <div id="hint-steps"></div>
+      <p>
+        <a class="naiyou-btn" id="hint-back" href="../naiyoubutsu/">解答へ</a>
+      </p>
+    </main>
+  </div>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script src="../data/site.js"></script>
+  <script src="../data/hint.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    (function () {
+      const data = HINT;
+
+      function escapeHtml(value) {
+        return String(value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      NAZONE.init();
+
+      document.getElementById("hint-title").textContent = data.title || "ヒント";
+      document.getElementById("hint-thanks").textContent = data.thanks || "";
+      document.getElementById("hint-notes-title").textContent = data.notesTitle || "注意事項";
+      document.getElementById("hint-notes").innerHTML = (data.notes || [])
+        .map((line) => `<li>${escapeHtml(line)}</li>`)
+        .join("");
+      const back = document.getElementById("hint-back");
+      if (back && data.backLabel) back.textContent = data.backLabel;
+
+      document.getElementById("hint-steps").innerHTML = (data.steps || [])
+        .map(
+          (step) => `
+        <section class="naiyou-step">
+          <h2 class="naiyou-step-bar">${escapeHtml(step.label)}</h2>
+          <p class="naiyou-q">${escapeHtml(step.body || "")}</p>
+        </section>`
+        )
+        .join("");
+    })();
+  </script>
+</body>
+</html>

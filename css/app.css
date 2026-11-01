@@ -618,7 +618,7 @@ body.page-naiyoubutsu {
   flex-direction: column;
   min-height: 100vh;
   background: #77cbea;
-  color: #102018;
+  color: #fff;
   text-align: center;
 }
 
@@ -658,9 +658,10 @@ body.page-naiyoubutsu .menu-btn {
 }
 
 .naiyou-wrap {
-  width: min(100%, 420px);
+  --pad-x: 20px;
+  width: 100%;
   flex: 1;
-  padding: 12px 20px 40px;
+  padding: 12px var(--pad-x) 56px;
 }
 
 .naiyou-intro h1,
@@ -668,8 +669,11 @@ body.page-naiyoubutsu .menu-btn {
 .naiyou-q,
 .naiyou-ok,
 .naiyou-thanks,
-.naiyou-block {
-  color: #102018;
+.naiyou-block,
+.naiyou-block h2,
+.naiyou-notes-box,
+.naiyou-notes-box h2 {
+  color: #fff;
 }
 
 .naiyou-intro h1 {
@@ -690,13 +694,16 @@ body.page-naiyoubutsu .menu-btn {
   min-height: 72px;
 }
 
-.naiyou-block h2 {
+.naiyou-block h2,
+.naiyou-notes-box h2 {
   margin: 0 0 10px;
   font-size: 1.05rem;
   font-weight: 700;
+  color: #fff;
 }
 
-.naiyou-block ul {
+.naiyou-block ul,
+.naiyou-notes-box ul {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -704,11 +711,21 @@ body.page-naiyoubutsu .menu-btn {
   line-height: 1.8;
 }
 
-.naiyou-block li {
+.naiyou-block li,
+.naiyou-notes-box li {
   margin: 0 0 6px;
+  color: #fff;
 }
 
-.naiyou-btn {
+.naiyou-notes-box {
+  margin: 0 0 24px;
+  padding: 16px 14px;
+  border: 2px solid #fff;
+}
+
+body.page-naiyoubutsu .naiyou-btn,
+body.page-naiyoubutsu button.naiyou-btn,
+body.page-naiyoubutsu .naiyou-form .naiyou-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -719,15 +736,46 @@ body.page-naiyoubutsu .menu-btn {
   margin: 12px auto 0;
   border: 0;
   border-radius: 999px;
-  background: #145238;
-  color: #fff;
+  background: #f4da26;
+  color: #102018;
   font-weight: 700;
   cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
 }
+
+.naiyou-form .naiyou-btn { margin-top: 0; }
 
 .naiyou-step {
   margin-top: 28px;
-  padding-top: 8px;
+}
+
+.naiyou-step-bar {
+  width: calc(100% + var(--pad-x) * 2);
+  margin: 0 calc(var(--pad-x) * -1) 16px;
+  padding: 10px 16px;
+  background: #fff;
+  color: #102018;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.naiyou-hint-fab {
+  position: fixed;
+  right: 16px;
+  bottom: 20px;
+  z-index: 50;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: #f4da26;
+  color: #102018;
+  font-weight: 700;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
 }
 
 .naiyou-open,
@@ -755,8 +803,6 @@ body.page-naiyoubutsu .menu-btn {
   text-align: center;
 }
 
-.naiyou-form .naiyou-btn { margin-top: 0; }
-
 .naiyou-ok {
   margin: 10px 0 0;
   font-size: 18px;
@@ -782,8 +828,9 @@ body.page-naiyoubutsu .menu-btn {
   }
 
   .naiyou-wrap {
+    --pad-x: 32px;
     width: 100%;
-    padding: 24px 32px 48px;
+    padding: 24px var(--pad-x) 56px;
   }
 
   .naiyou-intro h1 { font-size: 1.75rem; }

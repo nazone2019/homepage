@@ -24,6 +24,7 @@ python3 -m http.server 8080
 | サイト名・ナビ・SNS | `data/site.js` |
 | プライバシーポリシー | `data/privacy.js` |
 | /naiyoubutsu の注意文・各STEPの正解 | `data/naiyoubutsu.js` |
+| /hint のヒント文 | `data/hint.js` |
 | 色・余白・フォント | `css/app.css` の `:root`（スマホ幅が基準） |
 
 ヘッダー／フッターは `js/main.js` が全ページに自動挿入します。HTMLをページごとに直す必要はありません。
@@ -56,7 +57,8 @@ python3 -m http.server 8080
 - `member.html` … メンバー
 - `contact.html` … お問い合わせ（mailto）
 - `privacy.html` … プライバシーポリシー
-- `/naiyoubutsu` … サブページ（`naiyoubutsu/index.html`）
+- `/naiyoubutsu` … 解答入力（`naiyoubutsu/index.html`）
+- `/hint` … ヒント（`hint/index.html`）
 
 ## 補足
 

@@ -21,6 +21,7 @@
     const parts = location.pathname.replace(/\/+$/, "").split("/").filter(Boolean);
     const last = (parts[parts.length - 1] || "index.html").toLowerCase();
     if (parts.includes("naiyoubutsu")) return "naiyoubutsu/";
+    if (parts.includes("hint")) return "hint/";
     if (!last || last === "") return "index.html";
     return last;
   }
@@ -122,7 +123,8 @@
     href,
     EXT_ICON,
     init(options = {}) {
-      if (currentPage() !== "naiyoubutsu/") renderHeader();
+      const page = currentPage();
+      if (page !== "naiyoubutsu/" && page !== "hint/") renderHeader();
       renderFooter(options.crumb || "");
       document.body.classList.add("is-ready");
     },

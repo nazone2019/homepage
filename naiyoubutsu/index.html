@@ -25,7 +25,7 @@
         <h2 id="contents-title"></h2>
         <ul id="naiyou-contents"></ul>
       </section>
-      <section class="naiyou-block" aria-labelledby="notes-title">
+      <section class="naiyou-notes-box" aria-labelledby="notes-title">
         <h2 id="notes-title"></h2>
         <ul id="naiyou-notes"></ul>
       </section>
@@ -34,6 +34,8 @@
     <div id="naiyou-steps"></div>
     </main>
   </div>
+
+  <a class="naiyou-hint-fab" id="hint-fab" href="../hint/">ヒント</a>
 
   <footer class="site-footer" id="site-footer"></footer>
 
@@ -86,9 +88,11 @@
 
       function stepHtml(step, index, state) {
         const n = index + 1;
+        const bar = `<h3 class="naiyou-step-bar">STEP${n}</h3>`;
         if (state === "done") {
           return `
             <section class="naiyou-step" data-step="${n}">
+              ${bar}
               <p class="naiyou-open">${escapeHtml(step.open)}</p>
               <p class="naiyou-q">${escapeHtml(step.question)}</p>
               <p class="naiyou-ok">${escapeHtml(data.correctMessage)}</p>
@@ -96,6 +100,7 @@
         }
         return `
           <section class="naiyou-step" data-step="${n}">
+            ${bar}
             <p class="naiyou-open">${escapeHtml(step.open)}</p>
             <p class="naiyou-q">${escapeHtml(step.question)}</p>
             <form class="naiyou-form" data-index="${index}">
@@ -136,6 +141,8 @@
 
       const startBtn = document.getElementById("start-btn");
       startBtn.textContent = data.startLabel || "始める";
+      const hintFab = document.getElementById("hint-fab");
+      if (hintFab && data.hintLabel) hintFab.textContent = data.hintLabel;
 
       const progress = loadProgress();
 

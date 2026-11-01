@@ -11,7 +11,11 @@ const NAIYOUBUTSU = {
   contentsTitle: "内容物",
   contents: [],
   notesTitle: "注意事項",
-  notes: [],
+  notes: [
+    "内容のネタバレに繋がる行為はお控えください。",
+    "本キットの転売は固く禁止いたします。",
+  ],
+  hintLabel: "ヒント",
   startLabel: "始める",
   correctMessage: "正解",
   wrongMessage: "間違っているようです。",
