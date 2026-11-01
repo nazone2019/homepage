@@ -36,6 +36,9 @@
   </div>
 
   <a class="naiyou-hint-fab" id="hint-fab" href="../hint/">ヒント</a>
+  <div class="naiyou-clear" id="clear-overlay" hidden>
+    <p id="clear-message">正解！</p>
+  </div>
 
   <footer class="site-footer" id="site-footer"></footer>
 
@@ -55,11 +58,29 @@
           .replace(/"/g, "&quot;");
       }
 
+      function toHiragana(value) {
+        return String(value).replace(/[\u30A1-\u30F6]/g, (ch) =>
+          String.fromCharCode(ch.charCodeAt(0) - 0x60)
+        );
+      }
+
       function normalize(value) {
-        return String(value)
-          .normalize("NFKC")
-          .replace(/\s+/g, "")
-          .toLowerCase();
+        return toHiragana(
+          String(value)
+            .normalize("NFKC")
+            .toLowerCase()
+            .replace(/[\s　]/g, "")
+            .replace(/[ー―‐–—−〜~ｰ－-]/g, "ー")
+            .replace(/[・･。．.、，,！!？?「」『』]/g, "")
+        );
+      }
+
+      function variantsOf(value) {
+        const base = normalize(value);
+        const set = new Set([base, base.replace(/ー/g, "")]);
+        set.add(base.replace(/づ/g, "ず").replace(/ぢ/g, "じ"));
+        set.add(base.replace(/ず/g, "づ").replace(/じ/g, "ぢ"));
+        return set;
       }
 
       function loadProgress() {
@@ -81,9 +102,14 @@
       }
 
       function isCorrect(step, value) {
-        const answers = (step.answers || []).map(normalize).filter(Boolean);
-        if (!answers.length) return false;
-        return answers.includes(normalize(value));
+        const accepted = new Set();
+        (step.answers || []).forEach((answer) => {
+          variantsOf(answer).forEach((item) => {
+            if (item) accepted.add(item);
+          });
+        });
+        if (!accepted.size) return false;
+        return [...variantsOf(value)].some((item) => accepted.has(item));
       }
 
       function stepHtml(step, index, state) {
@@ -95,7 +121,6 @@
               ${bar}
               <p class="naiyou-open">${escapeHtml(step.open)}</p>
               <p class="naiyou-q">${escapeHtml(step.question)}</p>
-              <p class="naiyou-ok">${escapeHtml(data.correctMessage)}</p>
             </section>`;
         }
         return `
@@ -110,6 +135,20 @@
               <p class="naiyou-ng" hidden>${escapeHtml(data.wrongMessage)}</p>
             </form>
           </section>`;
+      }
+
+      function showClear() {
+        const overlay = document.getElementById("clear-overlay");
+        const message = document.getElementById("clear-message");
+        if (message) message.textContent = data.correctMessage || "正解！";
+        if (!overlay) return Promise.resolve();
+        overlay.hidden = false;
+        return new Promise((resolve) => {
+          window.setTimeout(() => {
+            overlay.hidden = true;
+            resolve();
+          }, 1400);
+        });
       }
 
       function renderSteps(solved, currentOpen) {
@@ -174,7 +213,9 @@
         if (isCorrect(data.steps[index], value)) {
           progress.solved += 1;
           saveProgress(progress);
-          renderSteps(progress.solved, progress.solved < data.steps.length);
+          showClear().then(() => {
+            renderSteps(progress.solved, progress.solved < data.steps.length);
+          });
         } else if (ng) {
           ng.hidden = false;
         }

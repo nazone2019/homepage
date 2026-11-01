@@ -803,10 +803,25 @@ body.page-naiyoubutsu .naiyou-form .naiyou-btn {
   text-align: center;
 }
 
-.naiyou-ok {
-  margin: 10px 0 0;
-  font-size: 18px;
+.naiyou-clear {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.78);
+}
+
+.naiyou-clear[hidden] { display: none; }
+
+.naiyou-clear p {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(40px, 12vw, 80px);
   font-weight: 700;
+  letter-spacing: 0.08em;
 }
 
 .naiyou-ng {

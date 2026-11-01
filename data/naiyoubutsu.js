@@ -1,8 +1,12 @@
 /**
  * /naiyoubutsu 解答フォーム用データ
- * 注意文・内容物・各STEPの正解はここを編集します
  *
- * answers にはそのSTEPで正解とみなす文字列を入れます（複数可）
+ * 各STEPの answers に、正解とみなす表記を並べます。
+ * ひらがな／カタカナ、全角／半角、長音「ー」の有無、空白は自動で同一視します。
+ * 漢字や英語など、別表記を足したいときは answers に追加してください。
+ *
+ * 例:
+ *   answers: ["きーぱー", "キーパー", "keeper"]
  */
 const NAIYOUBUTSU = {
   title: "はじめに",
@@ -17,58 +21,58 @@ const NAIYOUBUTSU = {
   ],
   hintLabel: "ヒント",
   startLabel: "始める",
-  correctMessage: "正解",
+  correctMessage: "正解！",
   wrongMessage: "間違っているようです。",
   steps: [
     {
       open: "STEP1の封筒を開けてください",
-      question: "STEP1：アンサーシートに書かれた謎の答えは？",
-      answers: ["うつりかわり"],
+      question: "アンサーシートに書かれた謎の答えは？",
+      answers: ["うつりかわり", "移り変わり", "移りかわり"],
     },
     {
       open: "STEP2の封筒を開けてください",
-      question: "STEP2：導きの紙に書かれた謎の答えは？",
-      answers: ["いとでんわ"],
+      question: "導きの紙に書かれた謎の答えは？",
+      answers: ["いとでんわ", "糸電話"],
     },
     {
       open: "STEP3の封筒を開けてください",
-      question: "STEP3：アンサーシートに書かれた謎の答えは？",
-      answers: ["きーぱー"],
+      question: "アンサーシートに書かれた謎の答えは？",
+      answers: ["きーぱー", "キーパー", "きいぱー"],
     },
     {
       open: "STEP4の封筒を開けてください",
-      question: "STEP4：なぞのかみに書かれた謎の答えは？",
-      answers: ["せんすいかん"],
+      question: "なぞのかみに書かれた謎の答えは？",
+      answers: ["せんすいかん", "潜水艦"],
     },
     {
       open: "STEP5の封筒を開けてください",
-      question: "STEP5：お仕事カードに書かれた謎の答えは？",
-      answers: ["とまと"],
+      question: "お仕事カードに書かれた謎の答えは？",
+      answers: ["とまと", "トマト"],
     },
     {
       open: "STEP6の封筒を開けてください",
-      question: "STEP6：アンサーシートに書かれた謎の答えは？",
-      answers: ["はーど"],
+      question: "アンサーシートに書かれた謎の答えは？",
+      answers: ["はーど", "ハード", "はあど"],
     },
     {
       open: "STEP7の封筒を開けてください",
-      question: "STEP7：第一章の答えは？",
-      answers: ["なんきょく"],
+      question: "第一章の答えは？",
+      answers: ["なんきょく", "南極"],
     },
     {
       open: "STEP8の封筒を開けてください",
-      question: "STEP8：指示書に書かれた謎の答えは？",
-      answers: ["せんばづる"],
+      question: "指示書に書かれた謎の答えは？",
+      answers: ["せんばづる", "せんばずる", "千羽鶴"],
     },
     {
       open: "STEP9の封筒を開けてください",
-      question: "STEP9：ストーリーシートに書かれた謎の答えは？",
-      answers: ["じょーかー"],
+      question: "ストーリーシートに書かれた謎の答えは？",
+      answers: ["じょーかー", "ジョーカー", "じょおかあ"],
     },
     {
       open: "STEP10の封筒を開けてください",
-      question: "STEP10：謎の紙に書かれた謎の答えは？",
-      answers: ["せかい"],
+      question: "謎の紙に書かれた謎の答えは？",
+      answers: ["せかい", "世界"],
     },
   ],
 };
