@@ -622,6 +622,12 @@ body.page-naiyoubutsu {
   text-align: center;
 }
 
+.naiyou-sheet {
+  flex: 1;
+  width: 100%;
+  background: #77cbea;
+}
+
 .naiyou-hero {
   margin: 0;
   width: 100%;
@@ -629,6 +635,7 @@ body.page-naiyoubutsu {
 
 .naiyou-hero img {
   width: 100%;
+  max-width: 100%;
   height: auto;
   display: block;
 }
@@ -768,14 +775,15 @@ body.page-naiyoubutsu .menu-btn {
     background: #29bbe6;
   }
 
-  .naiyou-hero {
-    max-width: 720px;
+  .naiyou-sheet {
+    width: min(100%, 720px);
     margin: 0 auto;
+    background: #77cbea;
   }
 
   .naiyou-wrap {
-    width: min(100%, 560px);
-    padding: 24px 24px 48px;
+    width: 100%;
+    padding: 24px 32px 48px;
   }
 
   .naiyou-intro h1 { font-size: 1.75rem; }
