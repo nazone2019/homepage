@@ -122,6 +122,17 @@
         return [...variantsOf(value)].some((item) => accepted.has(item));
       }
 
+      function noticeHtml(notice) {
+        if (!notice) return "";
+        const lines = Array.isArray(notice) ? notice : [notice];
+        const content = lines
+          .filter((line) => String(line || "").trim())
+          .map((line) => `<p>${escapeHtml(line)}</p>`)
+          .join("");
+        if (!content) return "";
+        return `<div class="naiyou-notice">${content}</div>`;
+      }
+
       function stepHtml(step, index, state, submitted) {
         const n = index + 1;
         const bar = `<h3 class="naiyou-step-bar">STEP${n}</h3>`;
@@ -131,6 +142,7 @@
           <section class="naiyou-step" data-step="${n}">
             ${bar}
             <p class="naiyou-open">${escapeHtml(step.open)}</p>
+            ${noticeHtml(step.notice)}
             <p class="naiyou-q">${escapeHtml(step.question)}</p>
             <form class="naiyou-form${locked ? " is-locked" : ""}" data-index="${index}">
               <label class="visually-hidden" for="answer-${n}">答え</label>

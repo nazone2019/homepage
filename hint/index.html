@@ -41,6 +41,7 @@
   <script>
     (function () {
       const data = HINT;
+      const STORAGE_KEY = "hint-progress-v3";
 
       function escapeHtml(value) {
         return String(value)
@@ -48,6 +49,106 @@
           .replace(/</g, "&lt;")
           .replace(/>/g, "&gt;")
           .replace(/"/g, "&quot;");
+      }
+
+      function formatText(value) {
+        return escapeHtml(value).replace(/\n/g, "<br>");
+      }
+
+      function emptyState() {
+        return {
+          openSteps: (data.steps || []).map(() => false),
+          openCards: (data.steps || []).map((step) => (step.items || []).map(() => false)),
+        };
+      }
+
+      function loadState() {
+        const fallback = emptyState();
+        try {
+          const raw = sessionStorage.getItem(STORAGE_KEY);
+          if (!raw) return fallback;
+          const parsed = JSON.parse(raw);
+          return {
+            openSteps: (data.steps || []).map((_, i) => Boolean(parsed.openSteps && parsed.openSteps[i])),
+            openCards: (data.steps || []).map((step, i) =>
+              (step.items || []).map((_, j) =>
+                Boolean(parsed.openCards && parsed.openCards[i] && parsed.openCards[i][j])
+              )
+            ),
+          };
+        } catch (err) {
+          return fallback;
+        }
+      }
+
+      function saveState() {
+        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      }
+
+      function stepHtml(step, index) {
+        const items = step.items || [];
+        const isOpen = Boolean(state.openSteps[index]);
+        const panelId = `hint-panel-${index}`;
+        let hintNo = 0;
+        const cards = items
+          .map((item, i) => {
+            const kind = item.type === "answer" ? "answer" : "hint";
+            if (kind === "hint") hintNo += 1;
+            const cardOpen = Boolean(state.openCards[index][i]);
+            const title = kind === "answer" ? "答え" : `ヒント${hintNo}`;
+            return `
+            <div class="hint-card hint-card--${kind}${cardOpen ? " is-open" : ""}">
+              <button
+                class="hint-card-toggle"
+                type="button"
+                data-step="${index}"
+                data-card="${i}"
+                aria-expanded="${cardOpen ? "true" : "false"}"
+                aria-label="${title}"
+              >
+                <span class="hint-card-label">${title}</span>
+                <span class="hint-chevron" aria-hidden="true"></span>
+              </button>
+              <div class="hint-card-body"${cardOpen ? "" : " hidden"}>
+                <p class="hint-card-text">${formatText(item.text || "")}</p>
+              </div>
+            </div>`;
+          })
+          .join("");
+
+        return `
+          <section class="naiyou-step hint-step${isOpen ? " is-open" : ""}" data-step="${index}">
+            <button
+              class="naiyou-step-bar hint-step-toggle"
+              type="button"
+              data-step="${index}"
+              aria-expanded="${isOpen ? "true" : "false"}"
+              aria-controls="${panelId}"
+              aria-label="${escapeHtml(step.label || `STEP${index + 1}`)}"
+            >
+              <span class="hint-step-title">${escapeHtml(step.label || `STEP${index + 1}`)}</span>
+              <span class="hint-chevron" aria-hidden="true"></span>
+            </button>
+            <div class="hint-panel" id="${panelId}"${isOpen ? "" : " hidden"}>
+              <div class="hint-list">${cards}</div>
+            </div>
+          </section>`;
+      }
+
+      function render(focus) {
+        document.getElementById("hint-steps").innerHTML = (data.steps || [])
+          .map((step, index) => stepHtml(step, index))
+          .join("");
+        if (!focus) return;
+        const section = document.querySelector(`.hint-step[data-step="${focus.step}"]`);
+        if (!section) return;
+        if (focus.kind === "card") {
+          const card = section.querySelector(`.hint-card-toggle[data-card="${focus.card}"]`);
+          if (card) card.focus();
+          return;
+        }
+        const toggle = section.querySelector(".hint-step-toggle");
+        if (toggle) toggle.focus();
       }
 
       NAZONE.init();
@@ -61,15 +162,27 @@
       const back = document.getElementById("hint-back");
       if (back && data.backLabel) back.textContent = data.backLabel;
 
-      document.getElementById("hint-steps").innerHTML = (data.steps || [])
-        .map(
-          (step) => `
-        <section class="naiyou-step">
-          <h2 class="naiyou-step-bar">${escapeHtml(step.label)}</h2>
-          <p class="naiyou-q">${escapeHtml(step.body || "")}</p>
-        </section>`
-        )
-        .join("");
+      const state = loadState();
+      render();
+
+      document.getElementById("hint-steps").addEventListener("click", (e) => {
+        const stepToggle = e.target.closest(".hint-step-toggle");
+        if (stepToggle) {
+          const index = Number(stepToggle.dataset.step);
+          state.openSteps[index] = !state.openSteps[index];
+          saveState();
+          render({ kind: "step", step: index });
+          return;
+        }
+
+        const cardToggle = e.target.closest(".hint-card-toggle");
+        if (!cardToggle) return;
+        const index = Number(cardToggle.dataset.step);
+        const card = Number(cardToggle.dataset.card);
+        state.openCards[index][card] = !state.openCards[index][card];
+        saveState();
+        render({ kind: "card", step: index, card });
+      });
     })();
   </script>
 </body>

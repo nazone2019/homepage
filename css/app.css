@@ -761,6 +761,43 @@ body.page-naiyoubutsu .naiyou-form .naiyou-btn {
   letter-spacing: 0.06em;
 }
 
+button.naiyou-step-bar.hint-step-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.hint-chevron {
+  flex: none;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 6px 0 6px 8px;
+  border-color: transparent transparent transparent currentColor;
+  opacity: 0.7;
+  transition: transform 0.18s ease;
+}
+
+.hint-step.is-open > .hint-step-toggle .hint-chevron,
+.hint-card.is-open > .hint-card-toggle .hint-chevron {
+  transform: rotate(90deg);
+}
+
+.hint-panel[hidden] {
+  display: none;
+}
+
+.hint-step.is-open .naiyou-step-bar {
+  margin-bottom: 16px;
+}
+
 .naiyou-hint-fab {
   position: fixed;
   right: 16px;
@@ -783,6 +820,92 @@ body.page-naiyoubutsu .naiyou-form .naiyou-btn {
   margin: 0 0 8px;
   font-size: 16px;
   font-weight: 700;
+}
+
+.naiyou-notice {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  border: 2px solid #fff;
+  color: #fff;
+}
+
+.naiyou-notice p {
+  margin: 0 0 8px;
+  font-size: 14px;
+  line-height: 1.7;
+  font-weight: 700;
+}
+
+.naiyou-notice p:last-child {
+  margin-bottom: 0;
+}
+
+.hint-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hint-card {
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  color: #fff;
+}
+
+.hint-card--answer {
+  border-color: #f4da26;
+  background: rgba(244, 218, 38, 0.12);
+}
+
+.hint-card-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  margin: 0;
+  padding: 12px 14px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+}
+
+.hint-card-label {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  opacity: 0.9;
+}
+
+.hint-card--answer .hint-card-label,
+.hint-card--answer .hint-chevron {
+  color: #f4da26;
+  opacity: 1;
+}
+
+.hint-card-body {
+  padding: 0 14px 16px;
+}
+
+.hint-card-body[hidden] {
+  display: none;
+}
+
+.hint-card-text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hint-chevron {
+    transition: none;
+  }
 }
 
 .naiyou-form {
