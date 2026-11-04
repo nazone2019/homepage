@@ -689,6 +689,14 @@ body.page-naiyoubutsu .menu-btn {
   overflow-wrap: anywhere;
 }
 
+.naiyou-thanks p {
+  margin: 0 0 1.1em;
+}
+
+.naiyou-thanks p:last-child {
+  margin-bottom: 0;
+}
+
 .naiyou-block {
   margin: 0 0 20px;
   min-height: 72px;
