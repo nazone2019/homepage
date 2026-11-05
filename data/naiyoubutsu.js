@@ -41,7 +41,6 @@ const NAIYOUBUTSU = {
     "それでは、またどこかでお会いしましょう！",
     "NAZONE一同",
   ],
-  // Xの投稿画面では画像を直接添付できないため、CLEAR画像付きシェアページのURLを投稿に付けます
   completeClearImage: "../assets/naiyoubutsu/clear.png",
   completeLinks: [
     {

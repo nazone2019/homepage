@@ -198,12 +198,14 @@
             </p>`
           : "";
         const links = (data.completeLinks || [])
-          .map(
-            (link) => `
-            <a class="naiyou-complete-link" href="${escapeHtml(resolveCompleteHref(link))}" target="_blank" rel="noopener noreferrer">
+          .map((link, i) => {
+            const href = escapeHtml(resolveCompleteHref(link));
+            const shareAttr = link.share === "tweet" ? ` data-complete-share="tweet" data-complete-index="${i}"` : "";
+            return `
+            <a class="naiyou-complete-link" href="${href}" target="_blank" rel="noopener noreferrer"${shareAttr}>
               <img src="${escapeHtml(link.image)}" alt="${escapeHtml(link.alt || "")}" width="1200" height="400">
-            </a>`
-          )
+            </a>`;
+          })
           .join("");
         return `
           <section class="naiyou-complete" id="naiyou-complete" aria-labelledby="complete-title">
@@ -212,6 +214,31 @@
             ${clearImage}
             <div class="naiyou-complete-links">${links}</div>
           </section>`;
+      }
+
+      async function shareTweetWithClearImage(link, fallbackHref) {
+        const imagePath = data.completeClearImage;
+        if (!imagePath || !navigator.share || !navigator.canShare) {
+          window.open(fallbackHref, "_blank", "noopener,noreferrer");
+          return;
+        }
+        try {
+          const response = await fetch(new URL(imagePath, window.location.href).href);
+          const blob = await response.blob();
+          const file = new File([blob], "clear.png", { type: blob.type || "image/png" });
+          const payload = {
+            text: link.tweetText || "",
+            files: [file],
+          };
+          if (!navigator.canShare(payload)) {
+            window.open(fallbackHref, "_blank", "noopener,noreferrer");
+            return;
+          }
+          await navigator.share(payload);
+        } catch (err) {
+          if (err && err.name === "AbortError") return;
+          window.open(fallbackHref, "_blank", "noopener,noreferrer");
+        }
       }
 
       function renderSteps(solved, currentOpen) {
@@ -320,6 +347,16 @@
         if (!form) return;
         const ng = form.querySelector(".naiyou-ng");
         if (ng) ng.hidden = true;
+      });
+
+      document.getElementById("naiyou-steps").addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-complete-share='tweet']");
+        if (!btn) return;
+        const index = Number(btn.dataset.completeIndex);
+        const link = (data.completeLinks || [])[index];
+        if (!link || link.share !== "tweet") return;
+        e.preventDefault();
+        shareTweetWithClearImage(link, btn.href);
       });
     })();
   </script>

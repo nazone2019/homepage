@@ -865,8 +865,7 @@ button.naiyou-step-bar.hint-step-toggle {
 }
 
 .naiyou-complete-clear img,
-.naiyou-clear-share-image img,
-.naiyou-complete-link img {
+.naiyou-clear-share-image img {
   display: block;
   width: 100%;
   height: auto;
@@ -875,12 +874,21 @@ button.naiyou-step-bar.hint-step-toggle {
 .naiyou-complete-links {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  align-items: center;
+  gap: 12px;
 }
 
 .naiyou-complete-link {
   display: block;
+  width: 100%;
+  max-width: 280px;
   overflow: hidden;
+}
+
+.naiyou-complete-link img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .naiyou-clear-share {
