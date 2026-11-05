@@ -38,8 +38,6 @@
   <div class="naiyou-clear" id="clear-overlay" hidden>
     <p id="clear-message">正解！</p>
   </div>
-  <div class="naiyou-toast" id="naiyou-toast" hidden></div>
-
   <footer class="site-footer" id="site-footer"></footer>
 
   <script src="../data/site.js"></script>
@@ -223,75 +221,6 @@
           </section>`;
       }
 
-      function showToast(message) {
-        const toast = document.getElementById("naiyou-toast");
-        if (!toast || !message) return;
-        toast.textContent = message;
-        toast.hidden = false;
-        window.clearTimeout(showToast._timer);
-        showToast._timer = window.setTimeout(() => {
-          toast.hidden = true;
-        }, 5200);
-      }
-
-      function isMacLike() {
-        return /Mac|iPhone|iPad|iPod/i.test(navigator.platform || "")
-          || /Mac OS X/i.test(navigator.userAgent || "");
-      }
-
-      async function fetchClearImageBlob() {
-        if (!data.completeClearImage) return null;
-        const response = await fetch(new URL(data.completeClearImage, window.location.href).href);
-        if (!response.ok) return null;
-        const blob = await response.blob();
-        return blob.type ? blob : new Blob([blob], { type: "image/png" });
-      }
-
-      async function copyClearImageToClipboard(blob) {
-        if (!blob || !navigator.clipboard || !window.ClipboardItem) return false;
-        try {
-          const pngBlob = blob.type === "image/png"
-            ? blob
-            : new Blob([blob], { type: "image/png" });
-          await navigator.clipboard.write([
-            new ClipboardItem({ "image/png": pngBlob }),
-          ]);
-          return true;
-        } catch (err) {
-          return false;
-        }
-      }
-
-      function downloadClearImage(blob) {
-        if (!blob) return;
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "clear.png";
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        window.setTimeout(() => URL.revokeObjectURL(url), 1000);
-      }
-
-      async function prepareClearImageAssist() {
-        let blob = null;
-        try {
-          blob = await fetchClearImageBlob();
-        } catch (err) {
-          blob = null;
-        }
-        if (!blob) return "";
-        const copied = await copyClearImageToClipboard(blob);
-        if (!copied) downloadClearImage(blob);
-        const hint = copied
-          ? (data.completePostPcHint
-            || "CLEAR画像をコピーしました。投稿画面で Ctrl+V（Macは ⌘V）を押すと画像を貼れます。")
-          : (data.completePostPcHintFallback
-            || "CLEAR画像をダウンロードしました。投稿画面で画像を添付してください。");
-        return isMacLike() ? hint.replace("Ctrl+V（Macは ⌘V）", "⌘V") : hint;
-      }
-
       function renderSteps(solved, currentOpen) {
         const mount = document.getElementById("naiyou-steps");
         const parts = [];
@@ -405,12 +334,8 @@
         if (!link || link.share !== "tweet") return;
         e.preventDefault();
 
-        // await のあとに open するとポップアップブロックされるため、先に投稿画面を開く
-        const href = resolveCompleteHref(link);
-        window.open(href, "_blank", "noopener,noreferrer");
-        prepareClearImageAssist().then((message) => {
-          if (message) showToast(message);
-        });
+        // await のあとに open するとポップアップブロックされるため、同期で開く
+        window.open(resolveCompleteHref(link), "_blank", "noopener,noreferrer");
       });
     })();
   </script>

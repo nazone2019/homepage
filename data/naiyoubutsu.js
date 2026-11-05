@@ -42,10 +42,6 @@ const NAIYOUBUTSU = {
     "NAZONE一同",
   ],
   completeClearImage: "../assets/naiyoubutsu/clear.png",
-  completePostPcHint:
-    "CLEAR画像をコピーしました。投稿画面で Ctrl+V（Macは ⌘V）を押すと画像を貼れます。",
-  completePostPcHintFallback:
-    "CLEAR画像をダウンロードしました。投稿画面で画像を添付してください。",
   completeLinks: [
     {
       image: "../assets/naiyoubutsu/1200x400_post.png",
