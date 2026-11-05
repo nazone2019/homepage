@@ -8,7 +8,8 @@
  * 例:
  *   answers: ["きーぱー", "キーパー", "keeper"]
  *
- * 訂正文などは notice に配列で足せます（open の下に表示されます）。
+ * 訂正文などは notice に配列で足せます（open の下に表示）。
+ * 質問文の下に出したい文は questionNotice に足せます。
  */
 const NAIYOUBUTSU = {
   title: "はじめに",
@@ -80,11 +81,11 @@ const NAIYOUBUTSU = {
     {
       open: "STEP9の封筒を開けてください",
       question: "ストーリーシートに書かれた謎の答えは？",
-      answers: ["じょーかー", "ジョーカー", "joker","JOKER"],
-      notice: [
+      questionNotice: [
         "【解答方法について】",
         "答えが分かったら、〈ハートの３〉〈スペードのキング〉〈ジョーカー〉のようにカードの名前を送信しましょう。",
       ],
+      answers: ["じょーかー", "ジョーカー", "joker", "JOKER"],
     },
     {
       open: "STEP10の封筒を開けてください",

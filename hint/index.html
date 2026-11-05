@@ -21,10 +21,6 @@
       <section class="naiyou-intro" aria-labelledby="hint-title">
         <h1 id="hint-title"></h1>
         <p class="naiyou-thanks" id="hint-thanks"></p>
-        <section class="naiyou-notes-box" aria-labelledby="hint-notes-title">
-          <h2 id="hint-notes-title"></h2>
-          <ul id="hint-notes"></ul>
-        </section>
       </section>
       <div id="hint-steps"></div>
       <p>
@@ -155,10 +151,6 @@
 
       document.getElementById("hint-title").textContent = data.title || "ヒント";
       document.getElementById("hint-thanks").textContent = data.thanks || "";
-      document.getElementById("hint-notes-title").textContent = data.notesTitle || "注意事項";
-      document.getElementById("hint-notes").innerHTML = (data.notes || [])
-        .map((line) => `<li>${escapeHtml(line)}</li>`)
-        .join("");
       const back = document.getElementById("hint-back");
       if (back && data.backLabel) back.textContent = data.backLabel;
 

@@ -140,6 +140,7 @@
             <p class="naiyou-open">${escapeHtml(step.open)}</p>
             ${noticeHtml(step.notice)}
             <p class="naiyou-q">${escapeHtml(step.question)}</p>
+            ${noticeHtml(step.questionNotice)}
             <form class="naiyou-form${locked ? " is-locked" : ""}" data-index="${index}">
               <label class="visually-hidden" for="answer-${n}">答え</label>
               <input id="answer-${n}" name="answer" type="text" autocomplete="off" inputmode="text"${valueAttr}${locked ? " readonly tabindex=\"-1\"" : ""}>
