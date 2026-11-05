@@ -32,6 +32,32 @@ const NAIYOUBUTSU = {
   resetConfirm: "最初の状態に戻しますか？",
   correctMessage: "正解！",
   wrongMessage: "間違っているようです。",
+  completeTitle: "COMPLETE!",
+  completeMessage: [
+    "おめでとうございます！",
+    "あなたはたくさんの内容物一覧を確認し\n全ての謎を解き明かしました！！！",
+    "さて、個性豊かなな内容物一覧たちを確認する\n不思議な謎解き、いかがでしたか？",
+    "感想は\n「♯まずは内容物一覧をご確認ください」\nからお待ちしております！",
+    "それでは、またどこかでお会いしましょう！",
+    "NAZONE一同",
+  ],
+  // Xの投稿画面では画像を直接添付できないため、CLEAR画像付きシェアページのURLを投稿に付けます
+  completeClearImage: "../assets/naiyoubutsu/clear.png",
+  completeLinks: [
+    {
+      image: "../assets/naiyoubutsu/1200x400_post.png",
+      alt: "感想をポストする",
+      share: "tweet",
+      sharePath: "clear/",
+      tweetText:
+        "【🎊 #まずは内容物一覧をご確認ください CLEAR‼🎊】\n\nたくさんの内容物一覧を確認し、すべての謎を解き明かした‼💡\n",
+    },
+    {
+      image: "../assets/naiyoubutsu/1200x400_survey.png",
+      alt: "アンケートに答える",
+      href: "https://forms.gle/xZCVrDxfSLEQ1LnJA",
+    },
+  ],
   steps: [
     {
       open: "STEP1の封筒を開けてください",

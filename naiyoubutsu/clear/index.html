@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ALL CLEAR | まずは内容物一覧をご確認ください！ | NAZONE</title>
+  <meta name="description" content="『まずは内容物一覧をご確認ください！』をクリアしました。">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="まずは内容物一覧をご確認ください！ ALL CLEAR">
+  <meta name="twitter:description" content="たくさんの内容物一覧を確認し、すべての謎を解き明かした‼">
+  <meta name="twitter:image" content="../../assets/naiyoubutsu/clear.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="まずは内容物一覧をご確認ください！ ALL CLEAR">
+  <meta property="og:description" content="たくさんの内容物一覧を確認し、すべての謎を解き明かした‼">
+  <meta property="og:image" content="../../assets/naiyoubutsu/clear.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <link rel="icon" href="../../assets/brand/favicon.png" type="image/png">
+  <link rel="stylesheet" href="../../css/app.css">
+  <script>
+    (function () {
+      var imagePath = "../../assets/naiyoubutsu/clear.png";
+      var absolute = new URL(imagePath, window.location.href).href;
+      ["og:image", "twitter:image"].forEach(function (name) {
+        var prop = name.indexOf("twitter:") === 0 ? "name" : "property";
+        var el = document.querySelector('meta[' + prop + '="' + name + '"]');
+        if (el) el.setAttribute("content", absolute);
+      });
+      var canonical = document.createElement("meta");
+      canonical.setAttribute("property", "og:url");
+      canonical.setAttribute("content", window.location.href.split("#")[0]);
+      document.head.appendChild(canonical);
+    })();
+  </script>
+</head>
+<body class="page-naiyoubutsu">
+  <div class="naiyou-sheet">
+    <main class="naiyou-wrap naiyou-clear-share">
+      <h1>ALL CLEAR</h1>
+      <p class="naiyou-thanks">『まずは内容物一覧をご確認ください！』をクリアしました。</p>
+      <p class="naiyou-clear-share-image">
+        <img src="../../assets/naiyoubutsu/clear.png" alt="まずは内容物一覧をご確認ください！ ALL CLEAR" width="1200" height="630">
+      </p>
+      <p>
+        <a class="naiyou-btn" href="../">解答へ戻る</a>
+      </p>
+    </main>
+  </div>
+  <footer class="site-footer" id="site-footer"></footer>
+  <script src="../../data/site.js"></script>
+  <script src="../../js/main.js"></script>
+  <script>NAZONE.init();</script>
+</body>
+</html>

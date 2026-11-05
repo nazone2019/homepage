@@ -830,6 +830,75 @@ button.naiyou-step-bar.hint-step-toggle {
   font-weight: 700;
 }
 
+.naiyou-complete {
+  margin-top: 36px;
+  padding-top: 8px;
+  color: #fff;
+  text-align: center;
+}
+
+.naiyou-complete-title {
+  margin: 0 0 20px;
+  font-size: clamp(36px, 10vw, 56px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+}
+
+.naiyou-complete-body {
+  margin: 0 0 24px;
+  font-size: 15px;
+  line-height: 1.8;
+  font-weight: 700;
+}
+
+.naiyou-complete-body p {
+  margin: 0 0 1.1em;
+}
+
+.naiyou-complete-body p:last-child {
+  margin-bottom: 0;
+}
+
+.naiyou-complete-clear {
+  margin: 0 0 20px;
+}
+
+.naiyou-complete-clear img,
+.naiyou-clear-share-image img,
+.naiyou-complete-link img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.naiyou-complete-links {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.naiyou-complete-link {
+  display: block;
+  overflow: hidden;
+}
+
+.naiyou-clear-share {
+  text-align: center;
+}
+
+.naiyou-clear-share h1 {
+  margin: 20px 0 12px;
+  color: #fff;
+  font-size: clamp(32px, 9vw, 48px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.naiyou-clear-share-image {
+  margin: 0 0 24px;
+}
+
 .naiyou-notice {
   margin: 0 0 14px;
   padding: 12px 14px;

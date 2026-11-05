@@ -172,16 +172,67 @@
         });
       }
 
+      function resolveCompleteHref(link) {
+        if (link.share === "tweet") {
+          const shareUrl = new URL(link.sharePath || "clear/", window.location.href).href;
+          const intent = new URL("https://twitter.com/intent/tweet");
+          intent.searchParams.set("text", link.tweetText || "");
+          intent.searchParams.set("url", shareUrl);
+          return intent.toString();
+        }
+        return link.href || "#";
+      }
+
+      function completeHtml() {
+        const title = escapeHtml(data.completeTitle || "COMPLETE!");
+        const messages = Array.isArray(data.completeMessage)
+          ? data.completeMessage
+          : [data.completeMessage || ""];
+        const body = messages
+          .filter((para) => String(para || "").trim())
+          .map((para) => `<p>${escapeHtml(para).replace(/\n/g, "<br>")}</p>`)
+          .join("");
+        const clearImage = data.completeClearImage
+          ? `<p class="naiyou-complete-clear">
+              <img src="${escapeHtml(data.completeClearImage)}" alt="ALL CLEAR" width="1200" height="630">
+            </p>`
+          : "";
+        const links = (data.completeLinks || [])
+          .map(
+            (link) => `
+            <a class="naiyou-complete-link" href="${escapeHtml(resolveCompleteHref(link))}" target="_blank" rel="noopener noreferrer">
+              <img src="${escapeHtml(link.image)}" alt="${escapeHtml(link.alt || "")}" width="1200" height="400">
+            </a>`
+          )
+          .join("");
+        return `
+          <section class="naiyou-complete" id="naiyou-complete" aria-labelledby="complete-title">
+            <h2 id="complete-title" class="naiyou-complete-title">${title}</h2>
+            <div class="naiyou-complete-body">${body}</div>
+            ${clearImage}
+            <div class="naiyou-complete-links">${links}</div>
+          </section>`;
+      }
+
       function renderSteps(solved, currentOpen) {
         const mount = document.getElementById("naiyou-steps");
         const parts = [];
+        const finished = solved >= data.steps.length;
         for (let i = 0; i < solved; i += 1) {
           parts.push(stepHtml(data.steps[i], i, "done", progress.answers[i]));
         }
-        if (currentOpen && solved < data.steps.length) {
+        if (currentOpen && !finished) {
           parts.push(stepHtml(data.steps[solved], solved, "open"));
         }
+        if (finished) {
+          parts.push(completeHtml());
+        }
         mount.innerHTML = parts.join("");
+        if (finished) {
+          const complete = document.getElementById("naiyou-complete");
+          if (complete) complete.scrollIntoView({ behavior: "smooth", block: "start" });
+          return;
+        }
         const nextInput = mount.querySelector(".naiyou-form:not(.is-locked) input");
         if (nextInput) nextInput.focus();
       }
