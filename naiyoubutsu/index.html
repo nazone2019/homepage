@@ -149,8 +149,8 @@
             <form class="naiyou-form${locked ? " is-locked" : ""}" data-index="${index}">
               <label class="visually-hidden" for="answer-${n}">答え</label>
               <input id="answer-${n}" name="answer" type="text" autocomplete="off" inputmode="text"${valueAttr}${locked ? " readonly tabindex=\"-1\"" : ""}>
+              ${locked ? "" : `<p class="naiyou-ng" aria-live="polite">${escapeHtml(data.wrongMessage)}</p>`}
               <button class="naiyou-btn" type="submit"${locked ? " disabled" : ""}>送信</button>
-              ${locked ? "" : `<p class="naiyou-ng" hidden>${escapeHtml(data.wrongMessage)}</p>`}
             </form>
           </section>`;
       }
@@ -420,7 +420,26 @@
 
       if (resetBtn) resetBtn.addEventListener("click", resetToStart);
 
-      document.getElementById("naiyou-steps").addEventListener("submit", (e) => {
+      function setWrongVisible(form, visible) {
+        const ng = form && form.querySelector(".naiyou-ng");
+        if (!ng) return;
+        ng.classList.toggle("is-on", Boolean(visible));
+      }
+
+      const stepsRoot = document.getElementById("naiyou-steps");
+
+      // 送信ボタンへのフォーカス移動でキーボードが閉じ、画面が跳ねるのを防ぐ
+      stepsRoot.addEventListener(
+        "pointerdown",
+        (e) => {
+          const btn = e.target.closest(".naiyou-form:not(.is-locked) button[type='submit']");
+          if (!btn) return;
+          e.preventDefault();
+        },
+        { passive: false }
+      );
+
+      stepsRoot.addEventListener("submit", (e) => {
         const form = e.target.closest(".naiyou-form");
         if (!form) return;
         e.preventDefault();
@@ -428,7 +447,6 @@
         const index = Number(form.dataset.index);
         if (index !== progress.solved) return;
         const input = form.querySelector("input");
-        const ng = form.querySelector(".naiyou-ng");
         const value = (input && input.value) || "";
         if (isCorrect(data.steps[index], value)) {
           progress.answers[index] = value;
@@ -437,16 +455,26 @@
           showClear().then(() => {
             renderSteps(progress.solved, true, true);
           });
-        } else if (ng) {
-          ng.hidden = false;
+        } else {
+          setWrongVisible(form, true);
+          // モバイルが submit 直後に input を発火してメッセージを消すのを防ぐ
+          form.dataset.ngLock = String(Date.now() + 400);
+          if (input) {
+            try {
+              input.focus({ preventScroll: true });
+            } catch (err) {
+              input.focus();
+            }
+          }
         }
       });
 
-      document.getElementById("naiyou-steps").addEventListener("input", (e) => {
+      stepsRoot.addEventListener("input", (e) => {
         const form = e.target.closest(".naiyou-form");
         if (!form) return;
-        const ng = form.querySelector(".naiyou-ng");
-        if (ng) ng.hidden = true;
+        const lockUntil = Number(form.dataset.ngLock || 0);
+        if (Date.now() < lockUntil) return;
+        setWrongVisible(form, false);
       });
 
       document.getElementById("naiyou-steps").addEventListener("click", (e) => {
