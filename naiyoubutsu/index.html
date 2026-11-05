@@ -245,7 +245,15 @@
           </section>`;
       }
 
-      function renderSteps(solved, currentOpen) {
+      function scrollToStepTarget(target) {
+        if (!target) return;
+        // 少し上に余白を残して、新しいSTEPが見やすい位置へ
+        const offset = 24;
+        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+      }
+
+      function renderSteps(solved, currentOpen, scrollToCurrent) {
         const mount = document.getElementById("naiyou-steps");
         const parts = [];
         const finished = solved >= data.steps.length;
@@ -259,10 +267,18 @@
           parts.push(completeHtml());
         }
         mount.innerHTML = parts.join("");
-        if (finished) {
-          const complete = document.getElementById("naiyou-complete");
-          if (complete) complete.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
+        if (!scrollToCurrent) return;
+        window.requestAnimationFrame(() => {
+          if (finished) {
+            scrollToStepTarget(document.getElementById("naiyou-complete"));
+            return;
+          }
+          if (currentOpen) {
+            scrollToStepTarget(
+              mount.querySelector(`.naiyou-step[data-step="${solved + 1}"]`)
+            );
+          }
+        });
       }
 
       NAZONE.init();
@@ -342,7 +358,7 @@
           progress.solved += 1;
           saveProgress(progress);
           showClear().then(() => {
-            renderSteps(progress.solved, true);
+            renderSteps(progress.solved, true, true);
           });
         } else if (ng) {
           ng.hidden = false;
