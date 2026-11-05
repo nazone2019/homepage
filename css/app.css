@@ -769,6 +769,8 @@ body.page-naiyoubutsu .naiyou-form .naiyou-btn {
 
 .naiyou-step {
   margin-top: 28px;
+  scroll-margin-top: 24px;
+  overflow-anchor: none;
 }
 
 .naiyou-step-bar {
@@ -848,6 +850,8 @@ button.naiyou-step-bar.hint-step-toggle {
   padding-top: 8px;
   color: #fff;
   text-align: center;
+  scroll-margin-top: 24px;
+  overflow-anchor: none;
 }
 
 .naiyou-complete-title {

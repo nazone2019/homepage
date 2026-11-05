@@ -187,6 +187,12 @@
         });
       }
 
+      function isKeyboardOpen() {
+        const vv = window.visualViewport;
+        if (!vv) return false;
+        return window.innerHeight - vv.height >= 48;
+      }
+
       function dismissKeyboard() {
         const active = document.activeElement;
         if (active && typeof active.blur === "function") active.blur();
@@ -194,7 +200,11 @@
           if (typeof el.blur === "function") el.blur();
         });
 
-        // iOS はフォーカス移動先がないとキーボードが残ることがある
+        // モバイルキーボードが出ているときだけフォーカス退避（PCではスクロールを邪魔しない）
+        if (!isKeyboardOpen()) {
+          return Promise.resolve();
+        }
+
         const sink = document.getElementById("keyboard-sink");
         if (sink) {
           try {
@@ -204,7 +214,6 @@
           }
         }
 
-        // 閉じアニメーション分の最低待ち + viewport 安定待ち
         return Promise.all([
           waitForKeyboardClose(520),
           new Promise((resolve) => window.setTimeout(resolve, 240)),
@@ -296,38 +305,29 @@
 
       function scrollToStepTarget(target) {
         if (!target) return;
-        // 少し上に余白を残して、新しいSTEPが見やすい位置へ
         const offset = 24;
-        const top = Math.max(
-          0,
-          target.getBoundingClientRect().top + window.pageYOffset - offset
-        );
         const scroller =
           document.scrollingElement || document.documentElement || document.body;
-        try {
-          scroller.scrollTo({ top, behavior: "smooth" });
-        } catch (err) {
-          scroller.scrollTop = top;
-        }
-        // iOS はキーボード閉鎖後に位置が戻ることがあるため再適用
-        window.setTimeout(() => {
-          try {
-            scroller.scrollTo({ top, behavior: "smooth" });
-          } catch (err) {
-            scroller.scrollTop = top;
-          }
-        }, 180);
-        window.setTimeout(() => {
-          const retryTop = Math.max(
+
+        const destination = () =>
+          Math.max(
             0,
             target.getBoundingClientRect().top + window.pageYOffset - offset
           );
+
+        const run = (behavior) => {
+          const top = destination();
           try {
-            scroller.scrollTo({ top: retryTop, behavior: "auto" });
+            scroller.scrollTo({ top, behavior });
           } catch (err) {
-            scroller.scrollTop = retryTop;
+            scroller.scrollTop = top;
           }
-        }, 420);
+        };
+
+        // PC/スマホ共通で次STEP先頭へ。遅延再実行で打ち消しにも対応
+        run("smooth");
+        window.setTimeout(() => run("smooth"), 120);
+        window.setTimeout(() => run("auto"), 450);
       }
 
       function renderSteps(solved, currentOpen, scrollToCurrent) {
@@ -350,10 +350,9 @@
           : currentOpen
             ? mount.querySelector(`.naiyou-step[data-step="${solved + 1}"]`)
             : null;
-        // レイアウト確定後にスクロール（モバイルのキーボード余韻も考慮）
         window.requestAnimationFrame(() => {
           window.requestAnimationFrame(() => {
-            window.setTimeout(() => scrollToStepTarget(target), 50);
+            scrollToStepTarget(target);
           });
         });
       }
