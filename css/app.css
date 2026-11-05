@@ -682,6 +682,19 @@ body.page-naiyoubutsu .menu-btn {
   font-weight: 700;
 }
 
+.naiyou-start-image {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0 24px;
+}
+
+.naiyou-start-image img {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+}
+
 .naiyou-thanks {
   margin: 0 0 24px;
   font-size: 15px;

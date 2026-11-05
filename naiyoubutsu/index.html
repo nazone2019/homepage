@@ -21,8 +21,10 @@
 
     <main class="naiyou-wrap">
     <section class="naiyou-intro" aria-labelledby="naiyou-title">
-      <h1 id="naiyou-title"></h1>
-      <div class="naiyou-thanks" id="naiyou-thanks"></div>
+      <h1 id="naiyou-title" class="visually-hidden">はじめに</h1>
+      <p class="naiyou-start-image">
+        <img id="naiyou-start-img" src="../assets/naiyoubutsu/start.png" alt="はじめに" width="1200" height="630">
+      </p>
       <section class="naiyou-notes-box" aria-labelledby="notes-title">
         <h2 id="notes-title"></h2>
         <ul id="naiyou-notes"></ul>
@@ -243,13 +245,14 @@
 
       NAZONE.init();
 
-      document.getElementById("naiyou-title").textContent = data.title || "はじめに";
+      const title = data.title || "はじめに";
+      document.getElementById("naiyou-title").textContent = title;
+      const startImg = document.getElementById("naiyou-start-img");
+      if (startImg) {
+        startImg.alt = title;
+        if (data.startImage) startImg.src = data.startImage;
+      }
       document.getElementById("notes-title").textContent = data.notesTitle || "注意事項";
-      const thanks = Array.isArray(data.thanks) ? data.thanks : [data.thanks || ""];
-      document.getElementById("naiyou-thanks").innerHTML = thanks
-        .filter((para) => String(para || "").trim())
-        .map((para) => `<p>${escapeHtml(para).replace(/\n/g, "<br>")}</p>`)
-        .join("");
       document.getElementById("naiyou-notes").innerHTML = (data.notes || [])
         .map((line) => `<li>${escapeHtml(line)}</li>`)
         .join("");
