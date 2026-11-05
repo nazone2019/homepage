@@ -1063,6 +1063,24 @@ button.naiyou-step-bar.hint-step-toggle {
   cursor: pointer;
 }
 
+#keyboard-sink {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+body.page-naiyoubutsu.is-clear-playing {
+  overflow: hidden;
+  touch-action: none;
+}
+
 .naiyou-clear {
   position: fixed;
   inset: 0;

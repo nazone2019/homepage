@@ -38,6 +38,7 @@
 
   <a class="naiyou-hint-fab" id="hint-fab" href="../hint/">ヒント</a>
   <button class="naiyou-reset" id="reset-btn" type="button"></button>
+  <button type="button" id="keyboard-sink" tabindex="-1" aria-hidden="true"></button>
   <div class="naiyou-clear" id="clear-overlay" hidden>
     <p id="clear-message">正解！</p>
   </div>
@@ -154,15 +155,60 @@
           </section>`;
       }
 
+      function waitForKeyboardClose(maxMs) {
+        return new Promise((resolve) => {
+          const vv = window.visualViewport;
+          const threshold = 48;
+          let settled = false;
+
+          const finish = () => {
+            if (settled) return;
+            settled = true;
+            if (vv) vv.removeEventListener("resize", onResize);
+            window.setTimeout(resolve, 60);
+          };
+
+          const isClosed = () => {
+            if (!vv) return true;
+            return window.innerHeight - vv.height < threshold;
+          };
+
+          const onResize = () => {
+            if (isClosed()) finish();
+          };
+
+          if (isClosed()) {
+            finish();
+            return;
+          }
+
+          if (vv) vv.addEventListener("resize", onResize);
+          window.setTimeout(finish, maxMs);
+        });
+      }
+
       function dismissKeyboard() {
         const active = document.activeElement;
         if (active && typeof active.blur === "function") active.blur();
-        const inputs = document.querySelectorAll(".naiyou-form input");
-        inputs.forEach((el) => el.blur());
-        // フォーカスを外し、モバイルのキーボード閉じを待つ
-        return new Promise((resolve) => {
-          window.setTimeout(resolve, 280);
+        document.querySelectorAll(".naiyou-form input, .naiyou-form button").forEach((el) => {
+          if (typeof el.blur === "function") el.blur();
         });
+
+        // iOS はフォーカス移動先がないとキーボードが残ることがある
+        const sink = document.getElementById("keyboard-sink");
+        if (sink) {
+          try {
+            sink.focus({ preventScroll: true });
+          } catch (err) {
+            sink.focus();
+          }
+        }
+
+        // 閉じアニメーション分の最低待ち + viewport 安定待ち
+        return Promise.all([
+          waitForKeyboardClose(520),
+          new Promise((resolve) => window.setTimeout(resolve, 240)),
+        ]).then(() => undefined);
       }
 
       function showClear() {
@@ -170,6 +216,8 @@
         const message = document.getElementById("clear-message");
         if (message) message.textContent = data.correctMessage || "正解！";
         if (!overlay) return Promise.resolve();
+
+        document.body.classList.add("is-clear-playing");
 
         return dismissKeyboard().then(() => {
           overlay.hidden = false;
@@ -182,6 +230,7 @@
               overlay.classList.remove("is-on");
               window.setTimeout(() => {
                 overlay.hidden = true;
+                document.body.classList.remove("is-clear-playing");
                 resolve();
               }, 280);
             }, 1180);
@@ -249,8 +298,36 @@
         if (!target) return;
         // 少し上に余白を残して、新しいSTEPが見やすい位置へ
         const offset = 24;
-        const top = target.getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+        const top = Math.max(
+          0,
+          target.getBoundingClientRect().top + window.pageYOffset - offset
+        );
+        const scroller =
+          document.scrollingElement || document.documentElement || document.body;
+        try {
+          scroller.scrollTo({ top, behavior: "smooth" });
+        } catch (err) {
+          scroller.scrollTop = top;
+        }
+        // iOS はキーボード閉鎖後に位置が戻ることがあるため再適用
+        window.setTimeout(() => {
+          try {
+            scroller.scrollTo({ top, behavior: "smooth" });
+          } catch (err) {
+            scroller.scrollTop = top;
+          }
+        }, 180);
+        window.setTimeout(() => {
+          const retryTop = Math.max(
+            0,
+            target.getBoundingClientRect().top + window.pageYOffset - offset
+          );
+          try {
+            scroller.scrollTo({ top: retryTop, behavior: "auto" });
+          } catch (err) {
+            scroller.scrollTop = retryTop;
+          }
+        }, 420);
       }
 
       function renderSteps(solved, currentOpen, scrollToCurrent) {
@@ -268,16 +345,16 @@
         }
         mount.innerHTML = parts.join("");
         if (!scrollToCurrent) return;
+        const target = finished
+          ? document.getElementById("naiyou-complete")
+          : currentOpen
+            ? mount.querySelector(`.naiyou-step[data-step="${solved + 1}"]`)
+            : null;
+        // レイアウト確定後にスクロール（モバイルのキーボード余韻も考慮）
         window.requestAnimationFrame(() => {
-          if (finished) {
-            scrollToStepTarget(document.getElementById("naiyou-complete"));
-            return;
-          }
-          if (currentOpen) {
-            scrollToStepTarget(
-              mount.querySelector(`.naiyou-step[data-step="${solved + 1}"]`)
-            );
-          }
+          window.requestAnimationFrame(() => {
+            window.setTimeout(() => scrollToStepTarget(target), 50);
+          });
         });
       }
 
