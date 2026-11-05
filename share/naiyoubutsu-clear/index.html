@@ -8,33 +8,71 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="まずは内容物一覧をご確認ください！ ALL CLEAR">
   <meta name="twitter:description" content="たくさんの内容物一覧を確認し、すべての謎を解き明かした‼">
-  <meta name="twitter:image" content="../../assets/goods/mazu-naiyoubutsu-clear.png">
+  <!-- クローラー向け: 絶対URL必須。公開ドメインが決まったら SITE.publicOrigin も設定してください -->
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/nazone2019/homepage/main/assets/goods/mazu-naiyoubutsu-clear.png">
   <meta property="og:type" content="website">
   <meta property="og:title" content="まずは内容物一覧をご確認ください！ ALL CLEAR">
   <meta property="og:description" content="たくさんの内容物一覧を確認し、すべての謎を解き明かした‼">
-  <meta property="og:image" content="../../assets/goods/mazu-naiyoubutsu-clear.png">
+  <meta property="og:image" content="https://raw.githubusercontent.com/nazone2019/homepage/main/assets/goods/mazu-naiyoubutsu-clear.png">
+  <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta http-equiv="refresh" content="0; url=../../good.html?id=mazu-naiyoubutsu">
+  <link rel="image_src" href="../../assets/goods/mazu-naiyoubutsu-clear.png">
   <link rel="icon" href="../../assets/brand/favicon.png" type="image/png">
+  <link rel="stylesheet" href="../../css/app.css">
+  <script src="../../data/site.js"></script>
   <script>
     (function () {
-      var image = new URL("../../assets/goods/mazu-naiyoubutsu-clear.png", location.href).href;
-      var page = location.href.split("#")[0];
+      var relativeImage = "../../assets/goods/mazu-naiyoubutsu-clear.png";
+      var origin = (typeof SITE !== "undefined" && SITE.publicOrigin)
+        ? String(SITE.publicOrigin).replace(/\/$/, "")
+        : location.origin;
+      var absoluteImage = origin.indexOf("http") === 0
+        ? origin + "/assets/goods/mazu-naiyoubutsu-clear.png"
+        : new URL(relativeImage, location.href).href;
+      var pageUrl = location.href.split("#")[0];
       var target = new URL("../../good.html?id=mazu-naiyoubutsu", location.href).href;
-      document.querySelector('meta[name="twitter:image"]').setAttribute("content", image);
-      document.querySelector('meta[property="og:image"]').setAttribute("content", image);
+
+      function setMeta(selector, attr, value) {
+        var el = document.querySelector(selector);
+        if (el) el.setAttribute(attr, value);
+      }
+
+      // 公開オリジンがある／http(s)配信時は、サイト上の画像URLに差し替え
+      if (/^https?:\/\//.test(absoluteImage) && absoluteImage.indexOf("127.0.0.1") === -1 && absoluteImage.indexOf("localhost") === -1) {
+        setMeta('meta[name="twitter:image"]', "content", absoluteImage);
+        setMeta('meta[property="og:image"]', "content", absoluteImage);
+      }
+      setMeta('link[rel="image_src"]', "href", absoluteImage);
+
       var ogUrl = document.createElement("meta");
       ogUrl.setAttribute("property", "og:url");
-      ogUrl.setAttribute("content", page);
+      ogUrl.setAttribute("content", pageUrl);
       document.head.appendChild(ogUrl);
-      location.replace(target);
+
+      // クローラーにはOGPを読ませ、人だけGoods詳細へ送る（即リダイレクト禁止）
+      var ua = navigator.userAgent || "";
+      var isBot = /Twitterbot|facebookexternalhit|Facebot|Slackbot|Discordbot|LinkedInBot|WhatsApp|TelegramBot|Googlebot/i.test(ua);
+      if (!isBot) {
+        setTimeout(function () {
+          location.replace(target);
+        }, 80);
+      }
     })();
   </script>
 </head>
-<body>
-  <p>
-    <a href="../../good.html?id=mazu-naiyoubutsu">まずは内容物一覧をご確認ください！ のページへ</a>
-  </p>
+<body class="page-naiyoubutsu">
+  <div class="naiyou-sheet">
+    <main class="naiyou-wrap naiyou-clear-share">
+      <h1>ALL CLEAR</h1>
+      <p class="naiyou-thanks">『まずは内容物一覧をご確認ください！』をクリアしました。</p>
+      <p class="naiyou-clear-share-image">
+        <img src="../../assets/goods/mazu-naiyoubutsu-clear.png" alt="まずは内容物一覧をご確認ください！ ALL CLEAR" width="1200" height="630">
+      </p>
+      <p>
+        <a class="naiyou-btn" href="../../good.html?id=mazu-naiyoubutsu">Goodsページへ</a>
+      </p>
+    </main>
+  </div>
 </body>
 </html>

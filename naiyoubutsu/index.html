@@ -274,57 +274,22 @@
         window.setTimeout(() => URL.revokeObjectURL(url), 1000);
       }
 
-      async function shareTweetWithClearImage(link, fallbackHref) {
-        const text = link.tweetText || "";
-        const textOnlyHref = resolveCompleteHref(link) || fallbackHref;
+      async function prepareClearImageAssist() {
         let blob = null;
         try {
           blob = await fetchClearImageBlob();
         } catch (err) {
           blob = null;
         }
-
-        // スマホなど: 画像だけ共有（ページURL混入を避ける）+ 投稿文はコピー
-        if (blob && navigator.share && navigator.canShare) {
-          try {
-            const file = new File([blob], "clear.png", { type: blob.type || "image/png" });
-            const fileOnly = { files: [file] };
-            if (navigator.canShare(fileOnly)) {
-              if (navigator.clipboard && navigator.clipboard.writeText) {
-                try {
-                  const shareUrl = link.sharePath
-                    ? new URL(link.sharePath, window.location.href).href
-                    : "";
-                  const clip = [text.trim(), shareUrl].filter(Boolean).join("\n");
-                  if (clip) await navigator.clipboard.writeText(clip);
-                } catch (err) {
-                  /* ignore */
-                }
-              }
-              await navigator.share(fileOnly);
-              showToast("投稿文をコピーしました。Xで画像と一緒に貼り付けてください。");
-              return;
-            }
-          } catch (err) {
-            if (err && err.name === "AbortError") return;
-          }
-        }
-
-        // PCなど: 画像をコピー（失敗時はダウンロード）→ 文言入り投稿画面を開く
-        let copied = false;
-        if (blob) copied = await copyClearImageToClipboard(blob);
-        if (blob && !copied) downloadClearImage(blob);
-
+        if (!blob) return "";
+        const copied = await copyClearImageToClipboard(blob);
+        if (!copied) downloadClearImage(blob);
         const hint = copied
           ? (data.completePostPcHint
             || "CLEAR画像をコピーしました。投稿画面で Ctrl+V（Macは ⌘V）を押すと画像を貼れます。")
           : (data.completePostPcHintFallback
             || "CLEAR画像をダウンロードしました。投稿画面で画像を添付してください。");
-        const localized = isMacLike()
-          ? hint.replace("Ctrl+V（Macは ⌘V）", "⌘V")
-          : hint;
-        showToast(localized);
-        window.open(textOnlyHref, "_blank", "noopener,noreferrer");
+        return isMacLike() ? hint.replace("Ctrl+V（Macは ⌘V）", "⌘V") : hint;
       }
 
       function renderSteps(solved, currentOpen) {
@@ -439,7 +404,13 @@
         const link = (data.completeLinks || [])[index];
         if (!link || link.share !== "tweet") return;
         e.preventDefault();
-        shareTweetWithClearImage(link, btn.href);
+
+        // await のあとに open するとポップアップブロックされるため、先に投稿画面を開く
+        const href = resolveCompleteHref(link);
+        window.open(href, "_blank", "noopener,noreferrer");
+        prepareClearImageAssist().then((message) => {
+          if (message) showToast(message);
+        });
       });
     })();
   </script>

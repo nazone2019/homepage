@@ -23,6 +23,7 @@ python3 -m http.server 8080
 | 団体紹介 | `data/about.js` |
 | お問い合わせ文言・送信先 | `data/contact.js` |
 | サイト名・ナビ・SNS | `data/site.js` |
+| 公開URL（OGP用） | `data/site.js` の `publicOrigin` |
 | プライバシーポリシー | `data/privacy.js` |
 | /naiyoubutsu の注意文・各STEPの正解 | `data/naiyoubutsu.js` |
 | /hint のヒント文 | `data/hint.js` |

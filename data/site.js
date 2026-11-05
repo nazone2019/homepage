@@ -9,6 +9,9 @@ const SITE = {
   founded: "2019年6月",
   copyright: "©2019 NAZONE All Rights Reserved.",
   twitter: "https://twitter.com/nazone2019",
+  // 公開後のサイトURL（末尾スラッシュなし）。OGP画像の絶対URL生成に使います
+  // 例: "https://example.com"
+  publicOrigin: "",
   hero: {
     line1: "謎解き制作集団",
     line2: "ココロざす を 志す",

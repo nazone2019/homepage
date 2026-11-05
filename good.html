@@ -4,6 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="NAZONE グッズ詳細">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="NAZONE GOODS">
+  <meta name="twitter:description" content="NAZONEのグッズ詳細">
+  <meta name="twitter:image" content="">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="NAZONE GOODS">
+  <meta property="og:description" content="NAZONEのグッズ詳細">
+  <meta property="og:image" content="">
   <title>GOOD | NAZONE</title>
   <link rel="icon" href="assets/brand/favicon.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,13 +37,37 @@
 
     NAZONE.init({ crumb: good ? good.title : "GOOD" });
 
+    function setOg(good) {
+      if (!good) return;
+      const origin = (SITE.publicOrigin || location.origin || "").replace(/\/$/, "");
+      const imageFile = good.clearImage || good.image;
+      const imageUrl = imageFile
+        ? `${origin}/assets/goods/${imageFile}`
+        : "";
+      const title = `${good.title} | NAZONE`;
+      const description = (good.about || "").replace(/\n/g, " ").slice(0, 120);
+      document.title = title;
+      const map = {
+        'meta[name="twitter:title"]': title,
+        'meta[name="twitter:description"]': description,
+        'meta[name="twitter:image"]': imageUrl,
+        'meta[property="og:title"]': title,
+        'meta[property="og:description"]': description,
+        'meta[property="og:image"]': imageUrl,
+      };
+      Object.keys(map).forEach((selector) => {
+        const el = document.querySelector(selector);
+        if (el && map[selector]) el.setAttribute("content", map[selector]);
+      });
+    }
+
     const mount = document.getElementById("good-detail");
     if (!good) {
       mount.innerHTML = `
         <p style="text-align:center;margin:80px 0;">グッズが見つかりませんでした。</p>
         <p style="text-align:center;"><a class="more-link" href="goods.html">GOODS へ戻る</a></p>`;
     } else {
-      document.title = `${good.title} | NAZONE`;
+      setOg(good);
       const about = good.about
         ? `<h3>【ABOUT】</h3><p>${good.about.replace(/\n/g, "<br>")}</p>`
         : "";
