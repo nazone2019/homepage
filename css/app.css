@@ -904,6 +904,18 @@ button.naiyou-step-bar.hint-step-toggle {
   height: auto;
 }
 
+.naiyou-complete-credits {
+  margin: 20px 0 0;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.8;
+}
+
+.naiyou-complete-credits p {
+  margin: 0;
+}
+
 
 .naiyou-clear-share {
   text-align: center;

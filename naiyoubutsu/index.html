@@ -154,25 +154,38 @@
           </section>`;
       }
 
+      function dismissKeyboard() {
+        const active = document.activeElement;
+        if (active && typeof active.blur === "function") active.blur();
+        const inputs = document.querySelectorAll(".naiyou-form input");
+        inputs.forEach((el) => el.blur());
+        // フォーカスを外し、モバイルのキーボード閉じを待つ
+        return new Promise((resolve) => {
+          window.setTimeout(resolve, 280);
+        });
+      }
+
       function showClear() {
         const overlay = document.getElementById("clear-overlay");
         const message = document.getElementById("clear-message");
         if (message) message.textContent = data.correctMessage || "正解！";
         if (!overlay) return Promise.resolve();
 
-        overlay.hidden = false;
-        overlay.classList.remove("is-on");
-        void overlay.offsetWidth;
-        overlay.classList.add("is-on");
+        return dismissKeyboard().then(() => {
+          overlay.hidden = false;
+          overlay.classList.remove("is-on");
+          void overlay.offsetWidth;
+          overlay.classList.add("is-on");
 
-        return new Promise((resolve) => {
-          window.setTimeout(() => {
-            overlay.classList.remove("is-on");
+          return new Promise((resolve) => {
             window.setTimeout(() => {
-              overlay.hidden = true;
-              resolve();
-            }, 280);
-          }, 1180);
+              overlay.classList.remove("is-on");
+              window.setTimeout(() => {
+                overlay.hidden = true;
+                resolve();
+              }, 280);
+            }, 1180);
+          });
         });
       }
 
@@ -215,12 +228,20 @@
             </a>`;
           })
           .join("");
+        const credits = (data.completeCredits || [])
+          .filter((line) => String(line || "").trim())
+          .map((line) => `<p>${escapeHtml(line)}</p>`)
+          .join("");
+        const creditsHtml = credits
+          ? `<div class="naiyou-complete-credits">${credits}</div>`
+          : "";
         return `
           <section class="naiyou-complete" id="naiyou-complete" aria-labelledby="complete-title">
             <h2 id="complete-title" class="naiyou-complete-title">${title}</h2>
             <div class="naiyou-complete-body">${body}</div>
             ${clearImage}
             <div class="naiyou-complete-links">${links}</div>
+            ${creditsHtml}
           </section>`;
       }
 
