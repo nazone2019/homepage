@@ -42,12 +42,17 @@ const NAIYOUBUTSU = {
     "NAZONE一同",
   ],
   completeClearImage: "../assets/naiyoubutsu/clear.png",
+  completePostPcHint:
+    "CLEAR画像をコピーしました。投稿画面で Ctrl+V（Macは ⌘V）を押すと画像を貼れます。",
+  completePostPcHintFallback:
+    "CLEAR画像をダウンロードしました。投稿画面で画像を添付してください。",
   completeLinks: [
     {
       image: "../assets/naiyoubutsu/1200x400_post.png",
       alt: "感想をポストする",
       share: "tweet",
-      sharePath: "clear/",
+      // クリア画像カード用。クリックすると Goods 詳細へリダイレクトします
+      sharePath: "../share/naiyoubutsu-clear/",
       tweetText:
         "【🎊 #まずは内容物一覧をご確認ください CLEAR‼🎊】\n\nたくさんの内容物一覧を確認し、すべての謎を解き明かした‼💡\n",
     },

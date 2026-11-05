@@ -18,6 +18,7 @@ python3 -m http.server 8080
 | やりたいこと | 編集するファイル |
 |---|---|
 | 作品の追加・修正 | `data/works.js` + `assets/works/` に画像 |
+| グッズの追加・修正 | `data/goods.js` + `assets/goods/` に画像 |
 | メンバーの追加・修正 | `data/members.js` + `assets/members/` に画像 |
 | 団体紹介 | `data/about.js` |
 | お問い合わせ文言・送信先 | `data/contact.js` |
@@ -54,6 +55,9 @@ python3 -m http.server 8080
 - `about.html` … 団体紹介
 - `contents.html` … Works 一覧（年フィルター付き）
 - `work.html?id=...` … 作品詳細
+- `goods.html` … Goods 一覧
+- `good.html?id=...` … グッズ詳細
+- `share/naiyoubutsu-clear/` … クリア投稿用URL（Goods詳細へリダイレクト）
 - `member.html` … メンバー
 - `contact.html` … お問い合わせ（mailto）
 - `privacy.html` … プライバシーポリシー

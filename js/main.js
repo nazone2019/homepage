@@ -115,11 +115,31 @@
       </a>`;
   }
 
+  function goodImageHtml(good) {
+    if (good.image) {
+      return `<img src="${href("assets/goods/" + good.image)}" alt="${good.title}" loading="lazy">`;
+    }
+    return `<div class="work-card__placeholder">${good.title}</div>`;
+  }
+
+  function goodCardHtml(good, heading = "h3") {
+    return `
+      <a class="work-card" href="${href("good.html")}?id=${encodeURIComponent(good.id)}" data-year="${good.year || ""}">
+        <div class="work-card__thumb">${goodImageHtml(good)}</div>
+        <div class="work-card__cap">
+          <${heading} class="work-card__title">${good.title}</${heading}>
+          <p class="work-card__date">${good.date || ""}</p>
+        </div>
+      </a>`;
+  }
+
   window.NAZONE = {
     renderHeader,
     renderFooter,
     workImageHtml,
     workCardHtml,
+    goodImageHtml,
+    goodCardHtml,
     href,
     EXT_ICON,
     init(options = {}) {

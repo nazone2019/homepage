@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="NAZONE 解答入力">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
   <title>はじめに | NAZONE</title>
   <link rel="icon" href="../assets/brand/favicon.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,6 +38,7 @@
   <div class="naiyou-clear" id="clear-overlay" hidden>
     <p id="clear-message">正解！</p>
   </div>
+  <div class="naiyou-toast" id="naiyou-toast" hidden></div>
 
   <footer class="site-footer" id="site-footer"></footer>
 
@@ -174,10 +177,14 @@
 
       function resolveCompleteHref(link) {
         if (link.share === "tweet") {
-          const shareUrl = new URL(link.sharePath || "clear/", window.location.href).href;
           const intent = new URL("https://twitter.com/intent/tweet");
           intent.searchParams.set("text", link.tweetText || "");
-          intent.searchParams.set("url", shareUrl);
+          if (link.sharePath) {
+            intent.searchParams.set(
+              "url",
+              new URL(link.sharePath, window.location.href).href
+            );
+          }
           return intent.toString();
         }
         return link.href || "#";
@@ -216,29 +223,108 @@
           </section>`;
       }
 
-      async function shareTweetWithClearImage(link, fallbackHref) {
-        const imagePath = data.completeClearImage;
-        if (!imagePath || !navigator.share || !navigator.canShare) {
-          window.open(fallbackHref, "_blank", "noopener,noreferrer");
-          return;
-        }
+      function showToast(message) {
+        const toast = document.getElementById("naiyou-toast");
+        if (!toast || !message) return;
+        toast.textContent = message;
+        toast.hidden = false;
+        window.clearTimeout(showToast._timer);
+        showToast._timer = window.setTimeout(() => {
+          toast.hidden = true;
+        }, 5200);
+      }
+
+      function isMacLike() {
+        return /Mac|iPhone|iPad|iPod/i.test(navigator.platform || "")
+          || /Mac OS X/i.test(navigator.userAgent || "");
+      }
+
+      async function fetchClearImageBlob() {
+        if (!data.completeClearImage) return null;
+        const response = await fetch(new URL(data.completeClearImage, window.location.href).href);
+        if (!response.ok) return null;
+        const blob = await response.blob();
+        return blob.type ? blob : new Blob([blob], { type: "image/png" });
+      }
+
+      async function copyClearImageToClipboard(blob) {
+        if (!blob || !navigator.clipboard || !window.ClipboardItem) return false;
         try {
-          const response = await fetch(new URL(imagePath, window.location.href).href);
-          const blob = await response.blob();
-          const file = new File([blob], "clear.png", { type: blob.type || "image/png" });
-          const payload = {
-            text: link.tweetText || "",
-            files: [file],
-          };
-          if (!navigator.canShare(payload)) {
-            window.open(fallbackHref, "_blank", "noopener,noreferrer");
-            return;
-          }
-          await navigator.share(payload);
+          const pngBlob = blob.type === "image/png"
+            ? blob
+            : new Blob([blob], { type: "image/png" });
+          await navigator.clipboard.write([
+            new ClipboardItem({ "image/png": pngBlob }),
+          ]);
+          return true;
         } catch (err) {
-          if (err && err.name === "AbortError") return;
-          window.open(fallbackHref, "_blank", "noopener,noreferrer");
+          return false;
         }
+      }
+
+      function downloadClearImage(blob) {
+        if (!blob) return;
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "clear.png";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+      }
+
+      async function shareTweetWithClearImage(link, fallbackHref) {
+        const text = link.tweetText || "";
+        const textOnlyHref = resolveCompleteHref(link) || fallbackHref;
+        let blob = null;
+        try {
+          blob = await fetchClearImageBlob();
+        } catch (err) {
+          blob = null;
+        }
+
+        // スマホなど: 画像だけ共有（ページURL混入を避ける）+ 投稿文はコピー
+        if (blob && navigator.share && navigator.canShare) {
+          try {
+            const file = new File([blob], "clear.png", { type: blob.type || "image/png" });
+            const fileOnly = { files: [file] };
+            if (navigator.canShare(fileOnly)) {
+              if (navigator.clipboard && navigator.clipboard.writeText) {
+                try {
+                  const shareUrl = link.sharePath
+                    ? new URL(link.sharePath, window.location.href).href
+                    : "";
+                  const clip = [text.trim(), shareUrl].filter(Boolean).join("\n");
+                  if (clip) await navigator.clipboard.writeText(clip);
+                } catch (err) {
+                  /* ignore */
+                }
+              }
+              await navigator.share(fileOnly);
+              showToast("投稿文をコピーしました。Xで画像と一緒に貼り付けてください。");
+              return;
+            }
+          } catch (err) {
+            if (err && err.name === "AbortError") return;
+          }
+        }
+
+        // PCなど: 画像をコピー（失敗時はダウンロード）→ 文言入り投稿画面を開く
+        let copied = false;
+        if (blob) copied = await copyClearImageToClipboard(blob);
+        if (blob && !copied) downloadClearImage(blob);
+
+        const hint = copied
+          ? (data.completePostPcHint
+            || "CLEAR画像をコピーしました。投稿画面で Ctrl+V（Macは ⌘V）を押すと画像を貼れます。")
+          : (data.completePostPcHintFallback
+            || "CLEAR画像をダウンロードしました。投稿画面で画像を添付してください。");
+        const localized = isMacLike()
+          ? hint.replace("Ctrl+V（Macは ⌘V）", "⌘V")
+          : hint;
+        showToast(localized);
+        window.open(textOnlyHref, "_blank", "noopener,noreferrer");
       }
 
       function renderSteps(solved, currentOpen) {
@@ -258,10 +344,7 @@
         if (finished) {
           const complete = document.getElementById("naiyou-complete");
           if (complete) complete.scrollIntoView({ behavior: "smooth", block: "start" });
-          return;
         }
-        const nextInput = mount.querySelector(".naiyou-form:not(.is-locked) input");
-        if (nextInput) nextInput.focus();
       }
 
       NAZONE.init();

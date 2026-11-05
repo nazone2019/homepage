@@ -25,6 +25,7 @@
         <div class="hero__actions">
           <a class="btn btn--primary" href="about.html">ABOUT</a>
           <a class="btn btn--ghost" href="contents.html">WORKS</a>
+          <a class="btn btn--ghost" href="goods.html">GOODS</a>
         </div>
       </div>
       <div class="colorbar" aria-hidden="true"></div>
@@ -49,6 +50,17 @@
         <a class="more-link" href="contents.html">すべて表示</a>
       </p>
     </section>
+
+    <section id="goods" aria-labelledby="home-goods-heading">
+      <div class="section-head">
+        <p>Goods</p>
+        <h2 id="home-goods-heading">グッズ</h2>
+      </div>
+      <div class="work-grid" id="home-goods"></div>
+      <p style="margin-top:16px;">
+        <a class="more-link" href="goods.html">すべて表示</a>
+      </p>
+    </section>
   </div>
 
   <footer class="site-footer" id="site-footer"></footer>
@@ -56,6 +68,7 @@
   <script src="data/site.js"></script>
   <script src="data/about.js"></script>
   <script src="data/works.js"></script>
+  <script src="data/goods.js"></script>
   <script src="js/main.js"></script>
   <script>
     NAZONE.init();
@@ -65,9 +78,14 @@
       const aboutText = document.getElementById("home-about-text");
       if (aboutText) aboutText.textContent = ABOUT.lead;
 
-      const home = document.getElementById("home-works");
-      if (!home) return;
-      home.innerHTML = getListedWorks().slice(0, 6).map((w) => NAZONE.workCardHtml(w)).join("");
+      const homeWorks = document.getElementById("home-works");
+      if (homeWorks) {
+        homeWorks.innerHTML = getListedWorks().slice(0, 6).map((w) => NAZONE.workCardHtml(w)).join("");
+      }
+      const homeGoods = document.getElementById("home-goods");
+      if (homeGoods) {
+        homeGoods.innerHTML = getListedGoods().map((g) => NAZONE.goodCardHtml(g)).join("");
+      }
     })();
   </script>
 </body>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NAZONE グッズ詳細">
+  <title>GOOD | NAZONE</title>
+  <link rel="icon" href="assets/brand/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+
+  <main class="wrap">
+    <div id="good-detail"></div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script src="data/site.js"></script>
+  <script src="data/goods.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const good = getGoodById(params.get("id") || "");
+
+    NAZONE.init({ crumb: good ? good.title : "GOOD" });
+
+    const mount = document.getElementById("good-detail");
+    if (!good) {
+      mount.innerHTML = `
+        <p style="text-align:center;margin:80px 0;">グッズが見つかりませんでした。</p>
+        <p style="text-align:center;"><a class="more-link" href="goods.html">GOODS へ戻る</a></p>`;
+    } else {
+      document.title = `${good.title} | NAZONE`;
+      const about = good.about
+        ? `<h3>【ABOUT】</h3><p>${good.about.replace(/\n/g, "<br>")}</p>`
+        : "";
+      const meta =
+        good.meta && good.meta.length
+          ? `<ul>${good.meta.map((m) => `<li>${m}</li>`).join("")}</ul>`
+          : "";
+      const hashtag = good.hashtag
+        ? `<p>ハッシュタグ：${good.hashtag}</p>`
+        : "";
+
+      mount.innerHTML = `
+        <article class="work-detail">
+          <div class="work-detail__media">${NAZONE.goodImageHtml(good)}</div>
+          <div>
+            <h1 class="work-detail__title">${good.title}</h1>
+            <p class="work-detail__date">${good.date || ""}</p>
+            ${about}
+            ${meta}
+            ${hashtag}
+            <p style="margin-top:28px;">
+              <a class="more-link" href="goods.html">GOODS へ戻る</a>
+            </p>
+          </div>
+        </article>`;
+    }
+  </script>
+</body>
+</html>
