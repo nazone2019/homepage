@@ -620,12 +620,94 @@ body.page-naiyoubutsu {
   background: #77cbea;
   color: #fff;
   text-align: center;
+  font-family: "MS Pゴシック", ui-sans-serif, system-ui, -apple-system, "system-ui", "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 25px;
+  letter-spacing: 0.8px;
+}
+
+.naiyou-tri-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.naiyou-tri-bg span {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--s);
+  height: var(--s);
+  opacity: var(--o);
+  background: #fff;
+  clip-path: polygon(50% 6%, 100% 92%, 0 92%);
+  transform: rotate(var(--r));
+  transform-origin: center;
+  animation: naiyou-tri-drift 9s ease-in-out infinite;
+}
+
+.naiyou-tri-bg span:nth-child(3n) {
+  animation-duration: 11s;
+  animation-delay: -2s;
+}
+
+.naiyou-tri-bg span:nth-child(4n) {
+  animation-duration: 13s;
+  animation-delay: -5s;
+}
+
+.naiyou-tri-bg span:nth-child(5n) {
+  animation-duration: 10s;
+  animation-delay: -7s;
+}
+
+.naiyou-tri-bg span.is-outline {
+  background: #fff;
+  clip-path: polygon(
+    evenodd,
+    50% 4%,
+    98% 96%,
+    2% 96%,
+    50% 4%,
+    50% 18%,
+    16% 84%,
+    84% 84%,
+    50% 18%
+  );
+}
+
+@keyframes naiyou-tri-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(var(--r));
+  }
+  50% {
+    transform: translate3d(0, -8px, 0) rotate(var(--r));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .naiyou-tri-bg span {
+    animation: none;
+  }
 }
 
 .naiyou-sheet {
+  position: relative;
+  z-index: 1;
   flex: 1;
   width: 100%;
+  overflow: hidden;
   background: #77cbea;
+}
+
+.naiyou-hero,
+.naiyou-wrap {
+  position: relative;
+  z-index: 1;
 }
 
 .naiyou-hero {
@@ -697,8 +779,6 @@ body.page-naiyoubutsu .menu-btn {
 
 .naiyou-thanks {
   margin: 0 0 24px;
-  font-size: 15px;
-  line-height: 1.8;
   overflow-wrap: anywhere;
 }
 
@@ -775,7 +855,7 @@ body.page-naiyoubutsu .naiyou-form .naiyou-btn {
 
 .naiyou-step-bar {
   width: calc(100% + var(--pad-x) * 2);
-  margin: 0 calc(var(--pad-x) * -1) 16px;
+  margin: 0 calc(var(--pad-x) * -1) 24px;
   padding: 10px 16px;
   background: #fff;
   color: #102018;
@@ -840,7 +920,7 @@ button.naiyou-step-bar.hint-step-toggle {
 
 .naiyou-open,
 .naiyou-q {
-  margin: 0 0 8px;
+  margin: 0 0 14px;
   font-size: 16px;
   font-weight: 700;
 }
@@ -864,9 +944,6 @@ button.naiyou-step-bar.hint-step-toggle {
 
 .naiyou-complete-body {
   margin: 0 0 24px;
-  font-size: 15px;
-  line-height: 1.8;
-  font-weight: 700;
 }
 
 .naiyou-complete-body p {
@@ -1028,7 +1105,7 @@ button.naiyou-step-bar.hint-step-toggle {
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  margin-top: 10px;
+  margin-top: 18px;
 }
 
 .naiyou-form input {
@@ -1038,6 +1115,7 @@ button.naiyou-step-bar.hint-step-toggle {
   border-radius: 10px;
   padding: 12px 14px;
   background: #fff;
+  color: #102018;
   text-align: center;
 }
 
@@ -1049,22 +1127,6 @@ button.naiyou-step-bar.hint-step-toggle {
 .naiyou-form .naiyou-btn:disabled {
   opacity: 0.42;
   cursor: default;
-}
-
-.naiyou-reset {
-  position: fixed;
-  left: 16px;
-  bottom: 20px;
-  z-index: 50;
-  min-height: 36px;
-  padding: 0 12px;
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  border-radius: 999px;
-  background: rgba(16, 32, 24, 0.28);
-  color: #fff;
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
 }
 
 #keyboard-sink {

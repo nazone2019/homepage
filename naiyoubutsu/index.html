@@ -15,6 +15,34 @@
 </head>
 <body class="page-naiyoubutsu">
   <div class="naiyou-sheet">
+    <div class="naiyou-tri-bg" aria-hidden="true">
+      <span style="--x:5%; --y:6%; --s:34px; --r:-18deg; --o:.2"></span>
+      <span style="--x:90%; --y:4%; --s:22px; --r:28deg; --o:.15"></span>
+      <span style="--x:16%; --y:14%; --s:48px; --r:12deg; --o:.1"></span>
+      <span style="--x:74%; --y:12%; --s:26px; --r:-42deg; --o:.18"></span>
+      <span style="--x:44%; --y:9%; --s:16px; --r:55deg; --o:.16"></span>
+      <span style="--x:92%; --y:22%; --s:40px; --r:8deg; --o:.12"></span>
+      <span style="--x:7%; --y:30%; --s:28px; --r:36deg; --o:.15"></span>
+      <span style="--x:58%; --y:26%; --s:20px; --r:-24deg; --o:.18"></span>
+      <span style="--x:80%; --y:36%; --s:54px; --r:16deg; --o:.09"></span>
+      <span style="--x:28%; --y:40%; --s:24px; --r:-50deg; --o:.16"></span>
+      <span style="--x:12%; --y:52%; --s:36px; --r:22deg; --o:.13"></span>
+      <span style="--x:66%; --y:48%; --s:18px; --r:40deg; --o:.18"></span>
+      <span style="--x:88%; --y:58%; --s:30px; --r:-14deg; --o:.14"></span>
+      <span style="--x:38%; --y:56%; --s:44px; --r:6deg; --o:.1"></span>
+      <span style="--x:4%; --y:68%; --s:32px; --r:-28deg; --o:.15"></span>
+      <span style="--x:52%; --y:66%; --s:22px; --r:34deg; --o:.17"></span>
+      <span style="--x:78%; --y:74%; --s:46px; --r:-8deg; --o:.1"></span>
+      <span style="--x:22%; --y:78%; --s:26px; --r:48deg; --o:.16"></span>
+      <span style="--x:94%; --y:84%; --s:20px; --r:-36deg; --o:.18"></span>
+      <span style="--x:42%; --y:88%; --s:38px; --r:14deg; --o:.12"></span>
+      <span style="--x:10%; --y:94%; --s:28px; --r:-22deg; --o:.14"></span>
+      <span style="--x:70%; --y:92%; --s:34px; --r:30deg; --o:.13"></span>
+      <span class="is-outline" style="--x:34%; --y:20%; --s:42px; --r:-32deg; --o:.22"></span>
+      <span class="is-outline" style="--x:84%; --y:44%; --s:36px; --r:48deg; --o:.2"></span>
+      <span class="is-outline" style="--x:18%; --y:62%; --s:50px; --r:10deg; --o:.18"></span>
+      <span class="is-outline" style="--x:60%; --y:82%; --s:40px; --r:-40deg; --o:.2"></span>
+    </div>
     <p class="naiyou-hero">
       <img src="../assets/naiyoubutsu/title.png" alt="まずは内容物一覧をご確認ください！" width="2504" height="1772">
     </p>
@@ -37,7 +65,6 @@
   </div>
 
   <a class="naiyou-hint-fab" id="hint-fab" href="../hint/">ヒント</a>
-  <button class="naiyou-reset" id="reset-btn" type="button"></button>
   <button type="button" id="keyboard-sink" tabindex="-1" aria-hidden="true"></button>
   <div class="naiyou-clear" id="clear-overlay" hidden>
     <p id="clear-message">正解！</p>
@@ -380,8 +407,6 @@
       startBtn.textContent = data.startLabel || "始める";
       const hintFab = document.getElementById("hint-fab");
       if (hintFab && data.hintLabel) hintFab.textContent = data.hintLabel;
-      const resetBtn = document.getElementById("reset-btn");
-      if (resetBtn) resetBtn.textContent = data.resetLabel || "最初に戻す（編集用）";
 
       const progress = loadProgress();
 
@@ -392,22 +417,6 @@
         renderSteps(progress.solved, true, scrollToCurrent);
       }
 
-      function resetToStart() {
-        if (!window.confirm(data.resetConfirm || "最初の状態に戻しますか？")) return;
-        sessionStorage.removeItem(STORAGE_KEY);
-        progress.started = false;
-        progress.solved = 0;
-        progress.answers = [];
-        startBtn.classList.remove("is-hidden");
-        document.getElementById("naiyou-steps").innerHTML = "";
-        const overlay = document.getElementById("clear-overlay");
-        if (overlay) {
-          overlay.classList.remove("is-on");
-          overlay.hidden = true;
-        }
-        window.scrollTo(0, 0);
-      }
-
       if (progress.started) {
         begin(false);
       }
@@ -416,8 +425,6 @@
         if (progress.started) return;
         begin(true);
       });
-
-      if (resetBtn) resetBtn.addEventListener("click", resetToStart);
 
       function setWrongVisible(form, visible) {
         const ng = form && form.querySelector(".naiyou-ng");
