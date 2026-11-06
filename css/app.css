@@ -52,7 +52,7 @@ button, input, textarea { font: inherit; font-size: 16px; }
 .wrap {
   width: min(100%, 1080px);
   margin: 0 auto;
-  padding: 0 16px 64px;
+  padding: 8px 20px 72px;
 }
 
 /* ---------- Header (phone: logo + hamburger) ---------- */
@@ -189,10 +189,10 @@ body.is-nav-open { overflow: hidden; }
 
 /* ---------- Section head ---------- */
 .section-head {
-  margin: 40px 0 16px;
+  margin: 36px 0 18px;
 }
 .section-head p {
-  margin: 0 0 4px;
+  margin: 0 0 6px;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -205,13 +205,14 @@ body.is-nav-open { overflow: hidden; }
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--ink-strong);
-  line-height: 1.3;
+  line-height: 1.35;
 }
 
 .page-lead {
-  margin: 0 0 20px;
+  margin: 0 0 28px;
   color: var(--muted);
   font-size: 14px;
+  line-height: 1.7;
 }
 
 .about-copy {
@@ -260,7 +261,7 @@ body.is-nav-open { overflow: hidden; }
 .work-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
+  gap: 22px;
 }
 
 .work-card {
@@ -292,13 +293,13 @@ body.is-nav-open { overflow: hidden; }
   color: var(--brand-deep);
 }
 .work-card__cap {
-  padding: 10px 12px 12px;
+  padding: 14px 16px 16px;
 }
 .work-card__title {
-  margin: 0 0 2px;
+  margin: 0 0 6px;
   font-size: 15px;
   font-weight: 700;
-  line-height: 1.4;
+  line-height: 1.45;
 }
 .work-card__date {
   margin: 0;
@@ -310,12 +311,12 @@ body.is-nav-open { overflow: hidden; }
 .filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin: 0 0 18px;
+  gap: 10px;
+  margin: 0 0 24px;
 }
 .filter-label {
   width: 100%;
-  margin: 0 0 4px;
+  margin: 0 0 8px;
   font-size: 12px;
   font-weight: 700;
   color: var(--muted);
@@ -455,7 +456,8 @@ body.is-nav-open { overflow: hidden; }
 
 .work-detail {
   display: grid;
-  gap: 20px;
+  gap: 28px;
+  padding-top: 12px;
 }
 .work-detail__media {
   border-radius: 12px;
@@ -465,26 +467,40 @@ body.is-nav-open { overflow: hidden; }
 }
 .work-detail__media img { width: 100%; }
 .work-detail__title {
-  margin: 0 0 6px;
+  margin: 0 0 10px;
   font-size: 1.5rem;
   color: var(--ink-strong);
+  line-height: 1.4;
 }
 .work-detail__date {
-  margin: 0 0 12px;
+  margin: 0 0 20px;
   color: var(--muted);
   font-size: 13px;
 }
 .work-detail h3 {
-  margin: 18px 0 6px;
+  margin: 28px 0 12px;
   font-size: 13px;
   color: var(--brand-deep);
+}
+.work-detail h3:first-child {
+  margin-top: 0;
 }
 .work-detail p,
 .work-detail li {
   font-size: 14px;
+  line-height: 1.85;
   white-space: pre-wrap;
 }
-.work-detail ul { padding-left: 1.2em; }
+.work-detail p {
+  margin: 0 0 1em;
+}
+.work-detail p:last-child {
+  margin-bottom: 0;
+}
+.work-detail ul {
+  margin: 0 0 1em;
+  padding-left: 1.2em;
+}
 
 /* ---------- Footer ---------- */
 .site-footer {
@@ -512,9 +528,12 @@ body.is-nav-open { overflow: hidden; }
 
 /* ---------- Tablet ---------- */
 @media (min-width: 640px) {
-  .wrap { padding: 0 24px 80px; }
-  .hero { margin-left: -24px; margin-right: -24px; }
-  .work-grid { grid-template-columns: repeat(2, 1fr); }
+  .wrap { padding: 12px 28px 88px; }
+  .hero { margin-left: -28px; margin-right: -28px; }
+  .work-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
   .member-row {
     display: grid;
     grid-template-columns: 140px 1fr;
@@ -591,7 +610,8 @@ body.is-nav-open { overflow: hidden; }
     background: var(--card);
     border: 1px solid var(--line);
     border-radius: 16px;
-    padding: 24px;
+    padding: 32px;
+    gap: 32px;
   }
 }
 
@@ -740,10 +760,10 @@ body.page-naiyoubutsu .menu-btn {
 }
 
 .naiyou-wrap {
-  --pad-x: 20px;
+  --pad-x: 22px;
   width: 100%;
   flex: 1;
-  padding: 12px var(--pad-x) 56px;
+  padding: 20px var(--pad-x) 64px;
 }
 
 .naiyou-intro h1,
@@ -848,15 +868,15 @@ body.page-naiyoubutsu .naiyou-form .naiyou-btn {
 .naiyou-form .naiyou-btn { margin-top: 0; }
 
 .naiyou-step {
-  margin-top: 28px;
+  margin-top: 36px;
   scroll-margin-top: 24px;
   overflow-anchor: none;
 }
 
 .naiyou-step-bar {
   width: calc(100% + var(--pad-x) * 2);
-  margin: 0 calc(var(--pad-x) * -1) 24px;
-  padding: 10px 16px;
+  margin: 0 calc(var(--pad-x) * -1) 28px;
+  padding: 12px 16px;
   background: #fff;
   color: #102018;
   font-size: 15px;
@@ -920,9 +940,10 @@ button.naiyou-step-bar.hint-step-toggle {
 
 .naiyou-open,
 .naiyou-q {
-  margin: 0 0 14px;
+  margin: 0 0 16px;
   font-size: 16px;
   font-weight: 700;
+  line-height: 1.7;
 }
 
 .naiyou-complete {
@@ -1104,8 +1125,8 @@ button.naiyou-step-bar.hint-step-toggle {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  margin-top: 18px;
+  gap: 12px;
+  margin-top: 22px;
 }
 
 .naiyou-form input {
