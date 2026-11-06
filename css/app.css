@@ -257,11 +257,11 @@ body.is-nav-open { overflow: hidden; }
 }
 .about-block li:last-child { border-bottom: 0; }
 
-/* ---------- Work grid: 2列・画像全体表示 ---------- */
+/* ---------- Work grid: 3列・画像全体表示 ---------- */
 .work-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
 }
 
 .work-card {
@@ -302,18 +302,18 @@ body.is-nav-open { overflow: hidden; }
 .work-card__cap {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 10px 12px 12px;
+  gap: 3px;
+  padding: 8px 8px 10px;
 }
 .work-card__title {
   margin: 0;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
-  line-height: 1.4;
+  line-height: 1.35;
 }
 .work-card__date {
   margin: 0;
-  font-size: 11px;
+  font-size: 10px;
   color: var(--muted);
   font-weight: 500;
 }
@@ -541,16 +541,16 @@ body.is-nav-open { overflow: hidden; }
   .wrap { padding: 12px 28px 88px; }
   .hero { margin-left: -28px; margin-right: -28px; }
   .work-grid {
-    gap: 18px;
+    gap: 14px;
   }
   .work-card__cap {
-    padding: 12px 14px 14px;
+    padding: 10px 12px 12px;
   }
   .work-card__title {
-    font-size: 15px;
+    font-size: 13px;
   }
   .work-card__date {
-    font-size: 12px;
+    font-size: 11px;
   }
   .member-row {
     display: grid;
@@ -635,7 +635,10 @@ body.is-nav-open { overflow: hidden; }
 
 @media (min-width: 960px) {
   .work-grid {
-    gap: 22px;
+    gap: 18px;
+  }
+  .work-card__title {
+    font-size: 14px;
   }
   .contact-form { max-width: 520px; }
 }
