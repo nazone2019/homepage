@@ -169,7 +169,7 @@
         return `
           <section class="naiyou-step" data-step="${n}">
             ${bar}
-            <p class="naiyou-open">${escapeHtml(step.open)}</p>
+            <p class="naiyou-open">${escapeHtml(step.open).replace(/\n/g, "<br>")}</p>
             ${noticeHtml(step.notice)}
             <p class="naiyou-q">${escapeHtml(step.question)}</p>
             ${noticeHtml(step.questionNotice)}
