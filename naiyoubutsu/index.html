@@ -182,53 +182,74 @@
           </section>`;
       }
 
+      function isMobileLike() {
+        return (
+          window.matchMedia("(hover: none), (pointer: coarse)").matches ||
+          "ontouchstart" in window
+        );
+      }
+
+      function keyboardGap() {
+        const vv = window.visualViewport;
+        if (!vv) return 0;
+        // iOS では innerHeight も縮むことがあるため clientHeight / offsetTop で判定
+        const layout = document.documentElement.clientHeight || window.innerHeight;
+        return Math.max(layout - vv.height, vv.offsetTop || 0);
+      }
+
+      function isKeyboardOpen() {
+        return keyboardGap() >= 48;
+      }
+
       function waitForKeyboardClose(maxMs) {
         return new Promise((resolve) => {
           const vv = window.visualViewport;
-          const threshold = 48;
           let settled = false;
 
           const finish = () => {
             if (settled) return;
             settled = true;
-            if (vv) vv.removeEventListener("resize", onResize);
-            window.setTimeout(resolve, 60);
+            if (vv) {
+              vv.removeEventListener("resize", onChange);
+              vv.removeEventListener("scroll", onChange);
+            }
+            window.setTimeout(resolve, 80);
           };
 
-          const isClosed = () => {
-            if (!vv) return true;
-            return window.innerHeight - vv.height < threshold;
+          const onChange = () => {
+            if (!isKeyboardOpen()) finish();
           };
 
-          const onResize = () => {
-            if (isClosed()) finish();
-          };
-
-          if (isClosed()) {
+          if (!isKeyboardOpen()) {
             finish();
             return;
           }
 
-          if (vv) vv.addEventListener("resize", onResize);
+          if (vv) {
+            vv.addEventListener("resize", onChange);
+            vv.addEventListener("scroll", onChange);
+          }
           window.setTimeout(finish, maxMs);
         });
       }
 
-      function isKeyboardOpen() {
-        const vv = window.visualViewport;
-        if (!vv) return false;
-        return window.innerHeight - vv.height >= 48;
-      }
-
       function dismissKeyboard() {
-        const active = document.activeElement;
-        if (active && typeof active.blur === "function") active.blur();
-        document.querySelectorAll(".naiyou-form input, .naiyou-form button").forEach((el) => {
+        const mobile = isMobileLike();
+        const open = isKeyboardOpen();
+
+        // 正解時は入力を readonly にしてから blur（iOS でキーボードが残りやすい対策）
+        document.querySelectorAll(".naiyou-form input").forEach((el) => {
+          el.setAttribute("readonly", "readonly");
+          el.blur();
+        });
+        document.querySelectorAll(".naiyou-form button").forEach((el) => {
           if (typeof el.blur === "function") el.blur();
         });
+        const active = document.activeElement;
+        if (active && typeof active.blur === "function") active.blur();
 
-        // モバイルキーボードが出ているときだけフォーカス退避（PCではスクロールを邪魔しない）
-        if (!isKeyboardOpen()) {
+        // PC でキーボードが無いときは待たない
+        if (!mobile && !open) {
           return Promise.resolve();
         }
 
@@ -241,9 +262,10 @@
           }
         }
 
+        const minWait = mobile ? 420 : 200;
         return Promise.all([
-          waitForKeyboardClose(520),
-          new Promise((resolve) => window.setTimeout(resolve, 240)),
+          waitForKeyboardClose(900),
+          new Promise((resolve) => window.setTimeout(resolve, minWait)),
         ]).then(() => undefined);
       }
 
@@ -255,6 +277,7 @@
 
         document.body.classList.add("is-clear-playing");
 
+        // モバイルはキーボードを閉じてから正解演出
         return dismissKeyboard().then(() => {
           overlay.hidden = false;
           overlay.classList.remove("is-on");
