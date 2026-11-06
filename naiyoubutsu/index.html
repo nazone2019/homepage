@@ -385,11 +385,11 @@
 
       const progress = loadProgress();
 
-      function begin() {
+      function begin(scrollToCurrent) {
         progress.started = true;
         saveProgress(progress);
         startBtn.classList.add("is-hidden");
-        renderSteps(progress.solved, true);
+        renderSteps(progress.solved, true, scrollToCurrent);
       }
 
       function resetToStart() {
@@ -409,12 +409,12 @@
       }
 
       if (progress.started) {
-        begin();
+        begin(false);
       }
 
       startBtn.addEventListener("click", () => {
         if (progress.started) return;
-        begin();
+        begin(true);
       });
 
       if (resetBtn) resetBtn.addEventListener("click", resetToStart);
