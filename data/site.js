@@ -5,7 +5,7 @@
 const SITE = {
   name: "NAZONE",
   tagline: "ココロざす を 志す",
-  description: "全国の大学生を中心とした謎解き制作集団",
+  description: "全国の大学生が集まってできた謎解き制作集団",
   founded: "2019年6月",
   copyright: "©2019 NAZONE All Rights Reserved.",
   twitter: "https://twitter.com/nazone2019",

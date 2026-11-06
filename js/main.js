@@ -104,10 +104,23 @@
     return `<div class="work-card__placeholder">${work.title}</div>`;
   }
 
+  function cardThumbHtml(src, title) {
+    return `
+      <div class="work-card__thumb">
+        <span class="work-card__blur" aria-hidden="true">
+          <img src="${src}" alt="">
+        </span>
+        <img class="work-card__photo" src="${src}" alt="${title}" loading="lazy">
+      </div>`;
+  }
+
   function workCardHtml(work, heading = "h3") {
+    const thumb = work.image
+      ? cardThumbHtml(href("assets/works/" + work.image), work.title)
+      : `<div class="work-card__thumb"><div class="work-card__placeholder">${work.title}</div></div>`;
     return `
       <a class="work-card" href="${href("work.html")}?id=${encodeURIComponent(work.id)}" data-year="${work.year || ""}">
-        <div class="work-card__thumb">${workImageHtml(work)}</div>
+        ${thumb}
         <div class="work-card__cap">
           <${heading} class="work-card__title">${work.title}</${heading}>
           <p class="work-card__date">${work.date}</p>
@@ -123,9 +136,12 @@
   }
 
   function goodCardHtml(good, heading = "h3") {
+    const thumb = good.image
+      ? cardThumbHtml(href("assets/goods/" + good.image), good.title)
+      : `<div class="work-card__thumb"><div class="work-card__placeholder">${good.title}</div></div>`;
     return `
       <a class="work-card" href="${href("good.html")}?id=${encodeURIComponent(good.id)}" data-year="${good.year || ""}">
-        <div class="work-card__thumb">${goodImageHtml(good)}</div>
+        ${thumb}
         <div class="work-card__cap">
           <${heading} class="work-card__title">${good.title}</${heading}>
           <p class="work-card__date">${good.date || ""}</p>
