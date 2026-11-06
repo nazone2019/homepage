@@ -457,13 +457,38 @@
 
       const stepsRoot = document.getElementById("naiyou-steps");
 
-      // 送信ボタンへのフォーカス移動でキーボードが閉じ、画面が跳ねるのを防ぐ
+      function clearInputSelection(input) {
+        if (!input) return;
+        const len = String(input.value || "").length;
+        try {
+          input.setSelectionRange(len, len);
+        } catch (err) {
+          // type によっては setSelectionRange 非対応
+        }
+      }
+
+      // 不正解時のみ送信ボタンへのフォーカス移動を防ぎ、キーボード維持＆選択状態を避ける
       stepsRoot.addEventListener(
         "pointerdown",
         (e) => {
           const btn = e.target.closest(".naiyou-form:not(.is-locked) button[type='submit']");
           if (!btn) return;
+          const form = btn.closest(".naiyou-form");
+          if (!form) return;
+          const index = Number(form.dataset.index);
+          const input = form.querySelector("input");
+          const value = (input && input.value) || "";
+          const correct =
+            index === progress.solved && isCorrect(data.steps[index], value);
+
+          if (correct) {
+            // 正解時はフォーカス移動を許可し、キーボードを閉じ始める
+            clearInputSelection(input);
+            return;
+          }
+
           e.preventDefault();
+          clearInputSelection(input);
         },
         { passive: false }
       );
@@ -477,6 +502,7 @@
         if (index !== progress.solved) return;
         const input = form.querySelector("input");
         const value = (input && input.value) || "";
+        clearInputSelection(input);
         if (isCorrect(data.steps[index], value)) {
           progress.answers[index] = value;
           progress.solved += 1;
@@ -494,6 +520,7 @@
             } catch (err) {
               input.focus();
             }
+            clearInputSelection(input);
           }
         }
       });
