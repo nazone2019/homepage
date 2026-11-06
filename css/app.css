@@ -613,6 +613,14 @@ body.is-nav-open { overflow: hidden; }
   border: 0;
 }
 
+@font-face {
+  font-family: "Kuramubon";
+  src: url("../naiyoubutsu/Kuramubon.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 body.page-naiyoubutsu {
   display: flex;
   flex-direction: column;
@@ -700,6 +708,11 @@ body.page-naiyoubutsu .menu-btn {
   font-size: 15px;
   line-height: 1.8;
   overflow-wrap: anywhere;
+}
+
+body.page-naiyoubutsu .naiyou-thanks,
+body.page-naiyoubutsu .naiyou-complete-body {
+  font-family: "Kuramubon", "Noto Sans JP", sans-serif;
 }
 
 .naiyou-thanks p {
