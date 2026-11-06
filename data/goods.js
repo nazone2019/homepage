@@ -17,8 +17,8 @@ const GOODS = [
   {
     id: "mazu-naiyoubutsu",
     title: "まずは内容物一覧をご確認ください！",
-    date: "2025年",
-    year: 2025,
+    date: "2026年",
+    year: 2026,
     image: "mazu-naiyoubutsu.png",
     clearImage: "mazu-naiyoubutsu-clear.png",
     sharePath: "share/naiyoubutsu-clear/",
