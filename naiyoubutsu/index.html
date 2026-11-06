@@ -467,6 +467,35 @@
         }
       }
 
+      function suppressInputSelection(form, input, ms) {
+        if (!form) return;
+        form.dataset.suppressSelect = String(Date.now() + (ms || 600));
+        clearInputSelection(input);
+        window.requestAnimationFrame(() => clearInputSelection(input));
+        [0, 30, 80, 160, 280, 450].forEach((delay) => {
+          window.setTimeout(() => clearInputSelection(input), delay);
+        });
+      }
+
+      // 変換確定などで select が走っても、送信直後は選択を解除する
+      stepsRoot.addEventListener("select", (e) => {
+        const input = e.target.closest(".naiyou-form input");
+        if (!input) return;
+        const form = input.closest(".naiyou-form");
+        if (!form) return;
+        if (Date.now() >= Number(form.dataset.suppressSelect || 0)) return;
+        clearInputSelection(input);
+      });
+
+      stepsRoot.addEventListener("compositionend", (e) => {
+        const input = e.target.closest(".naiyou-form input");
+        if (!input) return;
+        const form = input.closest(".naiyou-form");
+        if (!form) return;
+        if (Date.now() >= Number(form.dataset.suppressSelect || 0)) return;
+        suppressInputSelection(form, input, 400);
+      });
+
       // 不正解時のみ送信ボタンへのフォーカス移動を防ぎ、キーボード維持＆選択状態を避ける
       stepsRoot.addEventListener(
         "pointerdown",
@@ -481,14 +510,14 @@
           const correct =
             index === progress.solved && isCorrect(data.steps[index], value);
 
+          suppressInputSelection(form, input, 700);
+
           if (correct) {
             // 正解時はフォーカス移動を許可し、キーボードを閉じ始める
-            clearInputSelection(input);
             return;
           }
 
           e.preventDefault();
-          clearInputSelection(input);
         },
         { passive: false }
       );
@@ -502,7 +531,7 @@
         if (index !== progress.solved) return;
         const input = form.querySelector("input");
         const value = (input && input.value) || "";
-        clearInputSelection(input);
+        suppressInputSelection(form, input, 700);
         if (isCorrect(data.steps[index], value)) {
           progress.answers[index] = value;
           progress.solved += 1;
@@ -520,7 +549,7 @@
             } catch (err) {
               input.focus();
             }
-            clearInputSelection(input);
+            suppressInputSelection(form, input, 700);
           }
         }
       });
