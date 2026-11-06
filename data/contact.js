@@ -4,5 +4,5 @@
 const CONTACT = {
   lead:
     "謎解きの制作依頼をいつでもお待ちしています。法人・個人問わず、まずはお気軽にご連絡ください。",
-  email: "",
+  email: "nazone2019@gmail.com",
 };
