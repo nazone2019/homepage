@@ -20,21 +20,25 @@
       <h1>お問い合わせ</h1>
     </div>
     <p class="contact-lead" id="contact-lead"></p>
-    <form class="contact-form" id="contact-form">
+    <form class="contact-form" id="contact-form" method="post" action="">
+      <div class="contact-honeypot" aria-hidden="true">
+        <label for="wana">Leave blank</label>
+        <input id="wana" name="wana" type="text" tabindex="-1" autocomplete="off">
+      </div>
       <div class="field">
         <label for="name">お名前 *</label>
-        <input id="name" name="name" type="text" required autocomplete="name">
+        <input id="name" name="お名前" type="text" required autocomplete="name">
       </div>
       <div class="field">
         <label for="email">メールアドレス *</label>
-        <input id="email" name="email" type="email" required autocomplete="email">
+        <input id="email" name="メールアドレス" type="email" required autocomplete="email">
       </div>
       <div class="field">
-        <label for="message">本文</label>
-        <textarea id="message" name="message"></textarea>
+        <label for="message">本文 *</label>
+        <textarea id="message" name="お問い合わせ内容" required></textarea>
       </div>
       <button class="btn-submit" type="submit">送信</button>
-      <p class="form-note">送信するとメールアプリが開きます。<a href="privacy.html">プライバシーポリシー</a></p>
+      <p class="form-note">送信内容は <span id="contact-email"></span> へ届きます。<a href="privacy.html">プライバシーポリシー</a></p>
     </form>
   </main>
 
@@ -46,23 +50,12 @@
   <script>
     NAZONE.init({ crumb: "CONTACT" });
     document.getElementById("contact-lead").textContent = CONTACT.lead;
-
-    document.getElementById("contact-form").addEventListener("submit", (e) => {
-      e.preventDefault();
-      const name = document.getElementById("name").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const message = document.getElementById("message").value.trim();
-      const subject = encodeURIComponent(`[NAZONE] お問い合わせ — ${name}`);
-      const body = encodeURIComponent(
-        `お名前: ${name}\nメール: ${email}\n\n${message}`
-      );
-      const to = CONTACT.email || "";
-      if (!to) {
-        alert("送信先メールアドレスが未設定です。data/contact.js の email を設定してください。");
-        return;
-      }
-      location.href = `mailto:${to}?subject=${subject}&body=${body}`;
-    });
+    const form = document.getElementById("contact-form");
+    const emailNote = document.getElementById("contact-email");
+    if (emailNote) emailNote.textContent = CONTACT.email || "";
+    if (form && CONTACT.formAction) {
+      form.action = CONTACT.formAction;
+    }
   </script>
 </body>
 </html>

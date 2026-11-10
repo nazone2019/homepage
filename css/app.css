@@ -424,7 +424,61 @@ body.is-nav-open { overflow: hidden; }
   margin: 0 0 18px;
   font-size: 15px;
 }
+.contact-honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.thanks-box {
+  max-width: 640px;
+  margin: 24px auto 0;
+  padding: 28px 22px 32px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  text-align: center;
+}
+
+.thanks-eyebrow {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--brand);
+  text-transform: uppercase;
+}
+
+.thanks-box h1 {
+  margin: 0 0 20px;
+  font-size: clamp(1.4rem, 4vw, 1.85rem);
+  line-height: 1.4;
+  color: var(--ink-strong);
+}
+
+.thanks-body {
+  margin: 0 0 8px;
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.85;
+}
+
+.thanks-body p {
+  margin: 0 0 1em;
+}
+
+.thanks-body p:last-child {
+  margin-bottom: 0;
+}
+
+.thanks-box .work-detail__back {
+  margin-top: 18px;
+}
+
 .contact-form {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 14px;
