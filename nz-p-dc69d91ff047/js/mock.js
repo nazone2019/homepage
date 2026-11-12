@@ -87,6 +87,32 @@
   if (document.readyState === "complete") revealHomeHero();
   else window.addEventListener("load", revealHomeHero);
 
+  function revealHomePanels() {
+    const panels = document.querySelectorAll(".home-panel");
+    if (!panels.length) return;
+
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce || !("IntersectionObserver" in window)) {
+      panels.forEach((panel) => panel.classList.add("is-in"));
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-in");
+          io.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.18, rootMargin: "0px 0px -8% 0px" }
+    );
+
+    panels.forEach((panel) => io.observe(panel));
+  }
+
+  revealHomePanels();
+
   function sorted(list) {
     return window.DRAFT_sortByDateDesc
       ? window.DRAFT_sortByDateDesc(list)

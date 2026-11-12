@@ -1321,6 +1321,26 @@ body[data-page="goods"] .mock-filters {
   overflow: visible;
   display: grid;
   justify-items: center;
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.85s var(--mock-ease),
+    transform 0.85s var(--mock-ease);
+  will-change: opacity, transform;
+}
+
+.home-panel.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-panel {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
 }
 
 .home-panel .mock-list-heading {
