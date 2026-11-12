@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="お問い合わせ（草案）">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Contact | NAZONE（草案）</title>
+  <link rel="icon" href="../assets/brand/favicon.png" type="image/png">
+  <link rel="stylesheet" href="css/mock.css?v=32">
+</head>
+<body class="draft-mock" data-page="contact">
+  <div class="mock-stage mock-stage--list">
+    <header class="mock-list-header">
+      <a class="mock-list-logo" href="index.html" aria-label="NAZONE トップ">
+        <img src="nazone_logo.webp" alt="NAZONE" width="4123" height="884" decoding="async" fetchpriority="high" draggable="false">
+      </a>
+      <button class="mock-menu" id="menu-btn" type="button" aria-label="メニュー" aria-expanded="false" aria-controls="mock-nav">
+        <img src="assets/menu-icon.webp" alt="" width="155" height="125" draggable="false">
+      </button>
+    </header>
+
+    <div class="mock-content-panel">
+      <header class="mock-list-heading">
+        <h1 class="mock-list-heading__ja">お問い合わせ</h1>
+        <p class="mock-list-heading__en">Contact</p>
+      </header>
+
+      <p class="mock-contact-lead">謎解きの制作依頼をいつでもお待ちしております。<br>法人・個人問わず、まずはお気軽にご連絡ください。</p>
+
+      <form
+        class="mock-contact-form"
+        id="contact-form"
+        method="post"
+        action="https://ssgform.com/s/2jcHWVRGUrUS"
+      >
+        <div class="mock-contact-form__honeypot" aria-hidden="true">
+          <label for="wana">Leave blank</label>
+          <input id="wana" name="wana" type="text" tabindex="-1" autocomplete="off">
+        </div>
+
+        <label class="mock-contact-form__field">
+          <span>お名前 *</span>
+          <input id="name" name="お名前" type="text" required autocomplete="name">
+        </label>
+
+        <label class="mock-contact-form__field">
+          <span>メールアドレス *</span>
+          <input id="email" name="メールアドレス" type="email" required autocomplete="email">
+        </label>
+
+        <label class="mock-contact-form__field mock-contact-form__field--message">
+          <span>本文 *</span>
+          <textarea id="message" name="お問い合わせ内容" required></textarea>
+        </label>
+
+        <button class="mock-contact-form__submit" type="submit">送信</button>
+
+        <p class="mock-contact-form__note">
+          送信内容は nazone2019@gmail.com へ届きます。<br>
+          <a href="../privacy.html">プライバシーポリシー</a>
+        </p>
+      </form>
+    </div>
+
+    <footer class="mock-list-footer">
+      <p>©2019 NAZONE. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <nav class="mock-nav" id="mock-nav" hidden>
+    <a href="index.html"><span class="mock-nav__ja">ホーム</span><span class="mock-nav__en">Home</span></a>
+    <a href="about.html"><span class="mock-nav__ja">NAZONEって？</span><span class="mock-nav__en">About</span></a>
+    <a href="works.html"><span class="mock-nav__ja">制作した公演</span><span class="mock-nav__en">Works</span></a>
+    <a href="goods.html"><span class="mock-nav__ja">制作したグッズ</span><span class="mock-nav__en">Goods</span></a>
+    <a href="contact.html" aria-current="page"><span class="mock-nav__ja">お問い合わせ</span><span class="mock-nav__en">Contact</span></a>
+    <a href="../index.html"><span class="mock-nav__ja">現行サイトへ</span><span class="mock-nav__en">Live</span></a>
+  </nav>
+
+  <nav class="mock-side-nav" aria-label="メインメニュー">
+    <a href="index.html"><span class="mock-side-nav__ja">ホーム</span><span class="mock-side-nav__en is-home">Home</span></a>
+    <a href="about.html"><span class="mock-side-nav__ja">NAZONEって？</span><span class="mock-side-nav__en is-about">About</span></a>
+    <a href="works.html"><span class="mock-side-nav__ja">制作した公演</span><span class="mock-side-nav__en is-works">Works</span></a>
+    <a href="goods.html"><span class="mock-side-nav__ja">制作したグッズ</span><span class="mock-side-nav__en is-goods">Goods</span></a>
+    <a href="contact.html" aria-current="page"><span class="mock-side-nav__ja">お問い合わせ</span><span class="mock-side-nav__en is-contact">Contact</span></a>
+  </nav>
+
+  <script src="js/mock-common.js"></script>
+</body>
+</html>

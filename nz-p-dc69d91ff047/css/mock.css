@@ -1,0 +1,1206 @@
+/* =========================================================
+   NAZONE draft — image stage (homepage_hp.webp) + motion
+   ========================================================= */
+
+@font-face {
+  font-family: "Shin Retro Maru Gothic";
+  src: url("../fonts/ShinRetroMaruGothic-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Shin Retro Maru Gothic";
+  src: url("../fonts/ShinRetroMaruGothic-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Shin Retro Maru Gothic";
+  src: url("../fonts/ShinRetroMaruGothic-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Kuramubon";
+  src: url("../fonts/Kuramubon.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* 完成画像のICC表示色に合わせる（生ピクセル#5dc289 → 表示#1ec584） */
+  --mock-green: #1ec584;
+  --mock-green-deep: #17a86f;
+  --mock-mint: #d3ffdb;
+  --mock-ink: #4b4b4b;
+  --mock-white: #ffffff;
+  --mock-font: "Shin Retro Maru Gothic", "Hiragino Maru Gothic ProN", sans-serif;
+  --mock-font-display: "Kuramubon", "Shin Retro Maru Gothic", sans-serif;
+  --mock-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --mock-stage-width: 480px;
+  --mock-desktop-bg: #c8f3dc;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body.draft-mock {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--mock-font);
+  font-weight: 500;
+  color: var(--mock-ink);
+  background: var(--mock-green);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* カスタムカーソル：64px素材を2x指定（表示約32CSS px）。ホットスポット＝不透明部の左下 */
+body.draft-mock,
+body.draft-mock a,
+body.draft-mock button {
+  cursor:
+    -webkit-image-set(url("../assets/cursor-point.png") 2x) 1 26,
+    image-set(url("../assets/cursor-point.png") 2x) 1 26,
+    url("../assets/cursor-point.png") 2 52,
+    url("../assets/cursor-point.webp") 2 52,
+    auto;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; }
+
+.mock-stage {
+  position: relative;
+  width: min(100%, var(--mock-stage-width));
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.mock-image {
+  width: 100%;
+  height: auto;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ---- Catchphrase: crops from homepage_asset.webp ---- */
+.catch {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.catch__line {
+  position: absolute;
+  height: auto;
+  max-width: none;
+  opacity: 0;
+  transition: opacity 0.9s var(--mock-ease);
+}
+
+.catch__line.is-in {
+  opacity: 1;
+}
+
+.catch__line--kana {
+  left: 52.083%;
+  top: 9.067%;
+  width: 43.229%;
+  transition-delay: 0.2s;
+}
+
+.catch__line--kanji {
+  left: 72.604%;
+  top: 15.267%;
+  width: 22.969%;
+  transition-delay: 1.05s;
+}
+
+/* SCROLL: 完成図の位置に固定（上下の細かい動きのみ） */
+.mock-scroll {
+  position: absolute;
+  left: 41.667%;
+  top: 22.067%;
+  z-index: 3;
+  margin: 0;
+  width: 16.927%;
+  pointer-events: none;
+}
+
+.mock-scroll__img {
+  width: 100%;
+  height: auto;
+  opacity: 0;
+  transition: opacity 0.8s var(--mock-ease) 1.7s;
+}
+
+.mock-scroll__img.is-in {
+  opacity: 1;
+  animation: scrollBob 1.5s var(--mock-ease) 2.5s infinite;
+}
+
+@keyframes scrollBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .catch__line,
+  .mock-scroll__img {
+    transition: none;
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ハンバーガー: モバイルのみ・完成図の位置 */
+.mock-menu {
+  position: absolute;
+  left: 86.979%;
+  top: 1.333%;
+  z-index: 20;
+  width: 8.073%;
+  aspect-ratio: 155 / 125;
+  display: grid;
+  place-items: center;
+}
+
+.mock-menu img {
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+/* PCサイドナビはモバイルでは非表示 */
+.mock-side-nav {
+  display: none;
+}
+
+/* ---- Hotspots ---- */
+.hotspot {
+  position: absolute;
+  z-index: 5;
+  display: block;
+}
+
+.hotspot--logo {
+  left: 4%;
+  top: 0.9%;
+  width: 36%;
+  height: 2.6%;
+}
+
+.hotspot--about-btn {
+  left: 34%;
+  top: 44.5%;
+  width: 32%;
+  height: 2.6%;
+}
+
+.hotspot--works-prev {
+  left: 1%;
+  top: 61.2%;
+  width: 11%;
+  height: 4.2%;
+}
+
+.hotspot--works-next {
+  left: 88%;
+  top: 61.2%;
+  width: 11%;
+  height: 4.2%;
+}
+
+.hotspot--works-card {
+  left: 12.3%;
+  top: 53.9%;
+  width: 74.8%;
+  height: 12.8%;
+  z-index: 4;
+}
+
+.hotspot--works-all {
+  left: 32%;
+  top: 68.5%;
+  width: 36%;
+  height: 2.8%;
+}
+
+.hotspot--goods-prev {
+  left: 1%;
+  top: 85%;
+  width: 11%;
+  height: 4.2%;
+}
+
+.hotspot--goods-next {
+  left: 88%;
+  top: 85%;
+  width: 11%;
+  height: 4.2%;
+}
+
+.hotspot--goods-card {
+  left: 12.3%;
+  top: 77.75%;
+  width: 74.8%;
+  height: 11.6%;
+  z-index: 4;
+}
+
+.hotspot--goods-all {
+  left: 32%;
+  top: 92.4%;
+  width: 36%;
+  height: 2.8%;
+}
+
+.hotspot--member {
+  left: 13.3%;
+  top: var(--t);
+  width: 72.7%;
+  height: var(--h);
+}
+
+.hotspot--list-card {
+  left: 12.3%;
+  top: var(--t);
+  width: 74.9%;
+  height: var(--h);
+}
+
+.hotspot--list-card--goods {
+  left: 14.17%;
+  width: 71.04%;
+}
+
+.hotspot--privacy {
+  left: 30%;
+  top: 84.5%;
+  width: 40%;
+  height: 2.2%;
+}
+
+/* ---- Works / Goods：完成図をコードで再現（背景画像なし） ---- */
+.mock-stage--list {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow: visible;
+  min-height: 100vh;
+  padding: 0 0 28px;
+  background: var(--mock-green);
+}
+
+.mock-list-header {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 27px 22px 22px 30px;
+}
+
+.mock-list-logo {
+  display: block;
+  width: min(31%, 147px);
+  line-height: 0;
+}
+
+.mock-list-logo img {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+}
+
+body[data-page="works"] .mock-menu,
+body[data-page="goods"] .mock-menu,
+body[data-page="contact"] .mock-menu,
+body[data-page="about"] .mock-menu,
+body[data-page="work"] .mock-menu,
+body[data-page="good"] .mock-menu {
+  position: relative;
+  left: auto;
+  top: auto;
+  width: 32px;
+  flex: 0 0 auto;
+  margin-right: 4px;
+}
+
+/* 完成図のミントパネル：角丸30px */
+.mock-content-panel {
+  position: relative;
+  z-index: 1;
+  width: calc(100% - 51px);
+  margin: 0 auto;
+  padding: 24px 22px 36px;
+  background: var(--mock-mint);
+  border-radius: 30px;
+  box-sizing: border-box;
+}
+
+.mock-list-heading {
+  margin: 0 0 20px;
+  text-align: left;
+}
+
+.mock-list-heading__ja {
+  margin: 0;
+  font-family: var(--mock-font-display);
+  font-size: clamp(28px, 7.2vw, 34px);
+  font-weight: 400;
+  line-height: 1.2;
+  color: #2f2f2f;
+  letter-spacing: 0.02em;
+}
+
+.mock-list-heading__en {
+  margin: 6px 0 0;
+  font-family: var(--mock-font-display);
+  font-size: clamp(15px, 3.8vw, 18px);
+  font-weight: 400;
+  line-height: 1.2;
+  color: #3a3a3a;
+}
+
+.mock-list-footer {
+  margin-top: auto;
+  padding: 28px 16px 0;
+  text-align: center;
+}
+
+.mock-list-footer p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.mock-filters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px 14px;
+  width: min(100%, 340px);
+  margin: 0 auto 1.7em;
+}
+
+body[data-page="goods"] .mock-filters {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  width: min(100%, 360px);
+  gap: 10px 10px;
+}
+
+.mock-filter-btn {
+  width: 100%;
+  min-height: 36px;
+  padding: 0.45em 0.3em;
+  border: 2px solid var(--mock-green);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--mock-green);
+  font-family: var(--mock-font);
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.mock-filter-btn.is-active {
+  background: var(--mock-green);
+  color: #fff;
+}
+
+.mock-list {
+  display: grid;
+  gap: 30px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.mock-list-empty {
+  margin: 12px 0 0;
+  color: #5a5a5a;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.mock-list-card {
+  --kv-ratio: 848 / 1200; /* 縦長KVの基本サイズ */
+  --kv-col: clamp(140px, 44%, 188px);
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--kv-col) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  width: 100%;
+  min-height: 0;
+  padding: 16px;
+  background: #fff;
+  border-radius: 18px;
+  overflow: visible;
+}
+
+/* キービジュアル：縦長(848×1200)を基本枠 / 切れない / 左蝶番で手前に少し開く */
+
+.mock-list-card__media {
+  position: relative;
+  display: block;
+  align-self: start;
+  /* 開いたドアは長方形からはみ出してよい */
+  overflow: visible;
+  border-radius: 0;
+  background: transparent;
+  width: 100%;
+  aspect-ratio: var(--kv-ratio);
+  height: auto;
+  min-height: 0;
+  min-width: 0;
+  perspective: 640px;
+  perspective-origin: left center;
+  -webkit-tap-highlight-color: transparent;
+  --kv-main: #5a7a6a;
+}
+
+.mock-list-card__kv {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+/* ドアの奥：KVメインカラーの長方形（開くと右側から少し見える） */
+.mock-list-card__behind {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: var(--kv-main);
+  border-radius: 0;
+}
+
+/* 左蝶番：左辺固定のまま KV＋ぼかし帯を手前に開く → 右側に色面 */
+.mock-list-card__door {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 1;
+  overflow: hidden;
+  border-radius: 0;
+  background: #e8fff0;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition:
+    transform 0.4s var(--mock-ease),
+    box-shadow 0.4s var(--mock-ease);
+  will-change: transform;
+  box-shadow: none;
+  backface-visibility: hidden;
+}
+
+.mock-list-card__blur,
+.mock-list-card__main {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* 横長KV：ぼかし帯はドアの内側に置き、開閉と一緒に動かす */
+.mock-list-card__door .mock-list-card__blur {
+  display: none;
+  z-index: 0;
+  object-fit: cover;
+  object-position: center;
+  filter: blur(14px) saturate(1.05);
+  transform: scale(1.18);
+  opacity: 0.92;
+}
+
+.mock-list-card__door .mock-list-card__main {
+  z-index: 1;
+  object-fit: contain;
+  object-position: center;
+}
+
+.mock-list-card__media.is-letterbox .mock-list-card__door .mock-list-card__blur {
+  display: block;
+}
+
+/* カードホバー／フォーカスでドアを手前へ開く */
+.mock-list-card.is-door-open .mock-list-card__door,
+.mock-list-card__media.is-open .mock-list-card__door {
+  transform: translateZ(18px) rotateY(-32deg) scaleX(0.94);
+  box-shadow: 12px 8px 22px rgba(0, 0, 0, 0.28);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .mock-list-card:hover {
+    z-index: 5;
+  }
+
+  .mock-list-card:hover .mock-list-card__media {
+    z-index: 5;
+  }
+
+  .mock-list-card:hover .mock-list-card__door {
+    transform: translateZ(18px) rotateY(-32deg) scaleX(0.94);
+    box-shadow: 12px 8px 22px rgba(0, 0, 0, 0.28);
+  }
+
+  .mock-list-card:hover .mock-list-card__kwsk {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+    transition:
+      opacity 0.34s var(--mock-ease) 0.08s,
+      transform 0.4s var(--mock-ease) 0.08s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mock-list-card__door {
+    transition: none;
+  }
+
+  .mock-list-card.is-door-open .mock-list-card__door,
+  .mock-list-card__media.is-open .mock-list-card__door,
+  .mock-list-card:hover .mock-list-card__door {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* ドアから出てくる吹き出し：カード右下。消え時はKV側へスライドしない */
+.mock-list-card__kwsk {
+  --kwsk-w: min(58%, 196px);
+  --kwsk-h: calc(var(--kwsk-w) * 512 / 1536);
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 3;
+  width: var(--kwsk-w);
+  line-height: 0;
+  opacity: 0;
+  transform: translateY(10px) scale(0.96);
+  transform-origin: right bottom;
+  pointer-events: none;
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.16));
+}
+
+.mock-list-card__kwsk img {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+.mock-list-card.is-door-open .mock-list-card__kwsk {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+  transition:
+    opacity 0.34s var(--mock-ease) 0.08s,
+    transform 0.4s var(--mock-ease) 0.08s;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .mock-list-card__kwsk {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mock-list-card__kwsk {
+    transition: none;
+  }
+
+  .mock-list-card.is-door-open .mock-list-card__kwsk {
+    transition: none;
+  }
+}
+
+.mock-list-card__body {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
+  align-content: start;
+  gap: 6px;
+  min-width: 0;
+  min-height: 0;
+  padding: 0 2px 0 0;
+}
+
+.mock-list-card__tag {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0.25em 0.7em;
+  border-radius: 999px;
+  background: var(--mock-green);
+  color: #fff;
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.mock-list-card__title {
+  margin: 0;
+  font-size: clamp(15px, 3.8vw, 18px);
+  font-weight: 700;
+  line-height: 1.3;
+  color: #222;
+}
+
+.mock-list-card__title-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.mock-list-card__media,
+.mock-list-card__title-link {
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mock-list-card__kwsk {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mock-list-card__date {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #666;
+}
+
+.mock-list-card__desc {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: #444;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (max-width: 419px) {
+  .mock-list-header {
+    padding: 14px 16px 10px;
+  }
+
+  .mock-content-panel {
+    width: calc(100% - 28px);
+    padding: 22px 14px 28px;
+    border-radius: 26px;
+  }
+
+  body[data-page="goods"] .mock-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mock-list-card {
+    --kv-col: clamp(124px, 42%, 160px);
+  }
+}
+
+/* ---- Contact（完成図をコードで再現・背景画像なし） ---- */
+.mock-contact-lead {
+  margin: 0 0 22px;
+  width: 100%;
+  text-align: left;
+  font-size: clamp(12px, 3vw, 13.5px);
+  font-weight: 500;
+  line-height: 1.65;
+  color: #3a3a3a;
+}
+
+.mock-contact-form {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 18px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 22px 20px 24px;
+  background: #fff;
+  border-radius: 18px;
+  box-sizing: border-box;
+}
+
+.mock-contact-form__honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.mock-contact-form__field {
+  display: grid;
+  gap: 0.45em;
+  min-height: 0;
+}
+
+.mock-contact-form__field span {
+  font-size: clamp(13px, 3.4vw, 15px);
+  font-weight: 700;
+  color: #333;
+}
+
+.mock-contact-form__field input,
+.mock-contact-form__field textarea {
+  width: 100%;
+  border: 1.5px solid #d2d2d2;
+  border-radius: 999px;
+  padding: 0.85em 1.1em;
+  font: inherit;
+  font-weight: 500;
+  color: #222;
+  background: #fff;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.mock-contact-form__field textarea {
+  border-radius: 18px;
+  min-height: 180px;
+  resize: vertical;
+}
+
+.mock-contact-form__field input:focus,
+.mock-contact-form__field textarea:focus {
+  border-color: var(--mock-green);
+}
+
+.mock-contact-form__field--message {
+  min-height: 0;
+}
+
+.mock-contact-form__submit {
+  justify-self: center;
+  min-width: 0;
+  width: fit-content;
+  margin-top: 6px;
+  padding: 0.4em 1.35em;
+  border-radius: 999px;
+  background: var(--mock-green);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+}
+
+.mock-contact-form__note {
+  margin: 4px 0 0;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.7;
+  color: #4b4b4b;
+}
+
+.mock-contact-form__note a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ---- About（完成図をコードで再現・背景画像なし） ---- */
+.mock-about-brand {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  margin: 0 auto 22px;
+  padding: 28px 24px;
+  background: #fff;
+  border-radius: 18px;
+  box-sizing: border-box;
+}
+
+.mock-about-brand img {
+  width: min(72%, 260px);
+  height: auto;
+  display: block;
+}
+
+.mock-about-lead {
+  margin: 0 auto 36px;
+  max-width: 20em;
+  text-align: center;
+  font-size: clamp(13px, 3.4vw, 15px);
+  font-weight: 500;
+  line-height: 1.9;
+  color: #3a3a3a;
+}
+
+.mock-about-members-head {
+  margin: 0 0 18px;
+  padding-top: 18px;
+  border-top: 2px solid var(--mock-green);
+  text-align: left;
+}
+
+.mock-about-members-head__ja {
+  margin: 0;
+  font-family: var(--mock-font-display);
+  font-size: clamp(24px, 6.2vw, 30px);
+  font-weight: 400;
+  line-height: 1.2;
+  color: #2f2f2f;
+}
+
+.mock-about-members-head__en {
+  margin: 6px 0 0;
+  font-family: var(--mock-font-display);
+  font-size: clamp(14px, 3.6vw, 17px);
+  font-weight: 400;
+  line-height: 1.2;
+  color: #3a3a3a;
+}
+
+.mock-about-members {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.mock-about-member {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+  padding: 14px;
+  background: #fff;
+  border-radius: 18px;
+  color: inherit;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.mock-about-member__face {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 8px;
+  background: #f3f3f3;
+}
+
+.mock-about-member__text {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.mock-about-member__name {
+  font-family: var(--mock-font);
+  font-size: clamp(18px, 4.8vw, 24px);
+  font-weight: 700;
+  line-height: 1.2;
+  color: #2f2f2f;
+}
+
+.mock-about-member__id {
+  font-size: 13px;
+  font-weight: 500;
+  color: #555;
+  word-break: break-all;
+}
+
+/* ---- Work / Good detail：KV上＋情報下 ---- */
+.mock-detail {
+  width: 100%;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.mock-detail--empty {
+  padding: 48px 20px;
+  text-align: center;
+}
+
+.mock-detail__media {
+  display: block;
+  width: 100%;
+  background: #e8fff0;
+  line-height: 0;
+}
+
+.mock-detail__media img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  object-position: center top;
+}
+
+.mock-detail__body {
+  display: grid;
+  gap: 10px;
+  padding: 22px 20px 28px;
+}
+
+.mock-detail__tag {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0.28em 0.75em;
+  border-radius: 999px;
+  background: var(--mock-green);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.mock-detail__title {
+  margin: 0;
+  font-family: var(--mock-font-display);
+  font-size: clamp(22px, 6vw, 28px);
+  font-weight: 400;
+  line-height: 1.35;
+  color: #222;
+}
+
+.mock-detail__date {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #666;
+}
+
+.mock-detail__section {
+  margin-top: 8px;
+}
+
+.mock-detail__section h2 {
+  margin: 0 0 0.45em;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--mock-green);
+  letter-spacing: 0.02em;
+}
+
+.mock-detail__section p,
+.mock-detail__meta,
+.mock-detail__section ul,
+.mock-detail__hashtag {
+  margin: 0;
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1.75;
+  color: #333;
+  white-space: pre-wrap;
+}
+
+.mock-detail__meta,
+.mock-detail__section ul {
+  padding-left: 1.2em;
+  white-space: normal;
+}
+
+.mock-detail__meta li,
+.mock-detail__section li {
+  margin: 0.2em 0;
+}
+
+.mock-detail__hashtag {
+  margin-top: 4px;
+  color: #555;
+}
+
+.mock-detail__back {
+  margin: 18px 0 0;
+  text-align: center;
+}
+
+.mock-detail__back a {
+  color: var(--mock-green);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---- Home：Works / Goods カード枠（リストページと同じカードサイズ） ---- */
+.home-card-slot {
+  position: absolute;
+  left: 50%;
+  z-index: 6;
+  width: 74.8%;
+  height: auto;
+  transform: translateX(-50%);
+  display: grid;
+  align-items: start;
+}
+
+.home-card-slot--works {
+  top: 55%;
+}
+
+.home-card-slot--goods {
+  top: 78.8%;
+}
+
+.home-card-slot .mock-list-card {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  opacity: 1;
+  transition: opacity 0.28s var(--mock-ease);
+}
+
+/* リストと同じKV比率を維持（枠に押しつぶさない） */
+.home-card-slot .mock-list-card__media {
+  height: auto;
+  aspect-ratio: var(--kv-ratio);
+  align-self: start;
+}
+
+.home-card-slot .mock-list-card.is-swap {
+  opacity: 0;
+}
+
+/* ---- Mobile dropdown ---- */
+.mock-nav {
+  position: fixed;
+  top: max(56px, 7vw);
+  right: max(12px, calc((100vw - min(100vw, var(--mock-stage-width))) / 2 + 8px));
+  z-index: 40;
+  width: min(240px, calc(100vw - 24px));
+  padding: 10px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 12px 32px rgba(45, 110, 75, 0.2);
+  display: grid;
+  gap: 2px;
+}
+
+.mock-nav[hidden] { display: none; }
+
+.mock-nav a {
+  display: grid;
+  gap: 2px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  color: #2d6e4b;
+}
+
+.mock-nav a:hover {
+  background: rgba(93, 194, 137, 0.14);
+}
+
+.mock-nav__ja {
+  font-size: 14px;
+  font-weight: 700;
+  color: #222;
+}
+
+.mock-nav__en {
+  font-size: 12px;
+  font-weight: 700;
+  color: #4cbf82;
+}
+
+/* ---- Desktop outer color + 0001-style side nav ---- */
+@media (min-width: 768px) {
+  body.draft-mock {
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 0%, rgba(255, 255, 255, 0.55), transparent 60%),
+      var(--mock-desktop-bg);
+  }
+
+  .mock-stage {
+    width: var(--mock-stage-width);
+    min-height: 100vh;
+    box-shadow:
+      0 0 0 1px rgba(45, 110, 75, 0.12),
+      0 18px 48px rgba(45, 110, 75, 0.18);
+    background: var(--mock-green);
+  }
+
+  /* PC: ハンバーガー非表示 */
+  .mock-menu,
+  .mock-nav {
+    display: none !important;
+  }
+
+  /* PC: 列の外側に縦並びメニュー */
+  .mock-side-nav {
+    position: fixed;
+    left: calc(50% + var(--mock-stage-width) / 2 + 28px);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .mock-side-nav a {
+    display: grid;
+    gap: 4px;
+    min-width: 7em;
+  }
+
+  .mock-side-nav__ja {
+    font-size: 15px;
+    font-weight: 700;
+    color: #222;
+    letter-spacing: 0.02em;
+  }
+
+  .mock-side-nav__en {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .mock-side-nav__en.is-home { color: #e45b5b; }
+  .mock-side-nav__en.is-about { color: #4cbf82; }
+  .mock-side-nav__en.is-works { color: #4a7fd4; }
+  .mock-side-nav__en.is-goods { color: #d4a017; }
+  .mock-side-nav__en.is-contact { color: #333; }
+
+  .mock-side-nav a[aria-current="page"] .mock-side-nav__ja {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+}
