@@ -274,6 +274,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
     --home-art-top: 0%;
     --home-chrome: 13.8cqw;
     --home-scroll-slot: 3.5rem;
+    /* 中央よりわずかに下へ */
+    --home-nudge: 3.2vh;
   }
 
   .home-hero__art {
@@ -283,17 +285,19 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
     right: auto;
     /* 短い画面でも SCROLL まで入るよう縮小 */
     width: min(100cqi, calc((100svh - var(--home-scroll-slot)) * 1921 / 2700));
-    /* 中央寄せがロゴに食い込むときだけ下げる */
-    margin-top: max(
-      0px,
-      calc(
-        var(--home-chrome)
-        - (
-          100svh
-          - min(100cqi, calc((100svh - var(--home-scroll-slot)) * 1921 / 2700)) * 2700 / 1921
-          - var(--home-scroll-slot)
-        ) / 2
-      )
+    /* 中央寄せがロゴに食い込むときだけ下げ、そのうえで少し下へ */
+    margin-top: calc(
+      max(
+        0px,
+        calc(
+          var(--home-chrome)
+          - (
+            100svh
+            - min(100cqi, calc((100svh - var(--home-scroll-slot)) * 1921 / 2700)) * 2700 / 1921
+            - var(--home-scroll-slot)
+          ) / 2
+        )
+      ) + var(--home-nudge)
     );
     flex: 0 1 auto;
   }
