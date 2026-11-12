@@ -2,7 +2,7 @@
   function flyHomeArrow(arrow) {
     if (!arrow) return;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const end = { x: 71.55, y: 29.5 };
+    const end = { x: 85.27, y: 30.3 };
     // モバイル枠の右端・やや上から等速・直線で「ロ」へ刺さる
     const start = { x: 100, y: 10 };
     const tip = "translate(-4%, -94%)";
