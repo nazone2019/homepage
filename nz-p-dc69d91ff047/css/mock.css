@@ -275,7 +275,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
     --home-chrome: 13.8cqw;
     --home-scroll-slot: 3.5rem;
     /* 中央よりわずかに下へ */
-    --home-nudge: 3.2vh;
+    --home-nudge: 3.5vh;
   }
 
   .home-hero__art {
