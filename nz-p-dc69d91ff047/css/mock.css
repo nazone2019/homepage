@@ -906,8 +906,8 @@ body[data-page="goods"] .mock-filters {
 }
 
 .mock-about-brand img {
-  /* トップ／各ページヘッダーのロゴ幅（ステージ36%）に合わせる */
-  width: min(100%, 173px);
+  /* トップ／各ページヘッダーのロゴ幅（ステージ幅の36%）に合わせる */
+  width: min(100%, calc(min(100vw, var(--mock-stage-width)) * 0.36));
   height: auto;
   display: block;
 }
