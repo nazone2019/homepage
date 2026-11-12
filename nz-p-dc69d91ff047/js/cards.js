@@ -138,8 +138,12 @@
     const canHover =
       typeof window.matchMedia === "function" &&
       window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const coarsePointer =
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(pointer: coarse)").matches;
 
-    if (canHover) {
+    /* PC：ホバーで開閉 */
+    if (canHover && !coarsePointer) {
       const open = () => openDoor(card, media);
       const close = () => {
         if (card.contains(document.activeElement)) return;
@@ -155,12 +159,10 @@
       return;
     }
 
-    /* モバイル：1回目タップで仕掛け、2回目で詳細へ */
+    /* モバイル：カードタップ1回目で仕掛け、開いた状態のリンクタップで詳細へ */
     card.addEventListener(
       "click",
       (e) => {
-        const link = e.target.closest("a");
-        if (!link || !card.contains(link)) return;
         if (card.classList.contains("is-door-open")) return;
         e.preventDefault();
         e.stopPropagation();
