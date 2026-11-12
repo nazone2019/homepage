@@ -121,32 +121,63 @@
     else probe.addEventListener("load", finish, { once: true });
   }
 
+  function openDoor(card, media) {
+    media?.classList.add("is-open");
+    card.classList.add("is-door-open");
+  }
+
+  function closeDoor(card, media) {
+    media?.classList.remove("is-open");
+    card.classList.remove("is-door-open");
+  }
+
   function bindDoorHover(card) {
     if (!card || card.dataset.doorBound) return;
-    /* タッチ端末ではホバー用の1回目タップで遷移を邪魔しない */
+    card.dataset.doorBound = "1";
+    const media = card.querySelector(".mock-list-card__media");
     const canHover =
       typeof window.matchMedia === "function" &&
       window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-    if (!canHover) return;
-    card.dataset.doorBound = "1";
-    const media = card.querySelector(".mock-list-card__media");
-    const open = () => {
-      media?.classList.add("is-open");
-      card.classList.add("is-door-open");
-    };
-    const close = () => {
-      /* カード内の別リンクへフォーカス移動中は閉じない */
-      if (card.contains(document.activeElement)) return;
-      media?.classList.remove("is-open");
-      card.classList.remove("is-door-open");
-    };
-    card.addEventListener("pointerenter", open);
-    card.addEventListener("pointerleave", close);
-    card.addEventListener("focusin", open);
-    card.addEventListener("focusout", (e) => {
-      if (card.contains(e.relatedTarget)) return;
-      close();
-    });
+
+    if (canHover) {
+      const open = () => openDoor(card, media);
+      const close = () => {
+        if (card.contains(document.activeElement)) return;
+        closeDoor(card, media);
+      };
+      card.addEventListener("pointerenter", open);
+      card.addEventListener("pointerleave", close);
+      card.addEventListener("focusin", open);
+      card.addEventListener("focusout", (e) => {
+        if (card.contains(e.relatedTarget)) return;
+        close();
+      });
+      return;
+    }
+
+    /* モバイル：1回目タップで仕掛け、2回目で詳細へ */
+    card.addEventListener(
+      "click",
+      (e) => {
+        const link = e.target.closest("a");
+        if (!link || !card.contains(link)) return;
+        if (card.classList.contains("is-door-open")) return;
+        e.preventDefault();
+        e.stopPropagation();
+        openDoor(card, media);
+      },
+      true
+    );
+
+    document.addEventListener(
+      "pointerdown",
+      (e) => {
+        if (!card.classList.contains("is-door-open")) return;
+        if (card.contains(e.target)) return;
+        closeDoor(card, media);
+      },
+      true
+    );
   }
 
   function enhance(root) {

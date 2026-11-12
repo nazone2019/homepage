@@ -166,7 +166,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   }
 }
 
-/* ハンバーガー: モバイルのみ・完成図の位置 */
+/* ハンバーガー: モバイルのみ・完成図の位置（背景色差が出ないようCSSで描画） */
 .mock-menu {
   position: absolute;
   left: 86.979%;
@@ -176,12 +176,26 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   aspect-ratio: 155 / 125;
   display: grid;
   place-items: center;
+  background: transparent;
 }
 
 .mock-menu img {
-  width: 100%;
-  height: auto;
+  display: none;
+}
+
+.mock-menu__bars {
+  display: grid;
+  gap: 14%;
+  width: 62%;
   pointer-events: none;
+}
+
+.mock-menu__bars span {
+  display: block;
+  width: 100%;
+  height: 2.5px;
+  border-radius: 999px;
+  background: #fff;
 }
 
 /* PCサイドナビはモバイルでは非表示 */
@@ -212,14 +226,14 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
 .hotspot--works-prev {
   left: 1%;
-  top: 61.2%;
+  top: 57.8%;
   width: 11%;
   height: 4.2%;
 }
 
 .hotspot--works-next {
   left: 88%;
-  top: 61.2%;
+  top: 57.8%;
   width: 11%;
   height: 4.2%;
 }
@@ -241,14 +255,14 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
 .hotspot--goods-prev {
   left: 1%;
-  top: 85%;
+  top: 81.1%;
   width: 11%;
   height: 4.2%;
 }
 
 .hotspot--goods-next {
   left: 88%;
-  top: 85%;
+  top: 81.1%;
   width: 11%;
   height: 4.2%;
 }
@@ -339,8 +353,11 @@ body[data-page="good"] .mock-menu {
   left: auto;
   top: auto;
   width: 32px;
+  height: 26px;
+  aspect-ratio: auto;
   flex: 0 0 auto;
   margin-right: 4px;
+  background: transparent;
 }
 
 /* 完成図のミントパネル：角丸30px */
@@ -629,14 +646,6 @@ body[data-page="goods"] .mock-filters {
     transform 0.4s var(--mock-ease) 0.08s;
 }
 
-@media (hover: none), (pointer: coarse) {
-  .mock-list-card__kwsk {
-    opacity: 1;
-    transform: none;
-    pointer-events: auto;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .mock-list-card__kwsk {
     transition: none;
@@ -811,17 +820,21 @@ body[data-page="goods"] .mock-filters {
 
 .mock-contact-form__submit {
   justify-self: center;
-  min-width: 0;
-  width: fit-content;
+  box-sizing: border-box;
+  width: min(calc((min(100%, 340px) - 28px) / 3), 110px);
+  min-height: 36px;
   margin-top: 6px;
-  padding: 0.4em 1.35em;
+  padding: 0.45em 0.3em;
+  border: 2px solid var(--mock-green);
   border-radius: 999px;
   background: var(--mock-green);
   color: #fff;
-  font-size: 14px;
-  font-weight: 900;
-  letter-spacing: 0.04em;
-  line-height: 1.2;
+  font-family: var(--mock-font);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .mock-contact-form__note {
@@ -1072,11 +1085,11 @@ body[data-page="goods"] .mock-filters {
 }
 
 .home-card-slot--works {
-  top: 55%;
+  top: 53.9%;
 }
 
 .home-card-slot--goods {
-  top: 78.8%;
+  top: 77.75%;
 }
 
 .home-card-slot .mock-list-card {
