@@ -450,14 +450,14 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   background: var(--mock-green);
 }
 
-/* トップ（home-hero__logo）と同じ位置・幅に合わせる */
+/* トップ（home-hero__logo / home-hero__menu）と同じ位置・幅に合わせる */
+/* トップ logo top 5.45% はヒーロー高さ基準 → ステージ幅基準に換算 (aspect 1920/1780) */
 .mock-list-header {
+  --list-chrome-top: calc(5.45% * 1780 / 1920);
   position: relative;
   z-index: 20;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 24px 6.35% 28px;
+  display: block;
+  padding: var(--list-chrome-top) 6.35% 28px;
   box-sizing: border-box;
 }
 
@@ -482,26 +482,30 @@ body[data-page="contact"] .mock-menu,
 body[data-page="about"] .mock-menu,
 body[data-page="work"] .mock-menu,
 body[data-page="good"] .mock-menu {
-  position: relative;
-  left: auto;
-  top: auto;
+  position: absolute;
+  left: 87.66%;
+  top: 0;
+  /* margin-% は幅基準 → トップの top:5.5%（高さ基準）と揃える */
+  margin-top: calc(5.5% * 1780 / 1920);
   width: 8.073%;
   min-width: 32px;
-  max-width: 40px;
+  max-width: none;
   height: auto;
   aspect-ratio: 155 / 125;
-  flex: 0 0 auto;
+  flex: none;
   margin-right: 0;
   background: transparent;
+  z-index: 20;
 }
 
+/* 緑ステージ上で見えるよう、トップ同様に白バー */
 body[data-page="works"] .mock-menu__bars span,
 body[data-page="goods"] .mock-menu__bars span,
 body[data-page="contact"] .mock-menu__bars span,
 body[data-page="about"] .mock-menu__bars span,
 body[data-page="work"] .mock-menu__bars span,
 body[data-page="good"] .mock-menu__bars span {
-  background: var(--mock-green);
+  background: #fff;
 }
 
 /* 完成図のミントパネル：角丸30px */
@@ -881,7 +885,7 @@ body[data-page="goods"] .mock-filters {
 
 @media (max-width: 419px) {
   .mock-list-header {
-    padding: 24px 6.35% 28px;
+    padding: var(--list-chrome-top) 6.35% 28px;
   }
 
   .mock-content-panel {
