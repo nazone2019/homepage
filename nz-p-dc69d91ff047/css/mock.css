@@ -257,6 +257,58 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   50% { transform: translateY(5px); }
 }
 
+/* モバイル: 初回画面(=1画面)の中央に top を置き、SCROLL まで収める */
+@media (max-width: 767.98px) {
+  .home-hero {
+    container-type: inline-size;
+    aspect-ratio: auto;
+    height: 100vh;
+    height: 100svh;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    --home-art-top: 0%;
+    --home-chrome: 13.8cqw;
+    --home-scroll-slot: 3.5rem;
+  }
+
+  .home-hero__art {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    /* 短い画面でも SCROLL まで入るよう縮小 */
+    width: min(100cqi, calc((100svh - var(--home-scroll-slot)) * 1921 / 2700));
+    /* 中央寄せがロゴに食い込むときだけ下げる */
+    margin-top: max(
+      0px,
+      calc(
+        var(--home-chrome)
+        - (
+          100svh
+          - min(100cqi, calc((100svh - var(--home-scroll-slot)) * 1921 / 2700)) * 2700 / 1921
+          - var(--home-scroll-slot)
+        ) / 2
+      )
+    );
+    flex: 0 1 auto;
+  }
+
+  .home-hero__scroll {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 15.83%;
+    max-width: 4.75rem;
+    margin: 0.55rem auto 0;
+    flex: 0 0 auto;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .home-hero__overlay,
   .home-hero__overlay--kana,
