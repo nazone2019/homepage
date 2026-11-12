@@ -1,7 +1,10 @@
 (function () {
   const page = document.body.dataset.page;
   const isWorks = page === "works";
-  const items = isWorks ? window.DRAFT_WORKS : window.DRAFT_GOODS;
+  const rawItems = isWorks ? window.DRAFT_WORKS : window.DRAFT_GOODS;
+  const items = window.DRAFT_sortByDateDesc
+    ? window.DRAFT_sortByDateDesc(rawItems)
+    : (rawItems || []).slice();
   const filters = isWorks ? window.DRAFT_WORK_FILTERS : window.DRAFT_GOOD_FILTERS;
   const detailBase = isWorks ? "work.html?id=" : "good.html?id=";
 

@@ -27,6 +27,71 @@ const GOODS = [
     meta: ["所要時間：約40~80分"],
     hashtag: "#オクダケパズル",
   },
+  {
+    id: "bakusou-nazotoki",
+    title: "頭が良くなる！爆走！ナゾトキ大冒険",
+    date: "2022/12〜",
+    year: 2022,
+    image: "bakusou-nazotoki.webp",
+    about: "書籍。企業さまとのコラボ実績。",
+    meta: [],
+    hashtag: "",
+  },
+  {
+    id: "hanasaki",
+    title: "花咲き誇る処にて",
+    date: "2020/5",
+    year: 2020,
+    image: "hanasaki.jpeg",
+    about:
+      "NAZONE初期のWEB謎。花が咲き誇る場所を舞台にした、団体最初期の作品です。",
+    meta: [],
+    hashtag: "",
+  },
+  {
+    id: "start",
+    title: "はじまり START",
+    date: "2021/6",
+    year: 2021,
+    image: "start.jpeg",
+    about:
+      "LINE上で進行する謎解き。物語の「はじまり」をテーマにした初期のLINE謎です。",
+    meta: [],
+    hashtag: "",
+  },
+  {
+    id: "umi-escape",
+    title: "ある海からの脱出",
+    date: "2020/12",
+    year: 2020,
+    image: "umi-escape.jpeg",
+    about:
+      "海を舞台にした脱出モチーフのLINE謎。初期の物語型コンテンツのひとつです。",
+    meta: [],
+    hashtag: "",
+  },
+  {
+    id: "nazomori",
+    title: "ようこそ なぞときの森",
+    date: "2020/10",
+    year: 2020,
+    image: "nazomori.jpeg",
+    about:
+      "森を舞台にしたLINE謎。「なぞときの森」へ誘う、初期の世界観づくりが特徴です。",
+    meta: [],
+    hashtag: "",
+  },
+  {
+    id: "piennazo",
+    title: "ぴえん謎",
+    date: "2020/8",
+    year: 2020,
+    image: "piennazo.jpeg",
+    about:
+      "「ぴえん」をモチーフにしたLINE謎。気軽に遊べる初期デジタルコンテンツです。",
+    meta: [],
+    hashtag: "",
+  },
 ];
 
 function getListedGoods() {

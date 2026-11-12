@@ -94,61 +94,157 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   pointer-events: none;
 }
 
-/* ---- Catchphrase: crops from homepage_asset.webp ---- */
-.catch {
+/* ---- Home：ヒーロー（base + fade top + arrow） ---- */
+.mock-stage--home {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow: visible;
+  min-height: 100vh;
+  padding: 0 0 28px;
+  background: var(--mock-green);
+}
+
+.home-hero {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  /* 完成画像の緑ヒーロー比に近づけ、ロゴ帯を確保 */
+  aspect-ratio: 1920 / 1780;
+  /* 右からの矢印飛来をクリップしない */
+  overflow: visible;
+}
+
+.home-hero__art {
   position: absolute;
-  inset: 0;
-  z-index: 3;
+  left: 0;
+  right: 0;
+  /* 左上ロゴ帯の下から配置（完成画像でも catch はロゴより下） */
+  top: 28.5%;
+  width: 100%;
+  line-height: 0;
+  overflow: visible;
+}
+
+.home-hero__base,
+.home-hero__overlay {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
   pointer-events: none;
 }
 
-.catch__line {
+/* 「ココロざす」→「志す」を順にフェードイン（同一画像を領域クリップ） */
+.home-hero__overlay {
   position: absolute;
-  height: auto;
-  max-width: none;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
   opacity: 0;
-  transition: opacity 0.9s var(--mock-ease);
 }
 
-.catch__line.is-in {
+.home-hero__overlay--kana {
+  /* ココロざす帯 */
+  clip-path: inset(20% 4% 58% 47%);
+  transition: opacity 0.75s var(--mock-ease) 0.12s;
+}
+
+.home-hero__overlay--kanji {
+  /* 志す帯 */
+  clip-path: inset(62% 4% 16% 71%);
+  transition: opacity 0.75s var(--mock-ease) 0.95s;
+}
+
+.home-hero.is-ready .home-hero__overlay--kana,
+.home-hero.is-ready .home-hero__overlay--kanji {
   opacity: 1;
 }
 
-.catch__line--kana {
-  left: 52.083%;
-  top: 9.067%;
-  width: 43.229%;
-  transition-delay: 0.2s;
-}
-
-.catch__line--kanji {
-  left: 72.604%;
-  top: 15.267%;
-  width: 22.969%;
-  transition-delay: 1.05s;
-}
-
-/* SCROLL: 完成図の位置に固定（上下の細かい動きのみ） */
-.mock-scroll {
+/*
+  「ロ」実測: x 69.13–73.97% / y 26.46–35.15%（art内）
+  先端を「ロ」上寄り・やや下へ
+*/
+.home-hero__arrow {
+  --ro-x: 71.55%;
+  --ro-y: 29.5%;
+  --tip-x: 4%;
+  --tip-y: 94%;
   position: absolute;
-  left: 41.667%;
-  top: 22.067%;
+  left: var(--ro-x);
+  top: var(--ro-y);
   z-index: 3;
-  margin: 0;
-  width: 16.927%;
+  width: 5.2%;
+  height: auto;
+  opacity: 0;
+  transform: translate(calc(var(--tip-x) * -1), calc(var(--tip-y) * -1)) rotate(0deg);
+  transform-origin: var(--tip-x) var(--tip-y);
+  pointer-events: none;
+  user-select: none;
+  will-change: left, top, opacity, transform;
+}
+
+.home-hero__arrow.is-flying {
+  opacity: 1;
+}
+
+.home-hero__arrow.is-landed {
+  opacity: 1;
+  left: var(--ro-x);
+  top: var(--ro-y);
+  transform: translate(calc(var(--tip-x) * -1), calc(var(--tip-y) * -1)) rotate(0deg);
+}
+
+/* 完成画像: logo left 6.35% / top≈5.45% / width 30.63% */
+.home-hero__logo {
+  position: absolute;
+  left: 6.35%;
+  top: 5.45%;
+  z-index: 5;
+  width: 30.63%;
+  line-height: 0;
+}
+
+.home-hero__logo img {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
   pointer-events: none;
 }
 
-.mock-scroll__img {
+/* 完成画像: menu left 87.66% / top≈5.7% */
+.home-hero .home-hero__menu.mock-menu {
+  position: absolute;
+  left: 87.66%;
+  top: 5.5%;
+  z-index: 20;
+  width: 8.073%;
+}
+
+/* 「志す」下に余白を空けて配置（被り防止）。ヒーローを伸ばし下層も下がる */
+.home-hero__scroll {
+  position: absolute;
+  left: 42.14%;
+  top: 88.5%;
+  z-index: 4;
+  margin: 0;
+  width: 15.83%;
+  transform: none;
+  pointer-events: none;
+}
+
+.home-hero__scroll-img {
   width: 100%;
   height: auto;
   opacity: 0;
-  transition: opacity 0.8s var(--mock-ease) 1.7s;
+  transition: opacity 0.7s var(--mock-ease) 1.9s;
 }
 
-.mock-scroll__img.is-in {
+.home-hero.is-ready .home-hero__scroll-img {
   opacity: 1;
-  animation: scrollBob 1.5s var(--mock-ease) 2.5s infinite;
+  animation: scrollBob 1.5s var(--mock-ease) 2.6s infinite;
 }
 
 @keyframes scrollBob {
@@ -157,12 +253,20 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .catch__line,
-  .mock-scroll__img {
+  .home-hero__overlay,
+  .home-hero__overlay--kana,
+  .home-hero__overlay--kanji,
+  .home-hero__scroll-img {
     transition: none;
     animation: none;
     opacity: 1;
-    transform: none;
+  }
+
+  .home-hero__arrow {
+    opacity: 1;
+    left: var(--ro-x);
+    top: var(--ro-y);
+    transform: translate(calc(var(--tip-x) * -1), calc(var(--tip-y) * -1));
   }
 }
 
@@ -346,20 +450,21 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   background: var(--mock-green);
 }
 
-/* トップのロゴ位置（left 4% / top ~17px / width 36%）に合わせる */
+/* トップ（home-hero__logo）と同じ位置・幅に合わせる */
 .mock-list-header {
   position: relative;
   z-index: 20;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 17px 4% 28px;
+  padding: 24px 6.35% 28px;
   box-sizing: border-box;
 }
 
 .mock-list-logo {
   display: block;
-  width: 36%;
+  /* ヘッダー左右パディング 6.35%×2 を差し引き、ステージ幅の 30.63% になるよう換算 */
+  width: calc(30.63% * 100 / (100 - 12.7));
   line-height: 0;
 }
 
@@ -388,6 +493,15 @@ body[data-page="good"] .mock-menu {
   flex: 0 0 auto;
   margin-right: 0;
   background: transparent;
+}
+
+body[data-page="works"] .mock-menu__bars span,
+body[data-page="goods"] .mock-menu__bars span,
+body[data-page="contact"] .mock-menu__bars span,
+body[data-page="about"] .mock-menu__bars span,
+body[data-page="work"] .mock-menu__bars span,
+body[data-page="good"] .mock-menu__bars span {
+  background: var(--mock-green);
 }
 
 /* 完成図のミントパネル：角丸30px */
@@ -767,7 +881,7 @@ body[data-page="goods"] .mock-filters {
 
 @media (max-width: 419px) {
   .mock-list-header {
-    padding: 17px 4% 28px;
+    padding: 24px 6.35% 28px;
   }
 
   .mock-content-panel {
@@ -899,15 +1013,14 @@ body[data-page="goods"] .mock-filters {
   place-items: center;
   width: 100%;
   margin: 0 auto 22px;
-  padding: 28px 24px;
+  padding: 12px 10px;
   background: #fff;
   border-radius: 18px;
   box-sizing: border-box;
 }
 
 .mock-about-brand img {
-  /* トップ／各ページヘッダーのロゴ幅（ステージ幅の36%）に合わせる */
-  width: min(100%, calc(min(100vw, var(--mock-stage-width)) * 0.36));
+  width: 100%;
   height: auto;
   display: block;
 }
@@ -966,6 +1079,25 @@ body[data-page="goods"] .mock-filters {
   color: inherit;
   text-decoration: none;
   box-sizing: border-box;
+}
+
+.mock-about-member__id-link {
+  position: relative;
+  z-index: 1;
+  color: var(--mock-green-deep);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-size: 13px;
+  font-weight: 500;
+  word-break: break-all;
+  width: fit-content;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.mock-about-member__id-link:hover,
+.mock-about-member__id-link:focus-visible {
+  color: var(--mock-green);
 }
 
 .mock-about-member__face {
@@ -1115,23 +1247,94 @@ body[data-page="goods"] .mock-filters {
 }
 
 /* ---- Home：Works / Goods カード枠（リストページと同じカードサイズ） ---- */
-.home-card-slot {
-  position: absolute;
-  left: 50%;
-  z-index: 6;
-  width: 74.8%;
+/* ---- Home panels（完成画面をコードで再現） ---- */
+.home-panel {
+  position: relative;
+  z-index: 1;
+  width: calc(100% - 51px);
+  margin: 18px auto 0;
+  padding: 24px 22px 28px; /* works/goods の .mock-content-panel と同じ横パディング */
+  background: var(--mock-mint);
+  border-radius: 30px;
+  box-sizing: border-box;
+  overflow: visible;
+  display: grid;
+  justify-items: center;
+}
+
+.home-panel .mock-list-heading {
+  width: 100%;
+  margin: 0 0 18px;
+}
+
+.home-about-brand {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  margin: 0 0 18px;
+  padding: 12px 10px;
+  background: #fff;
+  border-radius: 18px;
+  box-sizing: border-box;
+}
+
+.home-about-brand img {
+  width: 100%;
   height: auto;
-  transform: translateX(-50%);
+  display: block;
+}
+
+.home-about-lead {
+  margin: 0 0 22px;
+  max-width: 20em;
+  text-align: center;
+  font-size: clamp(13px, 3.4vw, 15px);
+  font-weight: 500;
+  line-height: 1.9;
+  color: #3a3a3a;
+}
+
+.home-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 9.5em;
+  min-height: 40px;
+  padding: 0.55em 1.4em;
+  border-radius: 999px;
+  background: var(--mock-green);
+  color: #fff;
+  font-family: var(--mock-font);
+  font-size: clamp(14px, 3.6vw, 16px);
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+}
+
+.home-carousel {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0;
+}
+
+.home-panel--works .home-carousel {
+  margin: 0 0 14px;
+}
+
+.home-panel--goods .home-carousel {
+  margin: 0 0 22px;
+}
+
+/* works/goods リストと同じカード幅・見た目 */
+.home-card-slot {
+  position: relative;
+  z-index: 6;
+  width: 100%;
+  height: auto;
   display: grid;
   align-items: start;
-}
-
-.home-card-slot--works {
-  top: 53.9%;
-}
-
-.home-card-slot--goods {
-  top: 77.75%;
 }
 
 .home-card-slot .mock-list-card {
@@ -1139,10 +1342,9 @@ body[data-page="goods"] .mock-filters {
   height: auto;
   min-height: 0;
   opacity: 1;
-  transition: opacity 0.28s var(--mock-ease);
+  transition: opacity 0.35s var(--mock-ease);
 }
 
-/* リストと同じKV比率を維持（枠に押しつぶさない） */
 .home-card-slot .mock-list-card__media {
   height: auto;
   aspect-ratio: var(--kv-ratio);
@@ -1151,6 +1353,46 @@ body[data-page="goods"] .mock-filters {
 
 .home-card-slot .mock-list-card.is-swap {
   opacity: 0;
+}
+
+.home-slideshow-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  margin: 0 0 18px;
+}
+
+.home-slideshow-dots__dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(30, 197, 132, 0.28);
+  cursor: pointer;
+}
+
+.home-slideshow-dots__dot.is-active {
+  background: var(--mock-green);
+  transform: scale(1.15);
+}
+
+@media (max-width: 419px) {
+  .home-panel {
+    width: calc(100% - 28px);
+    padding: 22px 14px 24px; /* list のモバイル .mock-content-panel に合わせる */
+    border-radius: 26px;
+  }
+
+  .home-panel--works .home-carousel {
+    margin-bottom: 14px;
+  }
+
+  .home-panel--goods .home-carousel {
+    margin-bottom: 22px;
+  }
 }
 
 /* ---- Mobile dropdown ---- */

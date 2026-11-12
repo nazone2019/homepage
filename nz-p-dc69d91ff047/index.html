@@ -7,68 +7,118 @@
   <meta name="robots" content="noindex, nofollow">
   <title>NAZONE（草案）</title>
   <link rel="icon" href="../assets/brand/favicon.png" type="image/png">
-  <link rel="stylesheet" href="css/mock.css?v=35">
+  <link rel="stylesheet" href="css/mock.css?v=49">
 </head>
-<body class="draft-mock">
-  <div class="mock-stage" id="mock-stage">
-    <img
-      class="mock-image"
-      src="homepage_home2.webp"
-      alt="NAZONE ホームページ草案"
-      width="1920"
-      height="7500"
-      decoding="async"
-      fetchpriority="high"
-      draggable="false"
-    >
+<body class="draft-mock" data-page="home">
+  <div class="mock-stage mock-stage--home" id="mock-stage">
+    <section class="home-hero" id="home-hero" aria-label="ココロざすを志す">
+      <div class="home-hero__art">
+        <img
+          class="home-hero__base"
+          src="homepage_top_base.webp"
+          alt=""
+          width="1921"
+          height="1080"
+          decoding="async"
+          fetchpriority="high"
+          draggable="false"
+        >
+        <img
+          class="home-hero__overlay home-hero__overlay--kana"
+          src="homepage_top.webp"
+          alt="ココロざす"
+          width="1921"
+          height="1081"
+          decoding="async"
+          draggable="false"
+        >
+        <img
+          class="home-hero__overlay home-hero__overlay--kanji"
+          src="homepage_top.webp"
+          alt="志す"
+          width="1921"
+          height="1081"
+          decoding="async"
+          draggable="false"
+        >
+        <img
+          class="home-hero__arrow"
+          src="homepage_arrow.webp"
+          alt=""
+          width="100"
+          height="80"
+          decoding="async"
+          draggable="false"
+        >
+      </div>
 
-    <!-- 完成図からそのまま切り出し（装飾込み） -->
-    <div class="catch" aria-label="ココロざすを志す">
-      <img
-        class="catch__line catch__line--kana"
-        src="assets/catch-kana.webp"
-        alt="ココロざす"
-        width="830"
-        height="230"
-        draggable="false"
-      >
-      <img
-        class="catch__line catch__line--kanji"
-        src="assets/catch-kanji.webp"
-        alt="志す"
-        width="441"
-        height="227"
-        draggable="false"
-      >
-    </div>
+      <a class="home-hero__logo" href="index.html" aria-label="NAZONE トップ">
+        <img src="assets/logo-white.png" alt="NAZONE" width="605" height="130" decoding="async" draggable="false">
+      </a>
 
-    <!-- 完成図の位置に固定（上下の細かい動きのみ） -->
-    <p class="mock-scroll" aria-hidden="true">
-      <img class="mock-scroll__img" src="assets/scroll-mark.webp" alt="" width="325" height="185" draggable="false">
-    </p>
+      <button class="mock-menu home-hero__menu" id="menu-btn" type="button" aria-label="メニュー" aria-expanded="false" aria-controls="mock-nav">
+        <img src="assets/menu-icon.webp" alt="" width="155" height="125" draggable="false">
+        <span class="mock-menu__bars" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
 
-    <a class="hotspot hotspot--logo" href="index.html" aria-label="NAZONE トップ"></a>
+      <p class="home-hero__scroll" aria-hidden="true">
+        <img class="home-hero__scroll-img" src="assets/scroll-mark.webp" alt="" width="325" height="185" draggable="false">
+      </p>
+    </section>
 
-    <!-- モバイルのみ：完成図の位置にハンバーガー -->
-    <button class="mock-menu" id="menu-btn" type="button" aria-label="メニュー" aria-expanded="false" aria-controls="mock-nav">
-      <img src="assets/menu-icon.webp" alt="" width="155" height="125" draggable="false">
-      <span class="mock-menu__bars" aria-hidden="true"><span></span><span></span><span></span></span>
-    </button>
+    <section class="home-panel home-panel--about" aria-labelledby="home-about-heading">
+      <header class="mock-list-heading">
+        <h2 class="mock-list-heading__ja" id="home-about-heading">NAZONEって？</h2>
+        <p class="mock-list-heading__en">About</p>
+      </header>
 
-    <a class="hotspot hotspot--about-btn" href="about.html" aria-label="もっと詳しく！"></a>
+      <div class="home-about-brand">
+        <img src="../assets/brand/logo.webp" alt="NAZONE" width="2400" height="514" decoding="async" draggable="false">
+      </div>
 
-    <button class="hotspot hotspot--works-prev" type="button" data-carousel="works" data-dir="-1" aria-label="公演 前へ"></button>
-    <button class="hotspot hotspot--works-next" type="button" data-carousel="works" data-dir="1" aria-label="公演 次へ"></button>
-    <div class="home-card-slot home-card-slot--works" id="works-card-slot"></div>
-    <a class="hotspot hotspot--works-all" href="works.html" aria-label="公演をすべて表示する"></a>
+      <p class="home-about-lead">
+        全国の大学生が集まってできた謎解き制作集団。<br>
+        2019年6月設立。<br>
+        参加者自身が主人公になって物語体験を楽しめる<br>
+        「体験型謎解きゲーム」と呼ばれるイベントを<br>
+        制作・開催する。
+      </p>
 
-    <button class="hotspot hotspot--goods-prev" type="button" data-carousel="goods" data-dir="-1" aria-label="グッズ 前へ"></button>
-    <button class="hotspot hotspot--goods-next" type="button" data-carousel="goods" data-dir="1" aria-label="グッズ 次へ"></button>
-    <div class="home-card-slot home-card-slot--goods" id="goods-card-slot"></div>
-    <a class="hotspot hotspot--goods-all" href="goods.html" aria-label="グッズをすべて表示する"></a>
+      <a class="home-cta" href="about.html">もっと詳しく！</a>
+    </section>
+
+    <section class="home-panel home-panel--works" aria-labelledby="home-works-heading">
+      <header class="mock-list-heading">
+        <h2 class="mock-list-heading__ja" id="home-works-heading">制作した公演</h2>
+        <p class="mock-list-heading__en">Works</p>
+      </header>
+
+      <div class="home-carousel home-carousel--slideshow">
+        <div class="home-card-slot home-card-slot--works" id="works-card-slot"></div>
+      </div>
+      <div class="home-slideshow-dots" id="works-dots" role="tablist" aria-label="公演スライド"></div>
+
+      <a class="home-cta" href="works.html">すべて表示する</a>
+    </section>
+
+    <section class="home-panel home-panel--goods" aria-labelledby="home-goods-heading">
+      <header class="mock-list-heading">
+        <h2 class="mock-list-heading__ja" id="home-goods-heading">制作したグッズ</h2>
+        <p class="mock-list-heading__en">Goods</p>
+      </header>
+
+      <div class="home-carousel">
+        <div class="home-card-slot home-card-slot--goods" id="goods-card-slot"></div>
+      </div>
+
+      <a class="home-cta" href="goods.html">すべて表示する</a>
+    </section>
+
+    <footer class="mock-list-footer">
+      <p>©2019 NAZONE. All rights reserved.</p>
+    </footer>
   </div>
 
-  <!-- モバイル用ドロップダウン -->
   <nav class="mock-nav" id="mock-nav" hidden>
     <a href="index.html" aria-current="page"><span class="mock-nav__ja">ホーム</span><span class="mock-nav__en">Home</span></a>
     <a href="about.html"><span class="mock-nav__ja">NAZONEって？</span><span class="mock-nav__en">About</span></a>
@@ -78,7 +128,6 @@
     <a href="../index.html"><span class="mock-nav__ja">現行サイトへ</span><span class="mock-nav__en">Live</span></a>
   </nav>
 
-  <!-- PC用サイドメニュー（0001型） -->
   <nav class="mock-side-nav" aria-label="メインメニュー">
     <a href="index.html" aria-current="page">
       <span class="mock-side-nav__ja">ホーム</span>
@@ -102,9 +151,9 @@
     </a>
   </nav>
 
-  <script src="js/catalog.js"></script>
+  <script src="js/catalog.js?v=4"></script>
   <script src="js/cards.js?v=26"></script>
   <script src="js/mock-common.js?v=2"></script>
-  <script src="js/mock.js?v=23"></script>
+  <script src="js/mock.js?v=33"></script>
 </body>
 </html>

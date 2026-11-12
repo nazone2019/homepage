@@ -72,6 +72,7 @@ const WORKS = [
     date: "2025年",
     year: 2025,
     image: "okudake-puzzle.webp",
+    listed: false,
     story: "",
     about:
       "筆記用具は必要なし！？\n4つのキューブを「置くだけで」解き明かす新感覚の謎解きパズルブックです！\n盤面や問題の一部にキューブを正しく置くだけ……ですが、中にはひらめかないと一筋縄では解けないものも……！？\n1人でじっくり楽しんだり、友達や家族とわいわい楽しんだり、個性豊かな「オクダケパズル」たちをどうぞご堪能ください！！！",
@@ -219,6 +220,7 @@ const WORKS = [
     date: "2022/12/13〜",
     year: 2022,
     image: "bakusou-nazotoki.webp",
+    listed: false,
     about: "書籍。企業さまとのコラボ実績。",
     history: ["2022.12 書籍"],
   },
@@ -248,6 +250,7 @@ const WORKS = [
     date: "2021/6",
     year: 2021,
     image: "start.jpeg",
+    listed: false,
     about:
       "LINE上で進行する謎解き。物語の「はじまり」をテーマにした初期のLINE謎です。",
     history: ["2021.6 LINE謎"],
@@ -258,6 +261,7 @@ const WORKS = [
     date: "2020/12",
     year: 2020,
     image: "umi-escape.jpeg",
+    listed: false,
     about:
       "海を舞台にした脱出モチーフのLINE謎。初期の物語型コンテンツのひとつです。",
     history: ["2020.12 LINE謎"],
@@ -268,6 +272,7 @@ const WORKS = [
     date: "2020/10",
     year: 2020,
     image: "nazomori.jpeg",
+    listed: false,
     about:
       "森を舞台にしたLINE謎。「なぞときの森」へ誘う、初期の世界観づくりが特徴です。",
     history: ["2020.10 LINE謎"],
@@ -278,6 +283,7 @@ const WORKS = [
     date: "2020/8",
     year: 2020,
     image: "piennazo.jpeg",
+    listed: false,
     about:
       "「ぴえん」をモチーフにしたLINE謎。気軽に遊べる初期デジタルコンテンツです。",
     history: ["2020.8 LINE謎"],
@@ -288,6 +294,7 @@ const WORKS = [
     date: "2020/5",
     year: 2020,
     image: "hanasaki.jpeg",
+    listed: false,
     about:
       "NAZONE初期のWEB謎。花が咲き誇る場所を舞台にした、団体最初期の作品です。",
     history: ["2020.5 WEB謎"],

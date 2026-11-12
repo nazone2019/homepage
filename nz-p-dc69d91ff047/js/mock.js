@@ -1,16 +1,100 @@
 (function () {
-  function revealMotion() {
-    document.querySelectorAll(".catch__line, .mock-scroll__img").forEach((el) => {
-      el.classList.add("is-in");
+  function flyHomeArrow(arrow) {
+    if (!arrow) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const end = { x: 71.55, y: 29.5 };
+    // モバイル枠の右端・やや上から等速・直線で「ロ」へ刺さる
+    const start = { x: 100, y: 10 };
+    const tip = "translate(-4%, -94%)";
+    const duration = 180;
+    const delay = 1850;
+
+    arrow.classList.remove("is-flying", "is-landed");
+    arrow.style.left = start.x + "%";
+    arrow.style.top = start.y + "%";
+    arrow.style.opacity = "0";
+    arrow.style.transform = tip + " rotate(0deg)";
+
+    if (reduce) {
+      arrow.classList.add("is-landed");
+      arrow.style.left = end.x + "%";
+      arrow.style.top = end.y + "%";
+      arrow.style.opacity = "1";
+      arrow.style.transform = tip + " rotate(0deg)";
+      return;
+    }
+
+    window.setTimeout(() => {
+      arrow.classList.add("is-flying");
+      const t0 = performance.now();
+
+      function frame(now) {
+        // イージングなし = 一定速度
+        const p = Math.min(1, (now - t0) / duration);
+        const x = start.x + (end.x - start.x) * p;
+        const y = start.y + (end.y - start.y) * p;
+        const opacity = p < 0.06 ? p / 0.06 : 1;
+
+        arrow.style.left = x + "%";
+        arrow.style.top = y + "%";
+        arrow.style.opacity = String(opacity);
+        arrow.style.transform = tip + " rotate(0deg)";
+
+        if (p < 1) {
+          requestAnimationFrame(frame);
+        } else {
+          arrow.classList.remove("is-flying");
+          arrow.classList.add("is-landed");
+          arrow.style.left = end.x + "%";
+          arrow.style.top = end.y + "%";
+          arrow.style.opacity = "1";
+          arrow.style.transform = tip + " rotate(0deg)";
+        }
+      }
+
+      requestAnimationFrame(frame);
+    }, delay);
+  }
+
+  function revealHomeHero() {
+    const hero = document.getElementById("home-hero");
+    if (!hero) return;
+
+    const arrow = hero.querySelector(".home-hero__arrow");
+    const arts = hero.querySelectorAll(
+      ".home-hero__base, .home-hero__overlay, .home-hero__arrow"
+    );
+    const wait = [...arts].map((img) =>
+      img.complete
+        ? Promise.resolve()
+        : new Promise((resolve) => {
+            img.addEventListener("load", resolve, { once: true });
+            img.addEventListener("error", resolve, { once: true });
+          })
+    );
+
+    Promise.all(wait).then(() => {
+      requestAnimationFrame(() => {
+        hero.classList.remove("is-ready");
+        requestAnimationFrame(() => {
+          hero.classList.add("is-ready");
+          flyHomeArrow(arrow);
+        });
+      });
     });
   }
 
-  const startReveal = () => requestAnimationFrame(revealMotion);
-  if (document.readyState === "complete") startReveal();
-  else window.addEventListener("load", startReveal);
+  if (document.readyState === "complete") revealHomeHero();
+  else window.addEventListener("load", revealHomeHero);
+
+  function sorted(list) {
+    return window.DRAFT_sortByDateDesc
+      ? window.DRAFT_sortByDateDesc(list)
+      : (list || []).slice();
+  }
 
   function toCarouselItems(list, detailBase, peek, limit) {
-    return (list || []).slice(0, limit).map((item) => ({
+    return sorted(list).slice(0, limit).map((item) => ({
       title: item.title,
       tag: item.tag,
       date: item.date,
@@ -26,13 +110,13 @@
     window.DRAFT_WORKS,
     "work.html?id=",
     { src: "homepage_kwsk.webp", label: "この公演をのぞいてみる" },
-    4
+    3
   );
   const GOODS = toCarouselItems(
     window.DRAFT_GOODS,
     "good.html?id=",
     { src: "homepage_kwskgoods.webp", label: "このグッズをのぞいてみる" },
-    4
+    1
   );
 
   function cardHtml(item) {
@@ -60,36 +144,57 @@
       </article>`;
   }
 
-  function setupCarousel(name, items) {
-    const slot = document.getElementById(`${name}-card-slot`);
-    const prev = document.querySelector(`.hotspot--${name}-prev`);
-    const next = document.querySelector(`.hotspot--${name}-next`);
+  function mountCard(slot, item) {
+    slot.innerHTML = cardHtml(item);
+    window.DRAFT_enhanceCardMedia?.(slot);
+  }
+
+  function setupSlideshow(slot, items, dotsRoot) {
     if (!slot || !items.length) return;
 
     let index = 0;
     let busy = false;
+    let timer = null;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const intervalMs = 4200;
+
+    const dots = items.map((_, i) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "home-slideshow-dots__dot";
+      btn.setAttribute("role", "tab");
+      btn.setAttribute("aria-label", `${i + 1}枚目`);
+      btn.addEventListener("click", () => go(i, true));
+      dotsRoot?.appendChild(btn);
+      return btn;
+    });
+
+    function syncDots() {
+      dots.forEach((dot, i) => {
+        const on = i === index;
+        dot.classList.toggle("is-active", on);
+        if (on) dot.setAttribute("aria-current", "true");
+        else dot.removeAttribute("aria-current");
+      });
+    }
 
     function paint(i, animate) {
-      index = (i + items.length) % items.length;
-      const html = cardHtml(items[index]);
+      index = ((i % items.length) + items.length) % items.length;
+      syncDots();
 
-      const mount = () => {
-        slot.innerHTML = html;
-        window.DRAFT_enhanceCardMedia?.(slot);
-      };
+      const apply = () => mountCard(slot, items[index]);
 
       if (!animate) {
-        mount();
+        apply();
         return;
       }
-
       if (busy) return;
       busy = true;
       const current = slot.querySelector(".mock-list-card");
       if (current) current.classList.add("is-swap");
 
       window.setTimeout(() => {
-        mount();
+        apply();
         const nextCard = slot.querySelector(".mock-list-card");
         if (nextCard) {
           nextCard.classList.add("is-swap");
@@ -98,15 +203,24 @@
           });
         }
         busy = false;
-      }, 180);
+      }, 200);
     }
 
-    function step(dir) {
-      paint(index + dir, true);
+    function go(i, user) {
+      paint(i, true);
+      if (user) restart();
     }
 
-    prev?.addEventListener("click", () => step(-1));
-    next?.addEventListener("click", () => step(1));
+    function next() {
+      paint(index + 1, true);
+    }
+
+    function restart() {
+      if (timer) window.clearInterval(timer);
+      timer = null;
+      if (reduce || items.length < 2) return;
+      timer = window.setInterval(next, intervalMs);
+    }
 
     let startX = 0;
     slot.addEventListener("touchstart", (e) => {
@@ -115,12 +229,28 @@
     slot.addEventListener("touchend", (e) => {
       const dx = e.changedTouches[0].clientX - startX;
       if (Math.abs(dx) < 40) return;
-      step(dx < 0 ? 1 : -1);
+      go(index + (dx < 0 ? 1 : -1), true);
     }, { passive: true });
 
+    slot.addEventListener("mouseenter", () => {
+      if (timer) window.clearInterval(timer);
+      timer = null;
+    });
+    slot.addEventListener("mouseleave", () => restart());
+
     paint(0, false);
+    restart();
   }
 
-  setupCarousel("works", WORKS);
-  setupCarousel("goods", GOODS);
+  function setupStaticCard(slot, items) {
+    if (!slot || !items.length) return;
+    mountCard(slot, items[0]);
+  }
+
+  setupSlideshow(
+    document.getElementById("works-card-slot"),
+    WORKS,
+    document.getElementById("works-dots")
+  );
+  setupStaticCard(document.getElementById("goods-card-slot"), GOODS);
 })();

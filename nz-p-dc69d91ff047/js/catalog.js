@@ -62,15 +62,6 @@ window.DRAFT_WORKS = [
     story: "これは、たくさんの謎の答えを「推測」する謎解きゲームです。",
   },
   {
-    id: "girigiri-danshari",
-    title: "ギリギリダンシャリ",
-    tag: "ルーム型",
-    filter: "ルーム型",
-    date: "2026/5/2〜",
-    image: "../assets/works/girigiri-danshari.webp",
-    story: "何かを捨てながらたくさんの謎を解きスコアを稼ぐ、スコアアタック型の謎解きゲーム。",
-  },
-  {
     id: "nazone-fes-2026",
     title: "NAZONE FES 2026",
     tag: "フェス",
@@ -78,6 +69,15 @@ window.DRAFT_WORKS = [
     date: "2026/9/26〜",
     image: "../assets/works/nazone-fes-2026.webp",
     story: "NAZONE 新作中心のフェス型イベント「NAZONE FES 2026」。",
+  },
+  {
+    id: "girigiri-danshari",
+    title: "ギリギリダンシャリ",
+    tag: "ルーム型",
+    filter: "ルーム型",
+    date: "2026/5/2〜",
+    image: "../assets/works/girigiri-danshari.webp",
+    story: "何かを捨てながらたくさんの謎を解きスコアを稼ぐ、スコアアタック型の謎解きゲーム。",
   },
   {
     id: "groove",
@@ -246,15 +246,6 @@ window.DRAFT_GOODS = [
     story: "書籍。企業さまとのコラボ実績。",
   },
   {
-    id: "hanasaki",
-    title: "花咲き誇る処にて",
-    tag: "WEB謎",
-    filter: "Web",
-    date: "2020/5〜",
-    image: "../assets/goods/hanasaki.jpeg",
-    story: "花が咲き誇る場所を舞台にした、団体最初期のWEB謎。",
-  },
-  {
     id: "start",
     title: "はじまり START",
     tag: "LINE謎",
@@ -290,4 +281,26 @@ window.DRAFT_GOODS = [
     image: "../assets/goods/piennazo.jpeg",
     story: "「ぴえん」をモチーフにしたLINE謎。気軽に遊べる初期デジタルコンテンツ。",
   },
+  {
+    id: "hanasaki",
+    title: "花咲き誇る処にて",
+    tag: "WEB謎",
+    filter: "Web",
+    date: "2020/5〜",
+    image: "../assets/goods/hanasaki.jpeg",
+    story: "花が咲き誇る場所を舞台にした、団体最初期のWEB謎。",
+  },
 ];
+
+/* 日付文字列（例: 2026/9/26〜, 2025年, 2022/11〜）を新しい順に並べる */
+window.DRAFT_parseDate = function (value) {
+  const m = String(value || "").match(/(\d{4})(?:[/年](\d{1,2}))?(?:\/(\d{1,2}))?/);
+  if (!m) return 0;
+  return Date.UTC(Number(m[1]), Number(m[2] || 1) - 1, Number(m[3] || 1));
+};
+
+window.DRAFT_sortByDateDesc = function (list) {
+  return (list || []).slice().sort(function (a, b) {
+    return window.DRAFT_parseDate(b.date) - window.DRAFT_parseDate(a.date);
+  });
+};
