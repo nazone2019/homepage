@@ -556,6 +556,7 @@ body[data-page="works"] .mock-menu,
 body[data-page="goods"] .mock-menu,
 body[data-page="contact"] .mock-menu,
 body[data-page="about"] .mock-menu,
+body[data-page="privacy"] .mock-menu,
 body[data-page="work"] .mock-menu,
 body[data-page="good"] .mock-menu {
   position: absolute;
@@ -579,6 +580,7 @@ body[data-page="works"] .mock-menu__bars span,
 body[data-page="goods"] .mock-menu__bars span,
 body[data-page="contact"] .mock-menu__bars span,
 body[data-page="about"] .mock-menu__bars span,
+body[data-page="privacy"] .mock-menu__bars span,
 body[data-page="work"] .mock-menu__bars span,
 body[data-page="good"] .mock-menu__bars span {
   background: #fff;
@@ -1083,6 +1085,62 @@ body[data-page="goods"] .mock-filters {
 
 .mock-contact-form__note a {
   color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ---- Privacy ---- */
+.mock-privacy {
+  width: 100%;
+  display: grid;
+  gap: 18px;
+}
+
+.mock-privacy__intro {
+  margin: 0;
+  padding: 16px 16px 18px;
+  background: #fff;
+  border-radius: 18px;
+  font-size: clamp(13px, 3.4vw, 15px);
+  font-weight: 500;
+  line-height: 1.85;
+  color: #3a3a3a;
+}
+
+.mock-privacy__block {
+  margin: 0;
+  padding: 16px 16px 18px;
+  background: #fff;
+  border-radius: 18px;
+}
+
+.mock-privacy__block h2 {
+  margin: 0 0 0.7em;
+  font-size: clamp(14px, 3.6vw, 16px);
+  font-weight: 700;
+  line-height: 1.45;
+  color: #222;
+}
+
+.mock-privacy__block p {
+  margin: 0;
+  font-size: clamp(13px, 3.3vw, 14.5px);
+  font-weight: 500;
+  line-height: 1.85;
+  color: #3a3a3a;
+}
+
+.mock-privacy__foot {
+  margin: 4px 0 0;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: #4b4b4b;
+}
+
+.mock-privacy__foot a {
+  color: var(--mock-green);
+  font-weight: 700;
   text-decoration: underline;
   text-underline-offset: 2px;
 }

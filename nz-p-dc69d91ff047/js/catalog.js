@@ -68,7 +68,7 @@ window.DRAFT_WORKS = [
     filter: "その他",
     date: "2026/9/26〜",
     image: "../assets/works/nazone-fes-2026.webp",
-    story: "NAZONE 新作中心のフェス型イベント「NAZONE FES 2026」。",
+    story: "NAZONE 新作中心のフェス型イベント「NAZONE FES 2026」",
   },
   {
     id: "girigiri-danshari",
@@ -77,7 +77,7 @@ window.DRAFT_WORKS = [
     filter: "ルーム型",
     date: "2026/5/2〜",
     image: "../assets/works/girigiri-danshari.webp",
-    story: "何かを捨てながらたくさんの謎を解きスコアを稼ぐ、スコアアタック型の謎解きゲーム。",
+    story: "何かを捨てて解き進め！ これは、何かを捨てながらたくさんの謎を解きスコアを稼ぐ、スコアアタック型の謎解きゲーム。",
   },
   {
     id: "groove",
@@ -86,7 +86,7 @@ window.DRAFT_WORKS = [
     filter: "ホール型",
     date: "2025/7/18〜",
     image: "../assets/works/groove.webp",
-    story: "不思議を愛する者しかたどり着けない秘密のジャズバー『GROOVE』へようこそ。",
+    story: "ようこそ、不思議を愛する者しかたどり着けない秘密のジャズバー、『GROOVE』へ。",
   },
   {
     id: "second-run",
@@ -95,7 +95,7 @@ window.DRAFT_WORKS = [
     filter: "その他",
     date: "2025/5/17〜",
     image: "../assets/works/second-run.png",
-    story: "NAZONEの過去公演を再演するイベント。",
+    story: "NAZONE 初の再演中心のフェス型イベント「NAZONE SECOND RUN」",
   },
   {
     id: "kakikeshi-run",
@@ -104,7 +104,7 @@ window.DRAFT_WORKS = [
     filter: "ブース型",
     date: "2025/5/17〜",
     image: "../assets/works/kakikeshi-run.webp",
-    story: "筆記用具で解き進める体験型謎解き。",
+    story: "書いて！消して！考えて！",
   },
   {
     id: "ganbare-muriyari",
@@ -113,7 +113,7 @@ window.DRAFT_WORKS = [
     filter: "ブース型",
     date: "2025/5/17〜",
     image: "../assets/works/ganbare-muriyari.webp",
-    story: "「普通には解けない」ムリヤリセイトンスケルトンに挑み続けろ。",
+    story: "挑み続けろ、無理難題に──。",
   },
   {
     id: "motto-muriyari",
@@ -122,7 +122,7 @@ window.DRAFT_WORKS = [
     filter: "ブース型",
     date: "2024/12/7〜",
     image: "../assets/works/motto-muriyari.png",
-    story: "ムリヤリセイトンスケルトンシリーズ。",
+    story: "ひらめきで解き明かす不思議なスケルトンパズルをもっともっと楽しめる！！！",
   },
   {
     id: "kaburu-ensemble",
@@ -131,7 +131,7 @@ window.DRAFT_WORKS = [
     filter: "ブース型",
     date: "2024/11/3〜",
     image: "../assets/works/kaburu-ensemble.png",
-    story: "かぶって楽しむ体験型謎解き。",
+    story: "「カブリ」を見つけて攻略しろ！",
   },
   {
     id: "dustrush",
@@ -140,7 +140,7 @@ window.DRAFT_WORKS = [
     filter: "ルーム型",
     date: "2024/10/12〜",
     image: "../assets/works/dustrush.webp",
-    story: "2024年10月公演。",
+    story: "この会場の掃除は、皆さんの役目です。",
   },
   {
     id: "muriyari",
@@ -149,16 +149,16 @@ window.DRAFT_WORKS = [
     filter: "ブース型",
     date: "2024/7/13〜",
     image: "../assets/works/muriyari.png",
-    story: "普通には解けないスケルトン型の謎解き。",
+    story: "一風変わった「スケルトンパズル」を 最後まで攻略しろ!!",
   },
   {
     id: "aketari-tojitari-2",
-    title: "◁アケタリ▷▷トジタリ◁2",
+    title: "◁アケタリ▷ ▷トジタリ◁2",
     tag: "ルーム型",
     filter: "ルーム型",
     date: "2024/2/23〜",
     image: "../assets/works/aketari-tojitari-2.png",
-    story: "開いて閉じて進める体験型謎解き。",
+    story: "気が付くと、また見知らぬ部屋にトジ込められてしまったあなた",
   },
   {
     id: "alive",
@@ -167,7 +167,7 @@ window.DRAFT_WORKS = [
     filter: "ホール型",
     date: "2023/12/16〜",
     image: "../assets/works/alive.webp",
-    story: "2023年12月公演。",
+    story: "あなたは、人生を何度送っても使いきれない巨万の富を手に入れた大金持ち。",
   },
   {
     id: "nazo-teikyo",
@@ -176,7 +176,7 @@ window.DRAFT_WORKS = [
     filter: "ルーム型",
     date: "2023/10/28〜",
     image: "../assets/works/nazo-teikyo.webp",
-    story: "2023年10月公演。",
+    story: "あなたたちは江の島へとやってきた観光客一行",
   },
   {
     id: "shujin-game",
@@ -185,7 +185,7 @@ window.DRAFT_WORKS = [
     filter: "ルーム型",
     date: "2023/7/29〜",
     image: "../assets/works/shujin-game.webp",
-    story: "2023年7月公演。",
+    story: "「こちらが実際に使われていた牢屋です──」",
   },
   {
     id: "nazomen",
@@ -194,16 +194,16 @@ window.DRAFT_WORKS = [
     filter: "ルーム型",
     date: "2023/4/15〜",
     image: "../assets/works/nazomen.png",
-    story: "謎解きの免許を取る試験型イベント。",
+    story: "近年、自動車の運転における注意力や対応力の重要性がより指摘されるようになり、",
   },
   {
     id: "aketari-tojitari",
-    title: "◁アケタリ▷▷トジタリ◁",
+    title: "◁アケタリ▷ ▷トジタリ◁",
     tag: "ルーム型",
     filter: "ルーム型",
     date: "2022/11〜",
     image: "../assets/works/aketari-tojitari.png",
-    story: "開いて、閉じて、解き進める体験型謎解き。NAZONE初期の代表作。",
+    story: "いつの間にか見知らぬ部屋にトジ込められてしまったあなた",
   },
   {
     id: "hudebako",
@@ -212,7 +212,7 @@ window.DRAFT_WORKS = [
     filter: "カフェ型",
     date: "2022/10〜",
     image: "../assets/works/hudebako.jpg",
-    story: "カフェで楽しむ謎解き。筆箱をモチーフにした小規模コンテンツです。",
+    story: "✏️文房具を駆使して謎を解け📙📐📎",
   },
 ];
 
@@ -234,7 +234,7 @@ window.DRAFT_GOODS = [
     filter: "キット",
     date: "2025年",
     image: "../assets/goods/okudake-puzzle.webp",
-    story: "4つのキューブを「置くだけで」解き明かす新感覚の謎解きパズルブック。",
+    story: "筆記用具は必要なし！？ 4つのキューブを「置くだけで」解き明かす新感覚の謎解きパズルブックです！",
   },
   {
     id: "bakusou-nazotoki",
@@ -243,7 +243,7 @@ window.DRAFT_GOODS = [
     filter: "その他",
     date: "2022/12〜",
     image: "../assets/goods/bakusou-nazotoki.webp",
-    story: "書籍。企業さまとのコラボ実績。",
+    story: "NAZONEが第2章と他一部制作！",
   },
   {
     id: "start",
@@ -252,7 +252,7 @@ window.DRAFT_GOODS = [
     filter: "Web",
     date: "2021/6〜",
     image: "../assets/goods/start.jpeg",
-    story: "LINE上で進行する謎解き。物語の「はじまり」をテーマにした初期のLINE謎。",
+    story: "NAZONEのLINE謎第4弾",
   },
   {
     id: "umi-escape",
@@ -261,7 +261,7 @@ window.DRAFT_GOODS = [
     filter: "Web",
     date: "2020/12〜",
     image: "../assets/goods/umi-escape.jpeg",
-    story: "海を舞台にした脱出モチーフのLINE謎。",
+    story: "🌊NAZONEのLINE謎第3弾🌊",
   },
   {
     id: "nazomori",
@@ -270,7 +270,7 @@ window.DRAFT_GOODS = [
     filter: "Web",
     date: "2020/10〜",
     image: "../assets/goods/nazomori.jpeg",
-    story: "森を舞台にしたLINE謎。「なぞときの森」へ誘う初期コンテンツ。",
+    story: "NAZONEのLINE謎第2弾",
   },
   {
     id: "piennazo",
@@ -279,7 +279,7 @@ window.DRAFT_GOODS = [
     filter: "Web",
     date: "2020/8〜",
     image: "../assets/goods/piennazo.jpeg",
-    story: "「ぴえん」をモチーフにしたLINE謎。気軽に遊べる初期デジタルコンテンツ。",
+    story: "NAZONEのLINE謎第1弾",
   },
   {
     id: "hanasaki",
@@ -288,7 +288,7 @@ window.DRAFT_GOODS = [
     filter: "Web",
     date: "2020/5〜",
     image: "../assets/goods/hanasaki.jpeg",
-    story: "花が咲き誇る場所を舞台にした、団体最初期のWEB謎。",
+    story: "春も終わりそうな暑さですが、今年の春は花をあまり見ていない！という人も多いのでは…？",
   },
 ];
 
