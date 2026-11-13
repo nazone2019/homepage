@@ -131,6 +131,18 @@
     card.classList.remove("is-door-open");
   }
 
+  function detailHref(card) {
+    const link = card.querySelector(
+      ".mock-list-card__media[href], .mock-list-card__title-link[href], .mock-list-card__kwsk[href]"
+    );
+    return link ? link.getAttribute("href") : "";
+  }
+
+  function goDetail(card) {
+    const href = detailHref(card);
+    if (href) window.location.href = href;
+  }
+
   function bindDoorHover(card) {
     if (!card || card.dataset.doorBound) return;
     card.dataset.doorBound = "1";
@@ -142,7 +154,7 @@
       typeof window.matchMedia === "function" &&
       window.matchMedia("(pointer: coarse)").matches;
 
-    /* PC：ホバーで開閉 */
+    /* PC：ホバーで開閉。カードのどこをクリックしても詳細へ */
     if (canHover && !coarsePointer) {
       const open = () => openDoor(card, media);
       const close = () => {
@@ -156,17 +168,26 @@
         if (card.contains(e.relatedTarget)) return;
         close();
       });
+      card.addEventListener("click", (e) => {
+        if (e.target.closest("a[href]")) return;
+        goDetail(card);
+      });
       return;
     }
 
-    /* モバイル：カードタップ1回目で仕掛け、開いた状態のリンクタップで詳細へ */
+    /* モバイル：1回目でドア、2回目はカードのどこでも詳細へ */
     card.addEventListener(
       "click",
       (e) => {
-        if (card.classList.contains("is-door-open")) return;
+        if (!card.classList.contains("is-door-open")) {
+          e.preventDefault();
+          e.stopPropagation();
+          openDoor(card, media);
+          return;
+        }
+        if (e.target.closest("a[href]")) return;
         e.preventDefault();
-        e.stopPropagation();
-        openDoor(card, media);
+        goDetail(card);
       },
       true
     );
