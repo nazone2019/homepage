@@ -5,7 +5,8 @@
 const SITE = {
   name: "NAZONE",
   tagline: "ココロざす を 志す",
-  description: "ワクワクをお届けする謎解き制作団体",
+  description:
+    "謎解き制作団体「NAZONE」の公式ホームページです。思わず夢中になってしまうようなワクワクを、ぎゅぎゅっと詰め込んでお届けします。",
   founded: "2019年6月",
   copyright: "©2019 NAZONE All Rights Reserved.",
   twitter: "https://twitter.com/nazone2019",
