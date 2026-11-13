@@ -1105,14 +1105,24 @@ body[data-page="goods"] .mock-filters {
   display: block;
 }
 
-.mock-about-lead {
+.mock-about-lead,
+.mock-about-copy {
   margin: 0 auto 36px;
-  max-width: 20em;
+  max-width: 22em;
   text-align: center;
   font-size: clamp(13px, 3.4vw, 15px);
   font-weight: 500;
   line-height: 1.9;
   color: #3a3a3a;
+}
+
+.mock-about-copy p {
+  margin: 0 0 1.1em;
+  text-align: center;
+}
+
+.mock-about-copy p:last-child {
+  margin-bottom: 0;
 }
 
 .mock-about-members-head {
@@ -1396,13 +1406,17 @@ body[data-page="goods"] .mock-filters {
 }
 
 .home-about-lead {
-  margin: 0 0 22px;
-  max-width: 20em;
+  margin: 0 auto 22px;
+  /* 手動3行の各行が1文字だけ折り返さない幅 */
+  max-width: min(26em, 100%);
   text-align: center;
   font-size: clamp(13px, 3.4vw, 15px);
   font-weight: 500;
   line-height: 1.9;
   color: #3a3a3a;
+  overflow-wrap: normal;
+  word-break: keep-all;
+  line-break: strict;
 }
 
 .home-cta {
