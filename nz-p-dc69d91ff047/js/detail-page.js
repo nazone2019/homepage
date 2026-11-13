@@ -11,7 +11,7 @@
     : (typeof getGoodById === "function" ? getGoodById(id) : null);
 
   const listHref = isWork ? "works.html" : "goods.html";
-  const listLabel = isWork ? "WORKS へ戻る" : "GOODS へ戻る";
+  const listLabel = "戻る";
   const assetDir = isWork ? "../assets/works/" : "../assets/goods/";
   const draftList = isWork ? window.DRAFT_WORKS : window.DRAFT_GOODS;
   const draftMeta = (draftList || []).find((d) => d.id === id);
@@ -100,6 +100,16 @@
         )
       : "";
 
+  const buyLinks =
+    item.buyLinks && item.buyLinks.length
+      ? `<div class="mock-detail__buys">${item.buyLinks
+          .map(
+            (link) =>
+              `<a class="mock-detail__buy" href="${escapeHtml(link.href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.label)}</a>`
+          )
+          .join("")}</div>`
+      : "";
+
   mount.innerHTML = `
     <article class="mock-detail">
       ${image}
@@ -111,6 +121,7 @@
         ${about}
         ${meta}
         ${hashtag}
+        ${buyLinks}
         ${history}
         <p class="mock-detail__back"><a href="${listHref}">${listLabel}</a></p>
       </div>

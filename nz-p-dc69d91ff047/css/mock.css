@@ -1392,6 +1392,35 @@ body[data-page="goods"] .mock-filters {
   color: var(--mock-green-deep);
 }
 
+.mock-detail__buys {
+  display: grid;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.mock-detail__buy {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.85em 1em;
+  border: 2px solid var(--mock-green);
+  border-radius: 999px;
+  background: var(--mock-green);
+  color: #fff;
+  font-family: var(--mock-font);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: center;
+  text-decoration: none;
+}
+
+.mock-detail__buy:hover {
+  background: var(--mock-green-deep);
+  border-color: var(--mock-green-deep);
+  color: #fff;
+}
+
 .mock-detail__back {
   margin: 18px 0 0;
   text-align: center;
