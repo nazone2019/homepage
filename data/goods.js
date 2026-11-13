@@ -45,6 +45,12 @@ const GOODS = [
     about: "NAZONEが第2章と他一部制作！\nAmazonにて販売中",
     meta: [],
     hashtag: "",
+    buyLinks: [
+      {
+        label: "公式サイトはこちらから",
+        href: "https://www.ikedashoten.co.jp/book-details.php?isbn=978-4-262-15730-6",
+      },
+    ],
   },
   {
     id: "hanasaki",
@@ -55,6 +61,12 @@ const GOODS = [
     about: "春も終わりそうな暑さですが、今年の春は花をあまり見ていない！という人も多いのでは…？\nそんな皆様に、私たちから花を巡る物語を送ります。\n【花咲き誇る処にて】\n是非、花の織りなす素敵な世界をお楽しみください\nWEB上でプレイする謎解きゲーム",
     meta: [],
     hashtag: "#花咲謎",
+    buyLinks: [
+      {
+        label: "プレイはこちらから",
+        href: "https://nazone2019.wixsite.com/hanasaki",
+      },
+    ],
   },
   {
     id: "start",
@@ -65,6 +77,12 @@ const GOODS = [
     about: "NAZONEのLINE謎第4弾\n終わらない謎解きが今はじまる───\nLINE上でプレイする謎解きゲーム",
     meta: [],
     hashtag: "#はじまり謎",
+    buyLinks: [
+      {
+        label: "プレイはこちらから",
+        href: "https://lin.ee/RDoXRMd",
+      },
+    ],
   },
   {
     id: "umi-escape",
@@ -75,6 +93,12 @@ const GOODS = [
     about: "🌊NAZONEのLINE謎第3弾🌊\n気づけばあなたは海にいる。\n綺麗な海の上で、綺麗な謎を解き明かせ🐚\nLINE上でプレイする謎解きゲーム",
     meta: [],
     hashtag: "#海脱出",
+    buyLinks: [
+      {
+        label: "プレイはこちらから",
+        href: "https://lin.ee/BTP44yb",
+      },
+    ],
   },
   {
     id: "nazomori",
@@ -85,6 +109,12 @@ const GOODS = [
     about: "NAZONEのLINE謎第2弾\nどうぶつの森の知識がなくても楽しめる無人島脱出パッケージ🏝️\nあなたは脱出成功できますか？\nLINE上でプレイする謎解きゲーム",
     meta: [],
     hashtag: "#なぞ森",
+    buyLinks: [
+      {
+        label: "プレイはこちらから",
+        href: "https://lin.ee/41wjOfq",
+      },
+    ],
   },
   {
     id: "piennazo",
@@ -95,6 +125,12 @@ const GOODS = [
     about: "NAZONEのLINE謎第1弾\n細部まで凝りに凝ったJK感と謎解きのハーモニーをご堪能ください🥺\nLINE上でプレイする謎解きゲーム（現在LINEの仕様変更によりプレイ不可）",
     meta: [],
     hashtag: "#ぴえん謎",
+    buyLinks: [
+      {
+        label: "プレイはこちらから",
+        href: "https://lin.ee/Cs0oNIn",
+      },
+    ],
   }
 ];
 
