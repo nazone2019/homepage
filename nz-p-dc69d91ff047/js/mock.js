@@ -165,7 +165,6 @@
             <a class="mock-list-card__title-link" href="${item.href}">${item.title}</a>
           </h2>
           <p class="mock-list-card__date">${item.date}</p>
-          <p class="mock-list-card__desc">${item.story}</p>
         </div>
       </article>`;
   }

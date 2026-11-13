@@ -23,7 +23,6 @@
 
   function cardHtml(item) {
     const href = detailBase + encodeURIComponent(item.id);
-    const desc = item.story || "";
     const media = window.DRAFT_cardMediaHtml
       ? window.DRAFT_cardMediaHtml(href, item.image)
       : `<a class="mock-list-card__media" href="${href}" aria-label="${item.title}の詳細"><img src="${item.image}" alt="" loading="lazy"></a>`;
@@ -43,7 +42,6 @@
             <a class="mock-list-card__title-link" href="${href}">${item.title}</a>
           </h2>
           <p class="mock-list-card__date">${item.date}</p>
-          <p class="mock-list-card__desc">${desc}</p>
         </div>
       </article>`;
   }
