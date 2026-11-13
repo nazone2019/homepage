@@ -74,9 +74,23 @@
           .join("")}</ul>`
       : "";
 
-  const hashtag = item.hashtag
-    ? `<p class="mock-detail__hashtag">ハッシュタグ：${escapeHtml(item.hashtag)}</p>`
-    : "";
+  function hashtagHtml(raw) {
+    const text = String(raw || "").trim();
+    if (!text) return "";
+    const links = text
+      .split(/\s+/)
+      .filter(Boolean)
+      .map((part) => {
+        const label = part.startsWith("#") ? part : `#${part}`;
+        const query = label.replace(/^#/, "");
+        const href = `https://x.com/hashtag/${encodeURIComponent(query)}`;
+        return `<a class="mock-detail__hashtag-link" href="${href}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`;
+      })
+      .join(" ");
+    return `<p class="mock-detail__hashtag">ハッシュタグ：${links}</p>`;
+  }
+
+  const hashtag = hashtagHtml(item.hashtag);
 
   const history =
     isWork && item.history && item.history.length
