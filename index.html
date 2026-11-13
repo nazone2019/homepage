@@ -9,84 +9,138 @@
   <meta property="og:image" content="assets/brand/og.jpg">
   <title>NAZONE</title>
   <link rel="icon" href="assets/brand/favicon.png" type="image/png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/mock.css?v=74">
 </head>
-<body>
-  <header class="site-header" id="site-header"></header>
-
-  <div class="wrap">
-    <section class="hero" aria-label="メインビジュアル">
-      <img src="assets/brand/colorbar.webp" alt="ココロざす を 志す NAZONE">
-      <div class="hero__bar">
-        <p id="home-lead"></p>
-        <div class="hero__actions">
-          <a class="btn btn--primary" href="about.html">ABOUT</a>
-          <a class="btn btn--ghost" href="contents.html">WORKS</a>
-          <a class="btn btn--ghost" href="goods.html">GOODS</a>
-        </div>
+<body class="draft-mock" data-page="home">
+  <div class="mock-stage mock-stage--home" id="mock-stage">
+    <section class="home-hero" id="home-hero" aria-label="ココロざすを志す">
+      <div class="home-hero__art">
+        <img
+          class="home-hero__base"
+          src="assets/site/homepage_top_base.webp"
+          alt=""
+          width="1921"
+          height="1080"
+          decoding="async"
+          fetchpriority="high"
+          draggable="false"
+        >
+        <img
+          class="home-hero__overlay home-hero__overlay--kana"
+          src="assets/site/homepage_top.webp"
+          alt="ココロざす"
+          width="1921"
+          height="1081"
+          decoding="async"
+          draggable="false"
+        >
+        <img
+          class="home-hero__overlay home-hero__overlay--kanji"
+          src="assets/site/homepage_top.webp"
+          alt="志す"
+          width="1921"
+          height="1081"
+          decoding="async"
+          draggable="false"
+        >
+        <img
+          class="home-hero__arrow"
+          src="assets/site/homepage_arrow.webp"
+          alt=""
+          width="100"
+          height="80"
+          decoding="async"
+          draggable="false"
+        >
       </div>
-      <div class="colorbar" aria-hidden="true"></div>
-    </section>
 
-    <section id="about" aria-labelledby="home-about-heading">
-      <div class="section-head">
-        <p>About</p>
-        <h2 id="home-about-heading">NAZONEとは</h2>
-      </div>
-      <p class="about-copy" id="home-about-text"></p>
-      <a class="more-link" href="about.html">詳しく見る</a>
-    </section>
+      <a class="home-hero__logo" href="index.html" aria-label="NAZONE トップ">
+        <img src="assets/logo-white.png" alt="NAZONE" width="605" height="130" decoding="async" draggable="false">
+      </a>
 
-    <section id="works" aria-labelledby="home-works-heading">
-      <div class="section-head">
-        <p>Works</p>
-        <h2 id="home-works-heading">制作したもの</h2>
-      </div>
-      <div class="work-grid" id="home-works"></div>
-      <p style="margin-top:16px;">
-        <a class="more-link" href="contents.html">すべて表示</a>
+      <button class="mock-menu home-hero__menu" id="menu-btn" type="button" aria-label="メニュー" aria-expanded="false" aria-controls="mock-nav">
+        <img src="assets/menu-icon.webp" alt="" width="155" height="125" draggable="false">
+        <span class="mock-menu__bars" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
+
+      <p class="home-hero__scroll" aria-hidden="true">
+        <img class="home-hero__scroll-img" src="assets/scroll-mark.webp" alt="" width="325" height="185" draggable="false">
       </p>
     </section>
 
-    <section id="goods" aria-labelledby="home-goods-heading">
-      <div class="section-head">
-        <p>Goods</p>
-        <h2 id="home-goods-heading">グッズ</h2>
+    <section class="home-panel home-panel--about" aria-labelledby="home-about-heading">
+      <header class="mock-list-heading">
+        <h2 class="mock-list-heading__ja" id="home-about-heading">NAZONEって？</h2>
+        <p class="mock-list-heading__en">About</p>
+      </header>
+
+      <div class="home-about-brand">
+        <img src="assets/brand/logo.webp" alt="NAZONE" width="2400" height="514" decoding="async" draggable="false">
       </div>
-      <div class="work-grid" id="home-goods"></div>
-      <p style="margin-top:16px;">
-        <a class="more-link" href="goods.html">すべて表示</a>
+
+      <p class="home-about-lead">
+        はじめまして、「なぞーん」と読みます。<br>
+        思わず夢中になってしまうようなワクワクを、<br>
+        ぎゅぎゅっと詰め込んでお届けします。
       </p>
+
+      <a class="home-cta" href="about.html">もっと詳しく！</a>
     </section>
+
+    <section class="home-panel home-panel--works" aria-labelledby="home-works-heading">
+      <header class="mock-list-heading">
+        <h2 class="mock-list-heading__ja" id="home-works-heading">制作した公演</h2>
+        <p class="mock-list-heading__en">Works</p>
+      </header>
+
+      <div class="home-carousel home-carousel--slideshow">
+        <div class="home-card-slot home-card-slot--works" id="works-card-slot"></div>
+      </div>
+      <div class="home-slideshow-dots" id="works-dots" role="tablist" aria-label="公演スライド"></div>
+
+      <a class="home-cta" href="works.html">すべて表示する</a>
+    </section>
+
+    <section class="home-panel home-panel--goods" aria-labelledby="home-goods-heading">
+      <header class="mock-list-heading">
+        <h2 class="mock-list-heading__ja" id="home-goods-heading">制作したグッズ</h2>
+        <p class="mock-list-heading__en">Goods</p>
+      </header>
+
+      <div class="home-carousel">
+        <div class="home-card-slot home-card-slot--goods" id="goods-card-slot"></div>
+      </div>
+
+      <a class="home-cta" href="goods.html">すべて表示する</a>
+    </section>
+
+    <footer class="mock-list-footer">
+      <p>©2019 NAZONE. All rights reserved.</p>
+    </footer>
   </div>
 
-  <footer class="site-footer" id="site-footer"></footer>
+  <nav class="mock-nav" id="mock-nav" hidden>
+    <a href="index.html" aria-current="page"><img class="mock-nav-icon" src="assets/site/home.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-nav__ja">ホーム</span><span class="mock-nav__en">Home</span></span></a>
+    <a href="about.html"><img class="mock-nav-icon" src="assets/site/about.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-nav__ja">NAZONEって？</span><span class="mock-nav__en">About</span></span></a>
+    <a href="works.html"><img class="mock-nav-icon" src="assets/site/works.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-nav__ja">制作した公演</span><span class="mock-nav__en">Works</span></span></a>
+    <a href="goods.html"><img class="mock-nav-icon" src="assets/site/goods.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-nav__ja">制作したグッズ</span><span class="mock-nav__en">Goods</span></span></a>
+    <a href="contact.html"><img class="mock-nav-icon" src="assets/site/contact.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-nav__ja">お問い合わせ</span><span class="mock-nav__en">Contact</span></span></a>
+  </nav>
 
-  <script src="data/site.js"></script>
-  <script src="data/about.js"></script>
-  <script src="data/works.js"></script>
-  <script src="data/goods.js"></script>
-  <script src="js/main.js"></script>
-  <script>
-    NAZONE.init();
-    (function () {
-      const lead = document.getElementById("home-lead");
-      if (lead) lead.textContent = SITE.description;
-      const aboutText = document.getElementById("home-about-text");
-      if (aboutText) aboutText.textContent = ABOUT.lead;
+  <a class="mock-rail-logo" href="index.html" aria-label="NAZONE トップ">
+    <img src="assets/brand/logo.webp" alt="" width="2400" height="514" decoding="async" draggable="false">
+  </a>
+  <nav class="mock-side-nav" aria-label="メインメニュー">
+    <a href="index.html" aria-current="page"><img class="mock-nav-icon" src="assets/site/home.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-side-nav__ja">ホーム</span><span class="mock-side-nav__en">Home</span></span></a>
+    <a href="about.html"><img class="mock-nav-icon" src="assets/site/about.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-side-nav__ja">NAZONEって？</span><span class="mock-side-nav__en">About</span></span></a>
+    <a href="works.html"><img class="mock-nav-icon" src="assets/site/works.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-side-nav__ja">制作した公演</span><span class="mock-side-nav__en">Works</span></span></a>
+    <a href="goods.html"><img class="mock-nav-icon" src="assets/site/goods.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-side-nav__ja">制作したグッズ</span><span class="mock-side-nav__en">Goods</span></span></a>
+    <a href="contact.html"><img class="mock-nav-icon" src="assets/site/contact.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-side-nav__ja">お問い合わせ</span><span class="mock-side-nav__en">Contact</span></span></a>
+  </nav>
 
-      const homeWorks = document.getElementById("home-works");
-      if (homeWorks) {
-        homeWorks.innerHTML = getListedWorks().slice(0, 6).map((w) => NAZONE.workCardHtml(w)).join("");
-      }
-      const homeGoods = document.getElementById("home-goods");
-      if (homeGoods) {
-        homeGoods.innerHTML = getListedGoods().map((g) => NAZONE.goodCardHtml(g)).join("");
-      }
-    })();
-  </script>
+<script src="js/catalog.js?v=6"></script>
+  <script src="js/cards.js?v=27"></script>
+  <script src="js/mock-common.js?v=3"></script>
+  <script src="js/mock.js?v=37"></script>
 </body>
 </html>

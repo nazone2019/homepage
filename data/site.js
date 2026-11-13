@@ -18,10 +18,9 @@ const SITE = {
   },
   nav: [
     { label: "Home", jp: "ホーム", href: "index.html" },
-    { label: "About", jp: "NAZONEとは", href: "about.html" },
-    { label: "Works", jp: "制作したもの", href: "contents.html" },
-    { label: "Goods", jp: "グッズ", href: "goods.html" },
-    { label: "Member", jp: "メンバー", href: "member.html" },
+    { label: "About", jp: "NAZONEって？", href: "about.html" },
+    { label: "Works", jp: "制作した公演", href: "works.html" },
+    { label: "Goods", jp: "制作したグッズ", href: "goods.html" },
     { label: "Contact", jp: "お問い合わせ", href: "contact.html" },
   ],
 };

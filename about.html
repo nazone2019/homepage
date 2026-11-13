@@ -3,47 +3,109 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="謎解き制作団体NAZONEについて">
-  <title>ABOUT | NAZONE</title>
+  <meta name="description" content="NAZONEって？">
+  <title>About | NAZONE</title>
   <link rel="icon" href="assets/brand/favicon.png" type="image/png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/mock.css?v=74">
 </head>
-<body>
-  <header class="site-header" id="site-header"></header>
+<body class="draft-mock" data-page="about">
+  <div class="mock-stage mock-stage--list">
+    <header class="mock-list-header">
+      <a class="mock-list-logo" href="index.html" aria-label="NAZONE トップ">
+        <img src="assets/site/nazone_logo.webp" alt="NAZONE" width="4123" height="884" decoding="async" fetchpriority="high" draggable="false">
+      </a>
+      <button class="mock-menu" id="menu-btn" type="button" aria-label="メニュー" aria-expanded="false" aria-controls="mock-nav">
+        <img src="assets/menu-icon.webp" alt="" width="155" height="125" draggable="false">
+      <span class="mock-menu__bars" aria-hidden="true"><span></span><span></span><span></span></span>
+    </button>
+    </header>
 
-  <main class="wrap">
-    <div class="section-head">
-      <p>About</p>
-      <h1>NAZONEとは</h1>
+    <div class="mock-content-panel">
+      <header class="mock-list-heading">
+        <h1 class="mock-list-heading__ja">NAZONEって？</h1>
+        <p class="mock-list-heading__en">About</p>
+      </header>
+
+      <div class="mock-about-brand">
+        <img src="assets/brand/logo.webp" alt="NAZONE" width="2400" height="514" decoding="async" draggable="false">
+      </div>
+
+      <div class="mock-about-copy">
+        <p>はじめまして、「なぞーん」と読みます。</p>
+        <p>
+          私たちが大切にしているのは、<br>
+          面白さへの探究心と、自由な発想。
+        </p>
+        <p>
+          ときには定番の面白さを磨き、<br>
+          ときにはこれまでにない仕組みに挑戦する。
+        </p>
+        <p>
+          さまざまなアイデアを掛け合わせながら、<br>
+          思わず夢中になってしまうようなワクワクを<br>
+          お届けします。</p>
+      </div>
+
+      <header class="mock-about-members-head">
+        <h2 class="mock-about-members-head__ja">メンバー</h2>
+        <p class="mock-about-members-head__en">Member</p>
+      </header>
+
+      <ul class="mock-about-members">
+        <li>
+          <div class="mock-about-member">
+            <img class="mock-about-member__face" src="assets/site/shirukuto_head.jpg" alt="" width="400" height="400" loading="lazy" decoding="async" draggable="false">
+            <span class="mock-about-member__text">
+              <span class="mock-about-member__name">シルクト</span>
+              <a class="mock-about-member__id-link" href="https://x.com/shirukuto_NAZO" target="_blank" rel="noopener noreferrer">@shirukuto_NAZO</a>
+            </span>
+          </div>
+        </li>
+        <li>
+          <div class="mock-about-member">
+            <img class="mock-about-member__face" src="assets/site/nemaki_head.jpg" alt="" width="400" height="400" loading="lazy" decoding="async" draggable="false">
+            <span class="mock-about-member__text">
+              <span class="mock-about-member__name">ねまき</span>
+              <a class="mock-about-member__id-link" href="https://x.com/Nemusugirundesu" target="_blank" rel="noopener noreferrer">@Nemusugirundesu</a>
+            </span>
+          </div>
+        </li>
+        <li>
+          <div class="mock-about-member">
+            <img class="mock-about-member__face" src="assets/site/kirakira_head.jpg" alt="" width="400" height="400" loading="lazy" decoding="async" draggable="false">
+            <span class="mock-about-member__text">
+              <span class="mock-about-member__name">キラキラ</span>
+              <a class="mock-about-member__id-link" href="https://x.com/kirakira_NAZO" target="_blank" rel="noopener noreferrer">@kirakira_NAZO</a>
+            </span>
+          </div>
+        </li>
+      </ul>
     </div>
-    <div id="about-content"></div>
-  </main>
 
-  <footer class="site-footer" id="site-footer"></footer>
+    <footer class="mock-list-footer">
+      <p>©2019 NAZONE. All rights reserved.</p>
+    </footer>
+  </div>
 
-  <script src="data/site.js"></script>
-  <script src="data/about.js"></script>
-  <script src="js/main.js"></script>
-  <script>
-    NAZONE.init({ crumb: "ABOUT" });
-    const a = ABOUT;
-    document.getElementById("about-content").innerHTML = `
-      <section class="about-block">
-        <h2>${a.title}</h2>
-        <p>${a.lead}</p>
-      </section>
-      <section class="about-block">
-        <h2>自主制作</h2>
-        <ul>${a.selfProductions.map((x) => `<li>${x}</li>`).join("")}</ul>
-      </section>
-      <section class="about-block">
-        <h2>企業さまとのコラボ実績</h2>
-        <ul>${a.collaborations.map((x) => `<li>${x}</li>`).join("")}</ul>
-      </section>
-    `;
-  </script>
+  <nav class="mock-nav" id="mock-nav" hidden>
+    <a href="index.html"><img class="mock-nav-icon" src="assets/site/home.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-nav__ja">ホーム</span><span class="mock-nav__en">Home</span></span></a>
+    <a href="about.html" aria-current="page"><img class="mock-nav-icon" src="assets/site/about.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-nav__ja">NAZONEって？</span><span class="mock-nav__en">About</span></span></a>
+    <a href="works.html"><img class="mock-nav-icon" src="assets/site/works.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-nav__ja">制作した公演</span><span class="mock-nav__en">Works</span></span></a>
+    <a href="goods.html"><img class="mock-nav-icon" src="assets/site/goods.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-nav__ja">制作したグッズ</span><span class="mock-nav__en">Goods</span></span></a>
+    <a href="contact.html"><img class="mock-nav-icon" src="assets/site/contact.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-nav__ja">お問い合わせ</span><span class="mock-nav__en">Contact</span></span></a>
+  </nav>
+
+  <a class="mock-rail-logo" href="index.html" aria-label="NAZONE トップ">
+    <img src="assets/brand/logo.webp" alt="" width="2400" height="514" decoding="async" draggable="false">
+  </a>
+  <nav class="mock-side-nav" aria-label="メインメニュー">
+    <a href="index.html"><img class="mock-nav-icon" src="assets/site/home.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-side-nav__ja">ホーム</span><span class="mock-side-nav__en">Home</span></span></a>
+    <a href="about.html" aria-current="page"><img class="mock-nav-icon" src="assets/site/about.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-side-nav__ja">NAZONEって？</span><span class="mock-side-nav__en">About</span></span></a>
+    <a href="works.html"><img class="mock-nav-icon" src="assets/site/works.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-side-nav__ja">制作した公演</span><span class="mock-side-nav__en">Works</span></span></a>
+    <a href="goods.html"><img class="mock-nav-icon" src="assets/site/goods.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-side-nav__ja">制作したグッズ</span><span class="mock-side-nav__en">Goods</span></span></a>
+    <a href="contact.html"><img class="mock-nav-icon" src="assets/site/contact.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-side-nav__ja">お問い合わせ</span><span class="mock-side-nav__en">Contact</span></span></a>
+  </nav>
+
+<script src="js/mock-common.js?v=3"></script>
 </body>
 </html>

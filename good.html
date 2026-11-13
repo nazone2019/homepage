@@ -3,97 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="NAZONE グッズ詳細">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="NAZONE GOODS">
-  <meta name="twitter:description" content="NAZONEのグッズ詳細">
-  <meta name="twitter:image" content="">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="NAZONE GOODS">
-  <meta property="og:description" content="NAZONEのグッズ詳細">
-  <meta property="og:image" content="">
-  <title>GOOD | NAZONE</title>
+  <meta name="description" content="グッズ詳細">
+  <title>Good | NAZONE</title>
   <link rel="icon" href="assets/brand/favicon.png" type="image/png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/mock.css?v=74">
 </head>
-<body>
-  <header class="site-header" id="site-header"></header>
+<body class="draft-mock" data-page="good">
+  <div class="mock-stage mock-stage--list">
+    <header class="mock-list-header">
+      <a class="mock-list-logo" href="index.html" aria-label="NAZONE トップ">
+        <img src="assets/site/nazone_logo.webp" alt="NAZONE" width="4123" height="884" decoding="async" fetchpriority="high" draggable="false">
+      </a>
+      <button class="mock-menu" id="menu-btn" type="button" aria-label="メニュー" aria-expanded="false" aria-controls="mock-nav">
+        <img src="assets/menu-icon.webp" alt="" width="155" height="125" draggable="false">
+      <span class="mock-menu__bars" aria-hidden="true"><span></span><span></span><span></span></span>
+    </button>
+    </header>
 
-  <main class="wrap">
-    <div id="good-detail"></div>
-  </main>
+    <div class="mock-content-panel">
+      <div id="detail-mount"></div>
+    </div>
 
-  <footer class="site-footer" id="site-footer"></footer>
+    <footer class="mock-list-footer">
+      <p>©2019 NAZONE. All rights reserved.</p>
+    </footer>
+  </div>
 
-  <script src="data/site.js"></script>
-  <script src="data/goods.js"></script>
-  <script src="js/main.js"></script>
-  <script>
-    const params = new URLSearchParams(location.search);
-    const good = getGoodById(params.get("id") || "");
+  <nav class="mock-nav" id="mock-nav" hidden>
+    <a href="index.html"><img class="mock-nav-icon" src="assets/site/home.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-nav__ja">ホーム</span><span class="mock-nav__en">Home</span></span></a>
+    <a href="about.html"><img class="mock-nav-icon" src="assets/site/about.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-nav__ja">NAZONEって？</span><span class="mock-nav__en">About</span></span></a>
+    <a href="works.html"><img class="mock-nav-icon" src="assets/site/works.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-nav__ja">制作した公演</span><span class="mock-nav__en">Works</span></span></a>
+    <a href="goods.html" aria-current="page"><img class="mock-nav-icon" src="assets/site/goods.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-nav__ja">制作したグッズ</span><span class="mock-nav__en">Goods</span></span></a>
+    <a href="contact.html"><img class="mock-nav-icon" src="assets/site/contact.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-nav__ja">お問い合わせ</span><span class="mock-nav__en">Contact</span></span></a>
+  </nav>
 
-    NAZONE.init({ crumb: good ? good.title : "GOOD" });
+  <a class="mock-rail-logo" href="index.html" aria-label="NAZONE トップ">
+    <img src="assets/brand/logo.webp" alt="" width="2400" height="514" decoding="async" draggable="false">
+  </a>
+  <nav class="mock-side-nav" aria-label="メインメニュー">
+    <a href="index.html"><img class="mock-nav-icon" src="assets/site/home.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-side-nav__ja">ホーム</span><span class="mock-side-nav__en">Home</span></span></a>
+    <a href="about.html"><img class="mock-nav-icon" src="assets/site/about.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-side-nav__ja">NAZONEって？</span><span class="mock-side-nav__en">About</span></span></a>
+    <a href="works.html"><img class="mock-nav-icon" src="assets/site/works.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-side-nav__ja">制作した公演</span><span class="mock-side-nav__en">Works</span></span></a>
+    <a href="goods.html" aria-current="page"><img class="mock-nav-icon" src="assets/site/goods.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-side-nav__ja">制作したグッズ</span><span class="mock-side-nav__en">Goods</span></span></a>
+    <a href="contact.html"><img class="mock-nav-icon" src="assets/site/contact.png" alt="" width="256" height="256" decoding="async" draggable="false"><span class="mock-nav-label"><span class="mock-side-nav__ja">お問い合わせ</span><span class="mock-side-nav__en">Contact</span></span></a>
+  </nav>
 
-    function setOg(good) {
-      if (!good) return;
-      const origin = (SITE.publicOrigin || location.origin || "").replace(/\/$/, "");
-      const imageFile = good.clearImage || good.image;
-      const imageUrl = imageFile
-        ? `${origin}/assets/goods/${imageFile}`
-        : "";
-      const title = `${good.title} | NAZONE`;
-      const description = (good.about || "").replace(/\n/g, " ").slice(0, 120);
-      document.title = title;
-      const map = {
-        'meta[name="twitter:title"]': title,
-        'meta[name="twitter:description"]': description,
-        'meta[name="twitter:image"]': imageUrl,
-        'meta[property="og:title"]': title,
-        'meta[property="og:description"]': description,
-        'meta[property="og:image"]': imageUrl,
-      };
-      Object.keys(map).forEach((selector) => {
-        const el = document.querySelector(selector);
-        if (el && map[selector]) el.setAttribute("content", map[selector]);
-      });
-    }
-
-    const mount = document.getElementById("good-detail");
-    if (!good) {
-      mount.innerHTML = `
-        <p style="text-align:center;margin:80px 0;">グッズが見つかりませんでした。</p>
-        <p style="text-align:center;"><a class="more-link" href="goods.html">GOODS へ戻る</a></p>`;
-    } else {
-      setOg(good);
-      const about = good.about
-        ? `<h3>【ABOUT】</h3><p>${good.about.replace(/\n/g, "<br>")}</p>`
-        : "";
-      const meta =
-        good.meta && good.meta.length
-          ? `<ul>${good.meta.map((m) => `<li>${m}</li>`).join("")}</ul>`
-          : "";
-      const hashtag = good.hashtag
-        ? `<p>ハッシュタグ：${good.hashtag}</p>`
-        : "";
-
-      mount.innerHTML = `
-        <article class="work-detail">
-          <div class="work-detail__media">${NAZONE.goodImageHtml(good)}</div>
-          <div>
-            <h1 class="work-detail__title">${good.title}</h1>
-            <p class="work-detail__date">${good.date || ""}</p>
-            ${about}
-            ${meta}
-            ${hashtag}
-          </div>
-          <p class="work-detail__back">
-            <a class="more-link" href="goods.html">GOODS へ戻る</a>
-          </p>
-        </article>`;
-    }
-  </script>
+<script src="data/goods.js?v=5"></script>
+  <script src="js/catalog.js?v=6"></script>
+  <script src="js/mock-common.js?v=3"></script>
+  <script src="js/detail-page.js?v=20"></script>
 </body>
 </html>

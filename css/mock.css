@@ -1,0 +1,1781 @@
+/* =========================================================
+   NAZONE draft — image stage (homepage_hp.webp) + motion
+   ========================================================= */
+
+@font-face {
+  font-family: "Shin Retro Maru Gothic";
+  src: url("../fonts/ShinRetroMaruGothic-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Shin Retro Maru Gothic";
+  src: url("../fonts/ShinRetroMaruGothic-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Shin Retro Maru Gothic";
+  src: url("../fonts/ShinRetroMaruGothic-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Kuramubon";
+  src: url("../fonts/Kuramubon.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* 完成画像のICC表示色に合わせる（生ピクセル#5dc289 → 表示#1ec584） */
+  --mock-green: #1ec584;
+  --mock-green-deep: #17a86f;
+  --mock-mint: #d3ffdb;
+  --mock-ink: #4b4b4b;
+  --mock-white: #ffffff;
+  --mock-font: "Shin Retro Maru Gothic", "Hiragino Maru Gothic ProN", sans-serif;
+  --mock-font-display: "Kuramubon", "Shin Retro Maru Gothic", sans-serif;
+  --mock-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --mock-stage-width: 480px;
+  --mock-desktop-bg: #c8f3dc;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body.draft-mock {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--mock-font);
+  font-weight: 500;
+  color: var(--mock-ink);
+  background: var(--mock-green);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* カスタムカーソル：64px素材を2x指定（表示約32CSS px）。ホットスポット＝不透明部の左下 */
+body.draft-mock,
+body.draft-mock a,
+body.draft-mock button {
+  cursor:
+    -webkit-image-set(url("../assets/cursor-point.png") 2x) 1 26,
+    image-set(url("../assets/cursor-point.png") 2x) 1 26,
+    url("../assets/cursor-point.png") 2 52,
+    url("../assets/cursor-point.webp") 2 52,
+    auto;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; }
+
+.mock-stage {
+  position: relative;
+  width: min(100%, var(--mock-stage-width));
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.mock-image {
+  width: 100%;
+  height: auto;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ---- Home：ヒーロー（base + fade top + arrow） ---- */
+.mock-stage--home {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow: visible;
+  min-height: 100vh;
+  padding: 0 0 28px;
+  background: var(--mock-green);
+}
+
+.home-hero {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  /* ロゴ・メニュー下端(~11.6%幅)を空けてから art、さらにスクロール余白 */
+  --home-art-top: 13.5%;
+  /* 0.135 + 2700/1921 + ≈0.11 → height/width ≈ 1.65 → 1921/3170 */
+  aspect-ratio: 1921 / 3170;
+  /* 右からの矢印飛来をクリップしない */
+  overflow: visible;
+}
+
+.home-hero__art {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  /* margin-% は幅基準 → ロゴ／ハンバーガーと被らないよう下げる */
+  margin-top: var(--home-art-top);
+  width: 100%;
+  line-height: 0;
+  overflow: visible;
+}
+
+.home-hero__base,
+.home-hero__overlay {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* 「ココロざす」→「志す」を順にフェードイン（同一画像を領域クリップ） */
+.home-hero__overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  opacity: 0;
+}
+
+.home-hero__overlay--kana {
+  /* ココロざす帯（新画像: 約 y4.6–57% / x77–93%） */
+  clip-path: inset(4% 6% 42% 76%);
+  transition: opacity 0.75s var(--mock-ease) 0.12s;
+}
+
+.home-hero__overlay--kanji {
+  /* 志す帯（新画像: 約 y70.5–95% / x58–75%） */
+  clip-path: inset(70% 24% 4% 57%);
+  transition: opacity 0.75s var(--mock-ease) 0.95s;
+}
+
+.home-hero.is-ready .home-hero__overlay--kana,
+.home-hero.is-ready .home-hero__overlay--kanji {
+  opacity: 1;
+}
+
+/*
+  「ロ」実測（新画像 art内）: x 81.36–89.17% / y 28.41–34.0%
+  先端を「ロ」上寄り中央へ
+*/
+.home-hero__arrow {
+  --ro-x: 85.27%;
+  --ro-y: 30.3%;
+  --tip-x: 4%;
+  --tip-y: 94%;
+  position: absolute;
+  left: var(--ro-x);
+  top: var(--ro-y);
+  z-index: 3;
+  width: 7.8%; /* 5.2% × 1.5 */
+  height: auto;
+  opacity: 0;
+  transform: translate(calc(var(--tip-x) * -1), calc(var(--tip-y) * -1)) rotate(0deg);
+  transform-origin: var(--tip-x) var(--tip-y);
+  pointer-events: none;
+  user-select: none;
+  will-change: left, top, opacity, transform;
+}
+
+.home-hero__arrow.is-flying {
+  opacity: 1;
+}
+
+.home-hero__arrow.is-landed {
+  opacity: 1;
+  left: var(--ro-x);
+  top: var(--ro-y);
+  transform: translate(calc(var(--tip-x) * -1), calc(var(--tip-y) * -1)) rotate(0deg);
+}
+
+/* logo: 幅基準で従来どおり（ヒーローが高くなっても位置が沈まない） */
+.home-hero__logo {
+  position: absolute;
+  left: 6.35%;
+  top: 0;
+  margin-top: 5.052%;
+  z-index: 5;
+  width: 30.63%;
+  line-height: 0;
+}
+
+.home-hero__logo img {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* menu: トップと同じ幅基準 */
+.home-hero .home-hero__menu.mock-menu {
+  position: absolute;
+  left: 87.66%;
+  top: 0;
+  margin-top: 5.1%;
+  z-index: 20;
+  width: 8.073%;
+}
+
+/* 「志す」下（art下端≈93.4%）に余白を空けて配置 */
+.home-hero__scroll {
+  position: absolute;
+  left: 42.14%;
+  top: 94.5%;
+  z-index: 4;
+  margin: 0;
+  width: 15.83%;
+  transform: none;
+  pointer-events: none;
+}
+
+.home-hero__scroll-img {
+  width: 100%;
+  height: auto;
+  opacity: 0;
+  transition: opacity 0.7s var(--mock-ease) 1.9s;
+}
+
+.home-hero.is-ready .home-hero__scroll-img {
+  opacity: 1;
+  animation: scrollBob 1.5s var(--mock-ease) 2.6s infinite;
+}
+
+@keyframes scrollBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}
+
+/* モバイル: 初回画面(=1画面)の中央に top を置き、SCROLL まで収める */
+@media (max-width: 767.98px) {
+  .home-hero {
+    container-type: inline-size;
+    aspect-ratio: auto;
+    height: 100vh;
+    height: 100svh;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    --home-art-top: 0%;
+    --home-chrome: 13.8cqw;
+    --home-scroll-slot: 3.5rem;
+    /* 中央よりわずかに下へ */
+    --home-nudge: 3.5vh;
+  }
+
+  .home-hero__art {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    /* 短い画面でも SCROLL まで入るよう縮小 */
+    width: min(100cqi, calc((100svh - var(--home-scroll-slot)) * 1921 / 2700));
+    /* 中央寄せがロゴに食い込むときだけ下げ、そのうえで少し下へ */
+    margin-top: calc(
+      max(
+        0px,
+        calc(
+          var(--home-chrome)
+          - (
+            100svh
+            - min(100cqi, calc((100svh - var(--home-scroll-slot)) * 1921 / 2700)) * 2700 / 1921
+            - var(--home-scroll-slot)
+          ) / 2
+        )
+      ) + var(--home-nudge)
+    );
+    flex: 0 1 auto;
+  }
+
+  .home-hero__scroll {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 15.83%;
+    max-width: 4.75rem;
+    margin: 0.55rem auto 0;
+    flex: 0 0 auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero__overlay,
+  .home-hero__overlay--kana,
+  .home-hero__overlay--kanji,
+  .home-hero__scroll-img {
+    transition: none;
+    animation: none;
+    opacity: 1;
+  }
+
+  .home-hero__arrow {
+    opacity: 1;
+    left: var(--ro-x);
+    top: var(--ro-y);
+    transform: translate(calc(var(--tip-x) * -1), calc(var(--tip-y) * -1));
+  }
+}
+
+/* ハンバーガー: モバイルのみ・完成図の位置（背景色差が出ないようCSSで描画） */
+.mock-menu {
+  position: absolute;
+  left: 86.979%;
+  top: 1.333%;
+  z-index: 20;
+  width: 8.073%;
+  aspect-ratio: 155 / 125;
+  display: grid;
+  place-items: center;
+  background: transparent;
+}
+
+.mock-menu img {
+  display: none;
+}
+
+.mock-menu__bars {
+  position: relative;
+  display: block;
+  width: 70%;
+  height: 16px;
+  pointer-events: none;
+}
+
+.mock-menu__bars span {
+  position: absolute;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 2.5px;
+  border-radius: 999px;
+  background: #fff;
+  transition: transform 0.28s var(--mock-ease), opacity 0.2s ease, top 0.28s var(--mock-ease);
+}
+
+.mock-menu__bars span:nth-child(1) { top: 0; }
+.mock-menu__bars span:nth-child(2) { top: 50%; margin-top: -1.25px; }
+.mock-menu__bars span:nth-child(3) { bottom: 0; top: auto; }
+
+/* 開いたらバツ */
+.mock-menu[aria-expanded="true"] .mock-menu__bars span:nth-child(1) {
+  top: 50%;
+  margin-top: -1.25px;
+  transform: rotate(45deg);
+}
+
+.mock-menu[aria-expanded="true"] .mock-menu__bars span:nth-child(2) {
+  opacity: 0;
+}
+
+.mock-menu[aria-expanded="true"] .mock-menu__bars span:nth-child(3) {
+  top: 50%;
+  bottom: auto;
+  margin-top: -1.25px;
+  transform: rotate(-45deg);
+}
+
+/* PCレール／サイドナビはモバイルでは非表示 */
+.mock-side-nav,
+.mock-rail-logo {
+  display: none;
+}
+
+.mock-nav-icon {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
+  object-fit: contain;
+  display: block;
+}
+
+.mock-nav-label {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+/* ---- Hotspots ---- */
+.hotspot {
+  position: absolute;
+  z-index: 5;
+  display: block;
+}
+
+.hotspot--logo {
+  left: 4%;
+  top: 0.9%;
+  width: 36%;
+  height: 2.6%;
+}
+
+.hotspot--about-btn {
+  left: 34%;
+  top: 44.5%;
+  width: 32%;
+  height: 2.6%;
+}
+
+.hotspot--works-prev {
+  left: 1%;
+  top: 57.8%;
+  width: 11%;
+  height: 4.2%;
+}
+
+.hotspot--works-next {
+  left: 88%;
+  top: 57.8%;
+  width: 11%;
+  height: 4.2%;
+}
+
+.hotspot--works-card {
+  left: 12.3%;
+  top: 53.9%;
+  width: 74.8%;
+  height: 12.8%;
+  z-index: 4;
+}
+
+.hotspot--works-all {
+  left: 32%;
+  top: 68.5%;
+  width: 36%;
+  height: 2.8%;
+}
+
+.hotspot--goods-prev {
+  left: 1%;
+  top: 81.1%;
+  width: 11%;
+  height: 4.2%;
+}
+
+.hotspot--goods-next {
+  left: 88%;
+  top: 81.1%;
+  width: 11%;
+  height: 4.2%;
+}
+
+.hotspot--goods-card {
+  left: 12.3%;
+  top: 77.75%;
+  width: 74.8%;
+  height: 11.6%;
+  z-index: 4;
+}
+
+.hotspot--goods-all {
+  left: 32%;
+  top: 92.4%;
+  width: 36%;
+  height: 2.8%;
+}
+
+.hotspot--member {
+  left: 13.3%;
+  top: var(--t);
+  width: 72.7%;
+  height: var(--h);
+}
+
+.hotspot--list-card {
+  left: 12.3%;
+  top: var(--t);
+  width: 74.9%;
+  height: var(--h);
+}
+
+.hotspot--list-card--goods {
+  left: 14.17%;
+  width: 71.04%;
+}
+
+.hotspot--privacy {
+  left: 30%;
+  top: 84.5%;
+  width: 40%;
+  height: 2.2%;
+}
+
+/* ---- Works / Goods：完成図をコードで再現（背景画像なし） ---- */
+.mock-stage--list {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow: visible;
+  min-height: 100vh;
+  padding: 0 0 28px;
+  background: var(--mock-green);
+}
+
+/* トップ（home-hero__logo / home-hero__menu）と同じ位置・幅に合わせる */
+/* トップ logo top 5.45% はヒーロー高さ基準 → ステージ幅基準に換算 (aspect 1920/1780) */
+.mock-list-header {
+  --list-chrome-top: calc(5.45% * 1780 / 1920);
+  position: relative;
+  z-index: 20;
+  display: block;
+  padding: var(--list-chrome-top) 6.35% 28px;
+  box-sizing: border-box;
+}
+
+.mock-list-logo {
+  display: block;
+  /* ヘッダー左右パディング 6.35%×2 を差し引き、ステージ幅の 30.63% になるよう換算 */
+  width: calc(30.63% * 100 / (100 - 12.7));
+  line-height: 0;
+}
+
+.mock-list-logo img {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+}
+
+body[data-page="works"] .mock-menu,
+body[data-page="goods"] .mock-menu,
+body[data-page="contact"] .mock-menu,
+body[data-page="about"] .mock-menu,
+body[data-page="privacy"] .mock-menu,
+body[data-page="work"] .mock-menu,
+body[data-page="good"] .mock-menu {
+  position: absolute;
+  left: 87.66%;
+  top: 0;
+  /* margin-% は幅基準 → トップの top:5.5%（高さ基準）と揃える */
+  margin-top: calc(5.5% * 1780 / 1920);
+  width: 8.073%;
+  min-width: 32px;
+  max-width: none;
+  height: auto;
+  aspect-ratio: 155 / 125;
+  flex: none;
+  margin-right: 0;
+  background: transparent;
+  z-index: 20;
+}
+
+/* 緑ステージ上で見えるよう、トップ同様に白バー */
+body[data-page="works"] .mock-menu__bars span,
+body[data-page="goods"] .mock-menu__bars span,
+body[data-page="contact"] .mock-menu__bars span,
+body[data-page="about"] .mock-menu__bars span,
+body[data-page="privacy"] .mock-menu__bars span,
+body[data-page="work"] .mock-menu__bars span,
+body[data-page="good"] .mock-menu__bars span {
+  background: #fff;
+}
+
+/* 完成図のミントパネル：角丸30px */
+.mock-content-panel {
+  position: relative;
+  z-index: 1;
+  width: calc(100% - 51px);
+  margin: 0 auto;
+  padding: 24px 22px 36px;
+  background: var(--mock-mint);
+  border-radius: 30px;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+/* 詳細：カード(A)とミントパネル(B)の上下余白を揃える */
+body[data-page="work"] .mock-content-panel,
+body[data-page="good"] .mock-content-panel {
+  padding: 24px 22px;
+}
+
+.mock-list-heading {
+  margin: 0 0 20px;
+  text-align: left;
+}
+
+.mock-list-heading__ja {
+  margin: 0;
+  font-family: var(--mock-font-display);
+  font-size: clamp(28px, 7.2vw, 34px);
+  font-weight: 400;
+  line-height: 1.2;
+  color: #2f2f2f;
+  letter-spacing: 0.02em;
+}
+
+.mock-list-heading__en {
+  margin: 6px 0 0;
+  font-family: var(--mock-font-display);
+  font-size: clamp(15px, 3.8vw, 18px);
+  font-weight: 400;
+  line-height: 1.2;
+  color: #3a3a3a;
+}
+
+.mock-list-footer {
+  margin-top: auto;
+  padding: 28px 16px 0;
+  text-align: center;
+}
+
+.mock-list-footer p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.mock-filters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px 14px;
+  width: min(100%, 340px);
+  margin: 0 auto 1.7em;
+}
+
+body[data-page="goods"] .mock-filters {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  width: min(100%, 360px);
+  gap: 10px 10px;
+}
+
+.mock-filter-btn {
+  width: 100%;
+  min-height: 36px;
+  padding: 0.45em 0.3em;
+  border: 2px solid var(--mock-green);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--mock-green);
+  font-family: var(--mock-font);
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.mock-filter-btn.is-active {
+  background: var(--mock-green);
+  color: #fff;
+}
+
+.mock-list {
+  display: grid;
+  gap: 30px;
+  width: 100%;
+  margin: 0 auto;
+  overflow: visible;
+  padding: 4px 0 12px;
+}
+
+.mock-list-empty {
+  margin: 12px 0 0;
+  color: #5a5a5a;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.mock-list-card {
+  --kv-ratio: 848 / 1200; /* 縦長KVの基本サイズ */
+  --kv-col: clamp(140px, 44%, 188px);
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--kv-col) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  width: 100%;
+  min-height: 0;
+  padding: 16px;
+  background: #fff;
+  border-radius: 18px;
+  overflow: visible;
+  transform-style: preserve-3d;
+}
+
+.mock-list-card.is-door-open {
+  z-index: 6;
+}
+
+/* キービジュアル：縦長(848×1200)を基本枠 / 切れない / 左蝶番で手前に少し開く */
+
+.mock-list-card__media {
+  position: relative;
+  display: block;
+  align-self: start;
+  /* 開いたドアは長方形からはみ出してよい（モバイル含む） */
+  overflow: visible !important;
+  border-radius: 0;
+  background: transparent;
+  width: 100%;
+  aspect-ratio: var(--kv-ratio);
+  height: auto;
+  min-height: 0;
+  min-width: 0;
+  perspective: 640px;
+  perspective-origin: left center;
+  -webkit-tap-highlight-color: transparent;
+  transform-style: preserve-3d;
+  --kv-main: #5a7a6a;
+}
+
+.mock-list-card__kv {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  transform-style: preserve-3d;
+}
+
+/* ドアの奥：KVメインカラーの長方形（開くと右側から少し見える） */
+.mock-list-card__behind {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: var(--kv-main);
+  border-radius: 0;
+}
+
+/* 左蝶番：左辺固定のまま KV＋ぼかし帯を手前に開く → 右側に色面 */
+.mock-list-card__door {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 1;
+  overflow: hidden;
+  border-radius: 0;
+  background: #e8fff0;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition:
+    transform 0.4s var(--mock-ease),
+    box-shadow 0.4s var(--mock-ease);
+  will-change: transform;
+  box-shadow: none;
+  backface-visibility: hidden;
+}
+
+.mock-list-card__blur,
+.mock-list-card__main {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* 横長KV：ぼかし帯はドアの内側に置き、開閉と一緒に動かす */
+.mock-list-card__door .mock-list-card__blur {
+  display: none;
+  z-index: 0;
+  object-fit: cover;
+  object-position: center;
+  filter: blur(14px) saturate(1.05);
+  transform: scale(1.18);
+  opacity: 0.92;
+}
+
+.mock-list-card__door .mock-list-card__main {
+  z-index: 1;
+  object-fit: contain;
+  object-position: center;
+}
+
+.mock-list-card__media.is-letterbox .mock-list-card__door .mock-list-card__blur {
+  display: block;
+}
+
+/* カードホバー／フォーカスでドアを手前へ開く */
+.mock-list-card.is-door-open .mock-list-card__door,
+.mock-list-card__media.is-open .mock-list-card__door {
+  transform: translateZ(18px) rotateY(-32deg) scaleX(0.94);
+  box-shadow: 12px 8px 22px rgba(0, 0, 0, 0.28);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .mock-list-card:hover {
+    z-index: 5;
+  }
+
+  .mock-list-card:hover .mock-list-card__media {
+    z-index: 5;
+  }
+
+  .mock-list-card:hover .mock-list-card__door {
+    transform: translateZ(18px) rotateY(-32deg) scaleX(0.94);
+    box-shadow: 12px 8px 22px rgba(0, 0, 0, 0.28);
+  }
+
+  .mock-list-card:hover .mock-list-card__kwsk {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+    transition:
+      opacity 0.34s var(--mock-ease) 0.08s,
+      transform 0.4s var(--mock-ease) 0.08s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mock-list-card__door {
+    transition: none;
+  }
+
+  .mock-list-card.is-door-open .mock-list-card__door,
+  .mock-list-card__media.is-open .mock-list-card__door,
+  .mock-list-card:hover .mock-list-card__door {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* ドアから出てくる吹き出し：カード右下。消え時はKV側へスライドしない */
+.mock-list-card__kwsk {
+  --kwsk-w: min(58%, 196px);
+  --kwsk-h: calc(var(--kwsk-w) * 512 / 1536);
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 3;
+  width: var(--kwsk-w);
+  line-height: 0;
+  opacity: 0;
+  transform: translateY(10px) scale(0.96);
+  transform-origin: right bottom;
+  pointer-events: none;
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.16));
+}
+
+.mock-list-card__kwsk img {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+.mock-list-card.is-door-open .mock-list-card__kwsk {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+  transition:
+    opacity 0.34s var(--mock-ease) 0.08s,
+    transform 0.4s var(--mock-ease) 0.08s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mock-list-card__kwsk {
+    transition: none;
+  }
+
+  .mock-list-card.is-door-open .mock-list-card__kwsk {
+    transition: none;
+  }
+}
+
+.mock-list-card__body {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
+  align-content: start;
+  gap: 6px;
+  min-width: 0;
+  min-height: 0;
+  padding: 0 2px 0 0;
+}
+
+.mock-list-card__tag {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0.25em 0.7em;
+  border-radius: 999px;
+  background: var(--mock-green);
+  color: #fff;
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.mock-list-card__title {
+  margin: 0;
+  font-size: clamp(15px, 3.8vw, 18px);
+  font-weight: 700;
+  line-height: 1.3;
+  color: #222;
+}
+
+.mock-list-card__title-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.mock-list-card__media,
+.mock-list-card__title-link {
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mock-list-card__kwsk {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mock-list-card__date {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #666;
+}
+
+.mock-list-card__desc {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: #444;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (max-width: 419px) {
+  .mock-list-header {
+    padding: var(--list-chrome-top) 6.35% 28px;
+  }
+
+  .mock-content-panel {
+    width: calc(100% - 28px);
+    padding: 22px 14px 28px;
+    border-radius: 26px;
+    overflow: visible;
+  }
+
+  body[data-page="work"] .mock-content-panel,
+  body[data-page="good"] .mock-content-panel {
+    padding: 22px 14px;
+  }
+
+  body[data-page="goods"] .mock-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mock-list-card {
+    --kv-col: clamp(124px, 42%, 160px);
+  }
+}
+
+/* ---- Contact（完成図をコードで再現・背景画像なし） ---- */
+.mock-contact-lead {
+  margin: 0 0 22px;
+  width: 100%;
+  text-align: left;
+  font-size: clamp(12px, 3vw, 13.5px);
+  font-weight: 500;
+  line-height: 1.65;
+  color: #3a3a3a;
+}
+
+.mock-contact-form {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 18px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 22px 20px 24px;
+  background: #fff;
+  border-radius: 18px;
+  box-sizing: border-box;
+}
+
+.mock-contact-form__honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.mock-contact-form__field {
+  display: grid;
+  gap: 0.45em;
+  min-height: 0;
+}
+
+.mock-contact-form__field span {
+  font-size: clamp(13px, 3.4vw, 15px);
+  font-weight: 700;
+  color: #333;
+}
+
+.mock-contact-form__field input,
+.mock-contact-form__field textarea {
+  width: 100%;
+  border: 1.5px solid #d2d2d2;
+  border-radius: 999px;
+  padding: 0.85em 1.1em;
+  font: inherit;
+  font-weight: 500;
+  color: #222;
+  background: #fff;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.mock-contact-form__field textarea {
+  border-radius: 18px;
+  min-height: 180px;
+  resize: vertical;
+}
+
+.mock-contact-form__field input:focus,
+.mock-contact-form__field textarea:focus {
+  border-color: var(--mock-green);
+}
+
+.mock-contact-form__field--message {
+  min-height: 0;
+}
+
+.mock-contact-form__submit {
+  justify-self: center;
+  box-sizing: border-box;
+  width: min(calc((min(100%, 340px) - 28px) / 3), 110px);
+  min-height: 36px;
+  margin-top: 6px;
+  padding: 0.45em 0.3em;
+  border: 2px solid var(--mock-green);
+  border-radius: 999px;
+  background: var(--mock-green);
+  color: #fff;
+  font-family: var(--mock-font);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.mock-contact-form__note {
+  margin: 4px 0 0;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.7;
+  color: #4b4b4b;
+}
+
+.mock-contact-form__note a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ---- Privacy ---- */
+.mock-privacy {
+  width: 100%;
+  display: grid;
+  gap: 18px;
+}
+
+.mock-privacy__intro {
+  margin: 0;
+  padding: 16px 16px 18px;
+  background: #fff;
+  border-radius: 18px;
+  font-size: clamp(13px, 3.4vw, 15px);
+  font-weight: 500;
+  line-height: 1.85;
+  color: #3a3a3a;
+}
+
+.mock-privacy__block {
+  margin: 0;
+  padding: 16px 16px 18px;
+  background: #fff;
+  border-radius: 18px;
+}
+
+.mock-privacy__block h2 {
+  margin: 0 0 0.7em;
+  font-size: clamp(14px, 3.6vw, 16px);
+  font-weight: 700;
+  line-height: 1.45;
+  color: #222;
+}
+
+.mock-privacy__block p {
+  margin: 0;
+  font-size: clamp(13px, 3.3vw, 14.5px);
+  font-weight: 500;
+  line-height: 1.85;
+  color: #3a3a3a;
+}
+
+.mock-privacy__foot {
+  margin: 4px 0 0;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: #4b4b4b;
+}
+
+.mock-privacy__foot a {
+  color: var(--mock-green);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ---- About（完成図をコードで再現・背景画像なし） ---- */
+.mock-about-brand {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  margin: 0 auto 22px;
+  padding: 12px 10px;
+  background: #fff;
+  border-radius: 18px;
+  box-sizing: border-box;
+}
+
+.mock-about-brand img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.mock-about-lead,
+.mock-about-copy {
+  margin: 0 auto 36px;
+  max-width: 22em;
+  text-align: center;
+  font-size: clamp(13px, 3.4vw, 15px);
+  font-weight: 500;
+  line-height: 1.9;
+  color: #3a3a3a;
+}
+
+.mock-about-copy p {
+  margin: 0 0 1.1em;
+  text-align: center;
+}
+
+.mock-about-copy p:last-child {
+  margin-bottom: 0;
+}
+
+.mock-about-members-head {
+  margin: 0 0 18px;
+  padding-top: 18px;
+  border-top: 2px solid var(--mock-green);
+  text-align: left;
+}
+
+.mock-about-members-head__ja {
+  margin: 0;
+  font-family: var(--mock-font-display);
+  font-size: clamp(24px, 6.2vw, 30px);
+  font-weight: 400;
+  line-height: 1.2;
+  color: #2f2f2f;
+}
+
+.mock-about-members-head__en {
+  margin: 6px 0 0;
+  font-family: var(--mock-font-display);
+  font-size: clamp(14px, 3.6vw, 17px);
+  font-weight: 400;
+  line-height: 1.2;
+  color: #3a3a3a;
+}
+
+.mock-about-members {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.mock-about-member {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+  padding: 14px;
+  background: #fff;
+  border-radius: 18px;
+  color: inherit;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.mock-about-member__id-link {
+  position: relative;
+  z-index: 1;
+  color: var(--mock-green-deep);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-size: 13px;
+  font-weight: 500;
+  word-break: break-all;
+  width: fit-content;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.mock-about-member__id-link:hover,
+.mock-about-member__id-link:focus-visible {
+  color: var(--mock-green);
+}
+
+.mock-about-member__face {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 8px;
+  background: #f3f3f3;
+}
+
+.mock-about-member__text {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.mock-about-member__name {
+  font-family: var(--mock-font);
+  font-size: clamp(18px, 4.8vw, 24px);
+  font-weight: 700;
+  line-height: 1.2;
+  color: #2f2f2f;
+}
+
+.mock-about-member__id {
+  font-size: 13px;
+  font-weight: 500;
+  color: #555;
+  word-break: break-all;
+}
+
+/* ---- Work / Good detail：KV上＋情報下 ---- */
+.mock-detail {
+  width: 100%;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.mock-detail--empty {
+  padding: 48px 20px;
+  text-align: center;
+}
+
+.mock-detail__media {
+  display: block;
+  width: 100%;
+  background: #e8fff0;
+  line-height: 0;
+}
+
+.mock-detail__media img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  object-position: center top;
+}
+
+.mock-detail__body {
+  display: grid;
+  gap: 10px;
+  padding: 22px 20px 28px;
+}
+
+.mock-detail__tag {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0.28em 0.75em;
+  border-radius: 999px;
+  background: var(--mock-green);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.mock-detail__title {
+  margin: 0;
+  font-family: var(--mock-font-display);
+  font-size: clamp(22px, 6vw, 28px);
+  font-weight: 400;
+  line-height: 1.35;
+  color: #222;
+}
+
+.mock-detail__date {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #666;
+}
+
+.mock-detail__section {
+  margin-top: 8px;
+}
+
+.mock-detail__section h2 {
+  margin: 0 0 0.45em;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--mock-green);
+  letter-spacing: 0.02em;
+}
+
+.mock-detail__section p,
+.mock-detail__meta,
+.mock-detail__section ul,
+.mock-detail__hashtag {
+  margin: 0;
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1.75;
+  color: #333;
+  white-space: pre-wrap;
+}
+
+.mock-detail__meta,
+.mock-detail__section ul {
+  padding-left: 1.2em;
+  white-space: normal;
+}
+
+.mock-detail__meta li,
+.mock-detail__section li {
+  margin: 0.2em 0;
+}
+
+.mock-detail__hashtag {
+  margin-top: 4px;
+  color: #555;
+}
+
+.mock-detail__hashtag-link {
+  color: var(--mock-green);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.mock-detail__hashtag-link:hover {
+  color: var(--mock-green-deep);
+}
+
+.mock-detail__buys {
+  display: grid;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.mock-detail__buy {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.85em 1em;
+  border: 2px solid var(--mock-green);
+  border-radius: 999px;
+  background: var(--mock-green);
+  color: #fff;
+  font-family: var(--mock-font);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: center;
+  text-decoration: none;
+}
+
+.mock-detail__buy:hover {
+  background: var(--mock-green-deep);
+  border-color: var(--mock-green-deep);
+  color: #fff;
+}
+
+.mock-detail__back {
+  margin: 18px 0 0;
+  text-align: center;
+}
+
+.mock-detail__back a {
+  color: var(--mock-green);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---- Home：Works / Goods カード枠（リストページと同じカードサイズ） ---- */
+/* ---- Home panels（完成画面をコードで再現） ---- */
+.home-panel {
+  position: relative;
+  z-index: 1;
+  width: calc(100% - 51px);
+  margin: 18px auto 0;
+  padding: 24px 22px 28px; /* works/goods の .mock-content-panel と同じ横パディング */
+  background: var(--mock-mint);
+  border-radius: 30px;
+  box-sizing: border-box;
+  overflow: visible;
+  display: grid;
+  justify-items: center;
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.85s var(--mock-ease),
+    transform 0.85s var(--mock-ease);
+  will-change: opacity, transform;
+}
+
+.home-panel.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-panel {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
+}
+
+.home-panel .mock-list-heading {
+  width: 100%;
+  margin: 0 0 18px;
+}
+
+.home-about-brand {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  margin: 0 0 18px;
+  padding: 12px 10px;
+  background: #fff;
+  border-radius: 18px;
+  box-sizing: border-box;
+}
+
+.home-about-brand img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.home-about-lead {
+  margin: 0 auto 22px;
+  /* 手動3行の各行が1文字だけ折り返さない幅 */
+  max-width: min(26em, 100%);
+  text-align: center;
+  font-size: clamp(13px, 3.4vw, 15px);
+  font-weight: 500;
+  line-height: 1.9;
+  color: #3a3a3a;
+  overflow-wrap: normal;
+  word-break: keep-all;
+  line-break: strict;
+}
+
+.home-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 9.5em;
+  min-height: 40px;
+  padding: 0.55em 1.4em;
+  border-radius: 999px;
+  background: var(--mock-green);
+  color: #fff;
+  font-family: var(--mock-font);
+  font-size: clamp(14px, 3.6vw, 16px);
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+}
+
+.home-carousel {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0;
+}
+
+.home-panel--works .home-carousel {
+  margin: 0 0 14px;
+}
+
+.home-panel--goods .home-carousel {
+  margin: 0 0 22px;
+}
+
+/* works/goods リストと同じカード幅・見た目 */
+.home-card-slot {
+  position: relative;
+  z-index: 6;
+  width: 100%;
+  height: auto;
+  display: grid;
+  align-items: start;
+}
+
+.home-card-slot .mock-list-card {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  opacity: 1;
+  transition: opacity 0.35s var(--mock-ease);
+}
+
+.home-card-slot .mock-list-card__media {
+  height: auto;
+  aspect-ratio: var(--kv-ratio);
+  align-self: start;
+}
+
+.home-card-slot .mock-list-card.is-swap {
+  opacity: 0;
+}
+
+.home-slideshow-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  margin: 0 0 18px;
+}
+
+.home-slideshow-dots__dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(30, 197, 132, 0.28);
+  cursor: pointer;
+}
+
+.home-slideshow-dots__dot.is-active {
+  background: var(--mock-green);
+  transform: scale(1.15);
+}
+
+@media (max-width: 419px) {
+  .home-panel {
+    width: calc(100% - 28px);
+    padding: 22px 14px 24px; /* list のモバイル .mock-content-panel に合わせる */
+    border-radius: 26px;
+  }
+
+  .home-panel--works .home-carousel {
+    margin-bottom: 14px;
+  }
+
+  .home-panel--goods .home-carousel {
+    margin-bottom: 22px;
+  }
+}
+
+/* ---- Mobile dropdown ---- */
+.mock-nav {
+  position: fixed;
+  top: max(56px, 7vw);
+  right: max(12px, calc((100vw - min(100vw, var(--mock-stage-width))) / 2 + 8px));
+  z-index: 40;
+  width: min(280px, calc(100vw - 24px));
+  padding: 10px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 12px 32px rgba(45, 110, 75, 0.2);
+  display: grid;
+  gap: 2px;
+}
+
+.mock-nav[hidden] { display: none; }
+
+.mock-nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  color: #2d6e4b;
+}
+
+.mock-nav a:hover {
+  background: rgba(93, 194, 137, 0.14);
+}
+
+.mock-nav .mock-nav-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.mock-nav__ja {
+  font-size: 14px;
+  font-weight: 700;
+  color: #222;
+}
+
+.mock-nav__en {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--mock-green);
+}
+
+/* ---- Desktop: 左余白ロゴ + 右余白に等間隔メニュー ---- */
+@media (min-width: 768px) {
+  body.draft-mock {
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 0%, rgba(255, 255, 255, 0.55), transparent 60%),
+      var(--mock-desktop-bg);
+  }
+
+  .mock-stage {
+    width: var(--mock-stage-width);
+    min-height: 100vh;
+    box-shadow:
+      0 0 0 1px rgba(45, 110, 75, 0.12),
+      0 18px 48px rgba(45, 110, 75, 0.18);
+    background: var(--mock-green);
+  }
+
+  /* PC: ハンバーガー非表示 */
+  .mock-menu,
+  .mock-nav {
+    display: none !important;
+  }
+
+  /* ステージ左の余白中央にロゴ */
+  .mock-rail-logo {
+    position: fixed;
+    left: 0;
+    width: calc(50% - var(--mock-stage-width) / 2);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 28;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
+  }
+
+  .mock-rail-logo img {
+    width: min(220px, 70%);
+    height: auto;
+    display: block;
+  }
+
+  /* 右余白の中央にメニュー塊を置き、中身は左揃え＋等間隔 */
+  .mock-side-nav {
+    position: fixed;
+    left: calc(50% + var(--mock-stage-width) / 2);
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center; /* メニュー全体を余白の中央へ */
+    box-sizing: border-box;
+    padding: 8vh clamp(16px, 3vw, 40px);
+  }
+
+  .mock-side-nav a {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* 各項目は左揃え */
+    gap: 14px;
+    width: min(13.5em, 100%); /* 同幅の塊を中央に置き、中身は左揃え */
+    padding: 10px 14px;
+    border-radius: 16px;
+    box-sizing: border-box;
+  }
+
+  .mock-side-nav .mock-nav-icon {
+    width: clamp(36px, 4.2vw, 48px);
+    height: clamp(36px, 4.2vw, 48px);
+  }
+
+  .mock-side-nav .mock-nav-label {
+    gap: 4px;
+  }
+
+  .mock-side-nav__ja {
+    font-size: clamp(14px, 1.15vw, 16px);
+    font-weight: 700;
+    color: #222;
+    letter-spacing: 0.02em;
+  }
+
+  .mock-side-nav__en {
+    font-size: clamp(12px, 1vw, 14px);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--mock-green);
+  }
+
+  /* 現在ページ：白い角丸の長方形で囲む */
+  .mock-side-nav a[aria-current="page"] {
+    background: #fff;
+    box-shadow: 0 6px 18px rgba(45, 110, 75, 0.1);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1100px) {
+  .mock-rail-logo img {
+    width: min(150px, 72%);
+  }
+
+  .mock-side-nav {
+    padding: 6vh clamp(12px, 2.4vw, 28px);
+  }
+
+  .mock-side-nav .mock-nav-icon {
+    width: 34px;
+    height: 34px;
+  }
+}
