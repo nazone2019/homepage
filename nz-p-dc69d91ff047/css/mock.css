@@ -599,6 +599,12 @@ body[data-page="good"] .mock-menu__bars span {
   overflow: visible;
 }
 
+/* 詳細：カード(A)とミントパネル(B)の上下余白を揃える */
+body[data-page="work"] .mock-content-panel,
+body[data-page="good"] .mock-content-panel {
+  padding: 24px 22px;
+}
+
 .mock-list-heading {
   margin: 0 0 20px;
   text-align: left;
@@ -971,6 +977,11 @@ body[data-page="goods"] .mock-filters {
     padding: 22px 14px 28px;
     border-radius: 26px;
     overflow: visible;
+  }
+
+  body[data-page="work"] .mock-content-panel,
+  body[data-page="good"] .mock-content-panel {
+    padding: 22px 14px;
   }
 
   body[data-page="goods"] .mock-filters {
